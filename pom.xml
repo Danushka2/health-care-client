@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath/>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>lk.elevenzcode.healthcare</groupId>
+    <artifactId>health-care</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Health Care</name>
+    <packaging>pom</packaging>
+    <description>SLIIT PAF Module | Micro Service Project</description>
+
+    <modules>
+        <module>patient-api</module>
+        <module>hospital-api</module>
+        <module>doctor-api</module>
+        <module>appointment-api</module>
+        <module>payment-api</module>
+    </modules>
+
+    <properties>
+        <!--Hospital API DB Properties-->
+        <hospital.api.jdbc.url></hospital.api.jdbc.url>
+        <hospital.api.jdbc.username></hospital.api.jdbc.username>
+        <hospital.api.jdbc.password></hospital.api.jdbc.password>
+        <hospital.api.jdbc.schema></hospital.api.jdbc.schema>
+
+        <!--Doctor API DB Properties-->
+        <doctor.api.jdbc.url></doctor.api.jdbc.url>
+        <doctor.api.jdbc.username></doctor.api.jdbc.username>
+        <doctor.api.jdbc.password></doctor.api.jdbc.password>
+        <doctor.api.jdbc.schema></doctor.api.jdbc.schema>
+
+        <!--Patient API DB Properties-->
+        <patient.api.jdbc.url></patient.api.jdbc.url>
+        <patient.api.jdbc.username></patient.api.jdbc.username>
+        <patient.api.jdbc.password></patient.api.jdbc.password>
+        <patient.api.jdbc.schema></patient.api.jdbc.schema>
+
+        <!--Appointment API DB Properties-->
+        <appointment.api.jdbc.url></appointment.api.jdbc.url>
+        <appointment.api.jdbc.username></appointment.api.jdbc.username>
+        <appointment.api.jdbc.password></appointment.api.jdbc.password>
+        <appointment.api.jdbc.schema></appointment.api.jdbc.schema>
+
+        <!--Payment API DB Properties-->
+        <payment.api.jdbc.url></payment.api.jdbc.url>
+        <payment.api.jdbc.username></payment.api.jdbc.username>
+        <payment.api.jdbc.password></payment.api.jdbc.password>
+        <payment.api.jdbc.schema></payment.api.jdbc.schema>
+    </properties>
+</project>
