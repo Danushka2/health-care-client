@@ -1,4 +1,4 @@
-package lk.elevenzcode.healthcare.hospitalapi;
+package lk.elevenzcode.healthcare.commons;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,16 +6,16 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
- * Created by hashan on 2/28/20 12:23 PM
+ * Created by hashan on 2/9/20 11:50 AM
  */
 @SpringBootApplication
-public class HospitalApiApplication extends SpringBootServletInitializer {
+public class AuthApi extends SpringBootServletInitializer {
   public static void main(String[] args) {
-    SpringApplication.run(HospitalApiApplication.class, args);
+    SpringApplication.run(AuthApi.class, args);
   }
 
   @Override
   protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-    return builder.sources(HospitalApiApplication.class);
+    return builder.sources(AuthApi.class);
   }
 }
