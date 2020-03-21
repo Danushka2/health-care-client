@@ -25,6 +25,7 @@
         <module>doctor-api</module>
         <module>appointment-api</module>
         <module>payment-api</module>
+        <module>client-app</module>
     </modules>
 
     <properties>
@@ -32,8 +33,13 @@
         <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
         <api.jdbc.driver.class>com.mysql.cj.jdbc.Driver</api.jdbc.driver.class>
         <api.jdbc.hibernate.dialect>org.hibernate.dialect.MySQL5Dialect</api.jdbc.hibernate.dialect>
-        <api.jdbc.hibernate.ddl.auto>none</api.jdbc.hibernate.ddl.auto>
-
+        <api.jdbc.hibernate.ddl.auto>update</api.jdbc.hibernate.ddl.auto>
+        <api.auth.url>http://localhost:8081</api.auth.url>
+        <api.hospital.url>http://localhost:8082</api.hospital.url>
+        <api.doctor.url>http://localhost:8083</api.doctor.url>
+        <api.patient.url>http://localhost:8084</api.patient.url>
+        <api.appointment.url>http://localhost:8085</api.appointment.url>
+        <api.payment.url>http://localhost:8086</api.payment.url>
         <!--Auth API DB Properties-->
         <auth.api.jdbc.url>
             jdbc:mysql://localhost:3306/sch_auth?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
@@ -91,11 +97,6 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jersey</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <exclusions>
@@ -121,16 +122,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
-        </dependency>
-        <!-- jpa, crud repository -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <!-- MySQL -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
 </project>

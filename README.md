@@ -6,8 +6,7 @@
 3. Update `jdbc.urls` for all APIs @ `pom.xml`
 4. Execute `script/init-db.sql`
 5. Clean & Install `Health Care(root)` project
-6. Change `api.jdbc.hibernate.ddl.auto` to `none` after first deploy
-7. Import `Postman collection & environment` files to test APIs
+6. Import `Postman collection & environment` files to test APIs
 
 **OAuth2 Credentials**
 

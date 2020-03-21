@@ -3,7 +3,7 @@ package lk.elevenzcode.healthcare.appointmentapi.config.security;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import lk.elevenzcode.healthcare.appointmentapi.config.property.SecurityProperties;
-import lk.elevenzcode.healthcare.appointmentapi.web.service.Constant;
+import lk.elevenzcode.healthcare.appointmentapi.web.util.Constant;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,7 +28,7 @@ import javax.annotation.PostConstruct;
 @EnableResourceServer
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-  private static final String ROLE_APPT = "ROLE_APPT";
+  private static final String ROLE_APPT = "APPT";
   private final SecurityProperties securityProperties;
   @Value("${spring.jersey.application-path}")
   private String serviceContext;
@@ -53,7 +53,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http.anonymous().disable()
         .authorizeRequests()
-        .antMatchers(API_PATTERN).hasAuthority(ROLE_APPT)
+        .antMatchers(API_PATTERN).hasAnyRole(ROLE_APPT, lk.elevenzcode.healthcare.commons.web
+        .util.Constant.ROLE_CLIENT)
         .anyRequest()
         .authenticated();
   }

@@ -1,57 +1,24 @@
-/**
- * 
- */
 package lk.elevenzcode.healthcare.appointmentapi.service;
+
+import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
+import lk.elevenzcode.healthcare.commons.exception.ServiceException;
+import lk.elevenzcode.healthcare.commons.service.GenericService;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
-import lk.elevenzcode.healthcare.appointmentapi.repository.AppointmentRepository;
-
 /**
  * @author Yasas Alwis
- *
  */
-@Service
-public class AppointmentService implements IAppointmentService{
-	@Autowired
-	private AppointmentRepository appointmentRepository;
+public interface AppointmentService extends GenericService<Appointment> {
+  void createAppointment(Appointment appointment);
 
-	@Override
-	public void createAppointment(Appointment appointment) {
-		appointmentRepository.save(appointment);
-	}
+  void updateAppointment(Appointment appointment);
 
-	@Override
-	public void updateAppointment(Appointment appointment) {
-		appointmentRepository.save(appointment);
-	}
+  void deleteAppointment(Appointment appointment);
 
-	@Override
-	public void deleteAppointment(Appointment appointment) {
-		if(appointmentRepository.existsById(appointment.getAppointmentid())) {
-			appointmentRepository.delete(appointment);
-		}
-	}
+  Iterable<Appointment> findAll();
 
-	@Override
-	public Iterable<Appointment> findAll() {
-		Iterable<Appointment> appointments = appointmentRepository.findAll();
-		return appointments;
-	}
-	
-	@Override
-	public List<Appointment> findByPatient(Long patientId) {
-		List<Appointment> appointments = appointmentRepository.findByPatientId(patientId);
-		return appointments;
-	}
-	
-	@Override
-	public List<Appointment> findByDoctor(Long doctorId) {
-		List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorId);
-		return appointments;
-	}
+  List<Appointment> findByDoctor(int doctorId) throws ServiceException;
+
+  List<Appointment> findByPatient(int patientId) throws ServiceException;
 }

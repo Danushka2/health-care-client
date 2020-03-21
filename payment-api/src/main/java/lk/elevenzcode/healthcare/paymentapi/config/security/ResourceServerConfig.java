@@ -3,7 +3,7 @@ package lk.elevenzcode.healthcare.paymentapi.config.security;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import lk.elevenzcode.healthcare.paymentapi.config.property.SecurityProperties;
-import lk.elevenzcode.healthcare.paymentapi.web.service.Constant;
+import lk.elevenzcode.healthcare.paymentapi.web.util.Constant;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,65 +28,66 @@ import javax.annotation.PostConstruct;
 @EnableResourceServer
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-    private static final String ROLE_PAY = "PAY";
-    private final SecurityProperties securityProperties;
-    @Value("${spring.jersey.application-path}")
-    private String serviceContext;
-    private String API_PATTERN;
-    private TokenStore tokenStore;
+  private static final String ROLE_PAY = "PAY";
+  private final SecurityProperties securityProperties;
+  @Value("${spring.jersey.application-path}")
+  private String serviceContext;
+  private String API_PATTERN;
+  private TokenStore tokenStore;
 
-    public ResourceServerConfig(final SecurityProperties securityProperties) {
-        this.securityProperties = securityProperties;
-    }
+  public ResourceServerConfig(final SecurityProperties securityProperties) {
+    this.securityProperties = securityProperties;
+  }
 
-    @PostConstruct
-    void init() {
-        API_PATTERN = String.format("%s/%s/%s/**", serviceContext, Constant.API_VER,
-            Constant.API_PATH);
-    }
+  @PostConstruct
+  void init() {
+    API_PATTERN = String.format("%s/%s/%s/**", serviceContext, Constant.API_VER,
+        Constant.API_PATH);
+  }
 
-    @Override
-    public void configure(final ResourceServerSecurityConfigurer resources) {
-        resources.tokenStore(tokenStore());
-    }
+  @Override
+  public void configure(final ResourceServerSecurityConfigurer resources) {
+    resources.tokenStore(tokenStore());
+  }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.headers().httpStrictTransportSecurity().disable()
-            .and().requestMatchers()
-            .and()
-            .authorizeRequests()
-            .antMatchers(API_PATTERN).hasAnyRole(ROLE_PAY);
-    }
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+    http.anonymous().disable()
+        .authorizeRequests()
+        .antMatchers(API_PATTERN).hasAnyRole(ROLE_PAY, lk.elevenzcode.healthcare.commons.web
+        .util.Constant.ROLE_CLIENT)
+        .anyRequest()
+        .authenticated();
+  }
 
-    @Bean
-    public DefaultTokenServices tokenServices(final TokenStore tokenStore) {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setTokenStore(tokenStore);
-        return tokenServices;
-    }
+  @Bean
+  public DefaultTokenServices tokenServices(final TokenStore tokenStore) {
+    DefaultTokenServices tokenServices = new DefaultTokenServices();
+    tokenServices.setTokenStore(tokenStore);
+    return tokenServices;
+  }
 
-    @Bean
-    public TokenStore tokenStore() {
-        if (tokenStore == null) {
-            tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
-        }
-        return tokenStore;
+  @Bean
+  public TokenStore tokenStore() {
+    if (tokenStore == null) {
+      tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
     }
+    return tokenStore;
+  }
 
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setVerifierKey(getPublicKeyAsString());
-        return converter;
-    }
+  @Bean
+  public JwtAccessTokenConverter jwtAccessTokenConverter() {
+    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+    converter.setVerifierKey(getPublicKeyAsString());
+    return converter;
+  }
 
-    private String getPublicKeyAsString() {
-        try {
-            return IOUtils.toString(securityProperties.getJwt().getPublicKey().getInputStream(),
-                UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+  private String getPublicKeyAsString() {
+    try {
+      return IOUtils.toString(securityProperties.getJwt().getPublicKey().getInputStream(),
+          UTF_8);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
+  }
 }

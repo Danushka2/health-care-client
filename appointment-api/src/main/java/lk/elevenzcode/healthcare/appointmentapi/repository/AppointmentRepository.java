@@ -1,21 +1,17 @@
-/**
- * 
- */
 package lk.elevenzcode.healthcare.appointmentapi.repository;
+
+import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
+import lk.elevenzcode.healthcare.commons.repository.GenericRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-
-import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
-
 /**
  * @author Yasas Alwis
- *
  */
 @Repository
-public interface AppointmentRepository extends CrudRepository<Appointment, Long>{
-	List<Appointment> findByPatientId(Long patientId);
-	List<Appointment> findByDoctorId(Long doctorId);
+public interface AppointmentRepository extends GenericRepository<Appointment> {
+  List<Appointment> findByPatientId(int patientId);
+
+  List<Appointment> findByDoctorId(int doctorId);
 }

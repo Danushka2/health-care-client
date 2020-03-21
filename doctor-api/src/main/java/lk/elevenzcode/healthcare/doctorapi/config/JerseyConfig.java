@@ -1,6 +1,6 @@
 package lk.elevenzcode.healthcare.doctorapi.config;
 
-import lk.elevenzcode.healthcare.doctorapi.web.service.DoctorService;
+import lk.elevenzcode.healthcare.doctorapi.web.service.DoctorRestService;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
-        register(DoctorService.class);
+        register(DoctorRestService.class);
     }
 }

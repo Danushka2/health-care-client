@@ -2,85 +2,84 @@ package lk.elevenzcode.healthcare.appointmentapi.domain;
 
 /**
  * @author Yasas Alwis
- *
  */
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import lk.elevenzcode.healthcare.commons.domain.BaseDomain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 //Appointment class that store appointment details
 @Entity //Javax persistence entity annotation
-@Table(name = "appointment")
-public class Appointment {
-	
-	@Id //annotation will tell to the compiler, this is the primary key of the table
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //this annotation will tell the compiler this attribute is a auto increment value
-	private long appointmentid; //Appointment id Auto incremented
-	
-	private long doctorId; //Doctor id that patient is going to channel
-	
-	private long patientId; //Patient id, ID of the patient
-	
-	private LocalDate appointmentDate; //Appointment date
-	
-	private LocalTime appointmentTime; //Appointment Time
-	
-	private LocalDateTime createDate; //Created time and date of appointment
-	
-	//Constructor for appointment class
-	public Appointment(long appointmentid, long doctorId, long patientId, LocalDate appointmentDate,
-			LocalTime appointmentTime, LocalDateTime createDate) {
-		super();
-		this.appointmentid = appointmentid;
-		this.doctorId = doctorId;
-		this.patientId = patientId;
-		this.appointmentDate = appointmentDate;
-		this.appointmentTime = appointmentTime;
-		this.createDate = createDate;
-	}
-	
-	//-------------------------------------Getter to get data-------------------------------------------------//
-	public long getAppointmentid() {
-		return appointmentid;
-	}
+@Table(name = Appointment.TABLE_NAME)
+public class Appointment extends BaseDomain {
+  public static final String TABLE_NAME = "appointment";
+
+  @Column(name = "doctor_id", nullable = false)
+  private Integer doctorId; //Doctor id that patient is going to channel
+
+  @Column(name = "patient_id", nullable = false)
+  private Integer patientId; //Patient id, ID of the patient
+
+  @Column(name = "appointment_date", nullable = false)
+  private LocalDate appointmentDate; //Appointment date
+
+  @Column(name = "appointment_time", nullable = false)
+  private LocalTime appointmentTime; //Appointment Time
+
+  @Column(name = "create_datetime", nullable = false)
+  private LocalDateTime createDate; //Created time and date of appointment
+
+  public Appointment() {
+  }
+
+  //Constructor for appointment class
+  public Appointment(int id, Integer doctorId, Integer patientId, LocalDate appointmentDate,
+                     LocalTime appointmentTime, LocalDateTime createDate) {
+    super(id);
+    this.doctorId = doctorId;
+    this.patientId = patientId;
+    this.appointmentDate = appointmentDate;
+    this.appointmentTime = appointmentTime;
+    this.createDate = createDate;
+  }
+
+  //---------------------------------- Getter to get data-----------------------------------------//
 
 
-	public long getDoctorId() {
-		return doctorId;
-	}
+  public Integer getDoctorId() {
+    return doctorId;
+  }
 
 
-	public long getPatientId() {
-		return patientId;
-	}
+  public Integer getPatientId() {
+    return patientId;
+  }
 
 
-	public LocalDate getAppointmentDate() {
-		return appointmentDate;
-	}
+  public LocalDate getAppointmentDate() {
+    return appointmentDate;
+  }
 
 
-	public LocalTime getAppointmentTime() {
-		return appointmentTime;
-	}
+  public LocalTime getAppointmentTime() {
+    return appointmentTime;
+  }
 
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-	
-	//--------------------------------------------------TO String method to get all data----------------------------------//
-	@Override
-	public String toString() {
-		return "Appointment [appointmentid=" + appointmentid + ", doctorId=" + doctorId + ", patientId=" + patientId
-				+ ", appointmentDate=" + appointmentDate + ", appointmentTime=" + appointmentTime + ", createDate="
-				+ createDate + "]";
-	}
+  public LocalDateTime getCreateDate() {
+    return createDate;
+  }
 
-	
+  //--------------------------- TO String method to get all data----------------------------------//
+
+  @Override
+  public String toString() {
+    return "Appointment [id=" + id + ", doctorId=" + doctorId + ", " + "patientId=" + patientId
+        + ", appointmentDate=" + appointmentDate + ", appointmentTime=" + appointmentTime + ", "
+        + "createDate=" + createDate + "]";
+  }
 }

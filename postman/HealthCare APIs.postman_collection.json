@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "3d674264-6289-477b-9856-158acca7fd5b",
+    "_postman_id": "5d604ca9-8f61-4e6f-ac5c-74c085f21d03",
     "name": "HealthCare APIs",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -9,7 +9,7 @@
       "name": "Authentication",
       "item": [
         {
-          "name": "Get Token",
+          "name": "Get Auth Token",
           "event": [
             {
               "listen": "test",
@@ -45,8 +45,8 @@
               {
                 "key": "Content-Type",
                 "name": "Content-Type",
-                "value": "application/x-www-form-urlencoded",
-                "type": "text"
+                "type": "text",
+                "value": "application/x-www-form-urlencoded"
               }
             ],
             "body": {
@@ -59,20 +59,20 @@
                 },
                 {
                   "key": "username",
-                  "value": "{{pay_api_un}}",
+                  "value": "{{api_un}}",
                   "type": "text"
                 },
                 {
                   "key": "password",
-                  "value": "{{pay_api_pass}}",
+                  "value": "{{api_pass}}",
                   "type": "text"
                 }
               ]
             },
             "url": {
-              "raw": "{{auth_api_base_url}}/oauth/token",
+              "raw": "{{client_base_url}}/oauth/token",
               "host": [
-                "{{auth_api_base_url}}"
+                "{{client_base_url}}"
               ],
               "path": [
                 "oauth",
@@ -80,7 +80,103 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Get Auth Token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "type": "text",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{api_un}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "{{api_pass}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{client_base_url}}/oauth/token",
+                  "host": [
+                    "{{client_base_url}}"
+                  ],
+                  "path": [
+                    "oauth",
+                    "token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 21 Mar 2020 19:58:12 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODQ4MjA5OTIsInVzZXJfbmFtZSI6ImFwaSIsImF1dGhvcml0aWVzIjpbIlJPTEVfSE9TUCIsIlJPTEVfUFQiLCJST0xFX0RPQyIsIlJPTEVfUEFZIiwiUk9MRV9BUFBUIl0sImp0aSI6IjQ5NTgwNTFlLTI2ZTctNDUwNy04ZjQxLWVjNjZiZDAyMmRiOCIsImNsaWVudF9pZCI6ImNsaWVudCIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.d2T712--v1T70DaJgP_tSBGDEMbg0Pc1Ez3oAy9_lFFpREqKh-Qn2pTm812iBwKFUDTYQLTf75J9SNN7gr4XxriNxuW8RefD_mKPjOpvQPwppm3WtHlVImrMLJ4TKTMWavtOInMHC-iUwRWtH-XjXZQuziPjPJb56Pc3dpMpeFuX6YBMAkOwqYAlt0pSjp2BjXj3u8EzPcnp4dMhB00sD_mgFIMw2GaUnH5JWeeiQjciwNnCI70tgqOWSwKsxYWMEykA8REZy0wXPN1Nt1COB11kE8ESF73TBBt_36ZQ9il-cybnJkp2yuO4tFCu0Ou0ADJ3gcCfIOsm0CTYfq1BTQ\",\n    \"token_type\": \"bearer\",\n    \"refresh_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhcGkiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiYXRpIjoiNDk1ODA1MWUtMjZlNy00NTA3LThmNDEtZWM2NmJkMDIyZGI4IiwiZXhwIjoxNTg3NDEyNjkyLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1AiLCJST0xFX1BUIiwiUk9MRV9ET0MiLCJST0xFX1BBWSIsIlJPTEVfQVBQVCJdLCJqdGkiOiJmMWUyNzJkMS0yNzRlLTRmMjYtODlmMS05YzMxNWM5ZjRmNjkiLCJjbGllbnRfaWQiOiJjbGllbnQifQ.GJraVIOwIL2Kts6QPICJmCb1UTGGsJZ8dtuVwHQHfa7DKT-HDQzkTpyxWluyLwqrMj1Z59QyKziik7BHr5mqcJEXbnF_0Wms5m2RMjZmzUllUuNXlrxXE9ZJXPsUsip9YF-vOmjKxqKpX72mjLhj510B_MyIje8G-4aS-hhpMLDaT5FlwJFxSucXBOJwQh6ApjXRF8CJaZWsmTnES23hCIQO4S6CmnOtC1z4xLj0uNfhaOQX6-Enpb00YMBvqvcLsgfAPcMggYuxXDXHAZ4KB60XEJhOkwbT1onLoVvD5Ox1TmqZ6wNLgWjAOcqZauTdjmL3oJ5OPK-_2qekbJeFdA\",\n    \"expires_in\": 299,\n    \"scope\": \"read write\",\n    \"jti\": \"4958051e-26e7-4507-8f41-ec66bd022db8\"\n}"
+            }
+          ]
         },
         {
           "name": "Refresh Token",
@@ -132,9 +228,9 @@
               ]
             },
             "url": {
-              "raw": "{{auth_api_base_url}}/oauth/token",
+              "raw": "{{client_base_url}}/oauth/token",
               "host": [
-                "{{auth_api_base_url}}"
+                "{{client_base_url}}"
               ],
               "path": [
                 "oauth",
@@ -142,7 +238,91 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Refresh Token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "grant_type",
+                      "value": "refresh_token",
+                      "type": "text"
+                    },
+                    {
+                      "key": "refresh_token",
+                      "value": "{{refresh_token}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{client_base_url}}/oauth/token",
+                  "host": [
+                    "{{client_base_url}}"
+                  ],
+                  "path": [
+                    "oauth",
+                    "token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 21 Mar 2020 19:59:14 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json;charset=UTF-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODQ4MjEwNTQsInVzZXJfbmFtZSI6ImFwaSIsImF1dGhvcml0aWVzIjpbIlJPTEVfSE9TUCIsIlJPTEVfUFQiLCJST0xFX0RPQyIsIlJPTEVfUEFZIiwiUk9MRV9BUFBUIl0sImp0aSI6IjYxZmNlYzZjLWQ1MjgtNDY3ZS1hNDVkLWY0NGVjZjc4MzZmYiIsImNsaWVudF9pZCI6ImNsaWVudCIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.Lx33It52ohsS9pJV21sI61FYSnSlLuwc9r3_mMaWW1egdWSc40vbwb-lqbmcwnr5h3NdSiD5jZVBAAsNjbUZvCbqOwsSE6T3SFhyFGOq3SzSjZvp2zAzw6t23Q_IkLA560P-7m4jinMoAIRnX0_DUBgGD0wOGU2Uh6J2gUOFWBev0uyhfPT5qXmtYxsYJeO9RC2tsYO7tSXrcSoxW2jKf9xSg_dqyKR2DGZThbf3VC99jCYhlDI3XMmrCDDRxtINxNxUej_8vqqQ9wghuVbgY0-raOqQwdsx7v4kBtXAWPD8IvDzHaghAeHzVxLSqDScuPvEukjOBLVxhYFhGSO4jA\",\n    \"token_type\": \"bearer\",\n    \"refresh_token\": \"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhcGkiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiYXRpIjoiNjFmY2VjNmMtZDUyOC00NjdlLWE0NWQtZjQ0ZWNmNzgzNmZiIiwiZXhwIjoxNTg3NDEyNjkyLCJhdXRob3JpdGllcyI6WyJST0xFX0hPU1AiLCJST0xFX1BUIiwiUk9MRV9ET0MiLCJST0xFX1BBWSIsIlJPTEVfQVBQVCJdLCJqdGkiOiJmMWUyNzJkMS0yNzRlLTRmMjYtODlmMS05YzMxNWM5ZjRmNjkiLCJjbGllbnRfaWQiOiJjbGllbnQifQ.OvYrBviZfGkHe0VxliuDwfdLg5S6iTR4nxQMk3DftUbJNVdzu3LXvn_iv6Q1Ez5Zv45Pk4WcB_1gRo8c8DzwKkuJHOEcs7gTUD3lCyCn1LuNbE_j_giLP-FRqejUAweom0Qaf6UZvHhJgoeNQSAhANdd1NEVphG-L_xHhFYUtQlVfm0t5GijsUQxpFDjpnG4tsvCs8AQ27GoiPz7gsUh8Mvex2Z6t7I9itoIDtJjIP1eMM6A79IOAfHuJD2_0Oqb8_IVZJ6SNsdjvVHmE2rHWEYEYsB-ERTuT6NJHjtQ3404eKFvJZUgYJ5jKeMd3k1OB1UyXaOyMQz5wsWTVl8p0A\",\n    \"expires_in\": 299,\n    \"scope\": \"read write\",\n    \"jti\": \"61fcec6c-d528-467e-a45d-f44ecf7836fb\"\n}"
+            }
+          ]
         },
         {
           "name": "Check Token",
@@ -174,12 +354,12 @@
                 }
               ]
             },
-            "method": "GET",
+            "method": "POST",
             "header": [],
             "url": {
-              "raw": "{{auth_api_base_url}}/oauth/check_token?token={{access_token}}",
+              "raw": "{{client_base_url}}/oauth/check_token?token={{access_token}}",
               "host": [
-                "{{auth_api_base_url}}"
+                "{{client_base_url}}"
               ],
               "path": [
                 "oauth",
@@ -193,16 +373,91 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Check Token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{client_base_url}}/oauth/check_token?token={{access_token}}",
+                  "host": [
+                    "{{client_base_url}}"
+                  ],
+                  "path": [
+                    "oauth",
+                    "check_token"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "{{access_token}}"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 21 Mar 2020 19:59:22 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"user_name\": \"api\",\n    \"scope\": [\n        \"read\",\n        \"write\"\n    ],\n    \"active\": true,\n    \"exp\": 1584821054,\n    \"authorities\": [\n        \"ROLE_HOSP\",\n        \"ROLE_PT\",\n        \"ROLE_DOC\",\n        \"ROLE_PAY\",\n        \"ROLE_APPT\"\n    ],\n    \"jti\": \"61fcec6c-d528-467e-a45d-f44ecf7836fb\",\n    \"client_id\": \"client\"\n}"
+            }
+          ]
         }
       ],
       "protocolProfileBehavior": {}
     },
     {
-      "name": "Hospitals",
+      "name": "Hospital",
       "item": [
         {
-          "name": "Test",
+          "name": "Check Heartbeat",
           "request": {
             "auth": {
               "type": "bearer",
@@ -217,22 +472,95 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{hosp_api_base_url}}",
+              "raw": "{{client_base_url}}/hospitals/heartbeat",
               "host": [
-                "{{hosp_api_base_url}}"
+                "{{client_base_url}}"
+              ],
+              "path": [
+                "hospitals",
+                "heartbeat"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Check Heartbeat",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{client_base_url}}/hospitals/heartbeat",
+                  "host": [
+                    "{{client_base_url}}"
+                  ],
+                  "path": [
+                    "hospitals",
+                    "heartbeat"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "plain",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 21 Mar 2020 19:58:28 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "Hospital API is online\nIntegration with Doctor API : Success\nIntegration with Appointment API : Success"
+            }
+          ]
         }
       ],
       "protocolProfileBehavior": {}
     },
     {
-      "name": "Doctors",
+      "name": "Doctor",
       "item": [
         {
-          "name": "Test",
+          "name": "Check Heartbeat",
           "request": {
             "auth": {
               "type": "bearer",
@@ -247,22 +575,95 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{doc_api_base_url}}",
+              "raw": "{{client_base_url}}/doctors/heartbeat",
               "host": [
-                "{{doc_api_base_url}}"
+                "{{client_base_url}}"
+              ],
+              "path": [
+                "doctors",
+                "heartbeat"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Check Heartbeat",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{client_base_url}}/doctors/heartbeat",
+                  "host": [
+                    "{{client_base_url}}"
+                  ],
+                  "path": [
+                    "doctors",
+                    "heartbeat"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "plain",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 21 Mar 2020 19:58:47 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "Doctor API is online\nIntegration with Hospital API : Success\nIntegration with Appointment API : Success"
+            }
+          ]
         }
       ],
       "protocolProfileBehavior": {}
     },
     {
-      "name": "Patients",
+      "name": "Patient",
       "item": [
         {
-          "name": "Test",
+          "name": "Check Heartbeat",
           "request": {
             "auth": {
               "type": "bearer",
@@ -277,22 +678,95 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{pt_api_base_url}}",
+              "raw": "{{client_base_url}}/patients/heartbeat",
               "host": [
-                "{{pt_api_base_url}}"
+                "{{client_base_url}}"
+              ],
+              "path": [
+                "patients",
+                "heartbeat"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Check Heartbeat",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{client_base_url}}/patients/heartbeat",
+                  "host": [
+                    "{{client_base_url}}"
+                  ],
+                  "path": [
+                    "patients",
+                    "heartbeat"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "plain",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 21 Mar 2020 19:59:01 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "Patient API is online\nIntegration with Appointment API : Success"
+            }
+          ]
         }
       ],
       "protocolProfileBehavior": {}
     },
     {
-      "name": "Appointments",
+      "name": "Appointment",
       "item": [
         {
-          "name": "Test",
+          "name": "Check Heartbeat",
           "request": {
             "auth": {
               "type": "bearer",
@@ -307,22 +781,95 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{appt_api_base_url}}",
+              "raw": "{{client_base_url}}/appointments/heartbeat",
               "host": [
-                "{{appt_api_base_url}}"
+                "{{client_base_url}}"
+              ],
+              "path": [
+                "appointments",
+                "heartbeat"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Check Heartbeat",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{client_base_url}}/appointments/heartbeat",
+                  "host": [
+                    "{{client_base_url}}"
+                  ],
+                  "path": [
+                    "appointments",
+                    "heartbeat"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "plain",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 21 Mar 2020 19:58:21 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "Appointment API is online\nIntegration with Hospital API : Success\nIntegration with Doctor API : Success\nIntegration with Patient API : Success\nIntegration with Payment API : Success"
+            }
+          ]
         }
       ],
       "protocolProfileBehavior": {}
     },
     {
-      "name": "Payments",
+      "name": "Payment",
       "item": [
         {
-          "name": "Test",
+          "name": "Check Heartbeat",
           "request": {
             "auth": {
               "type": "bearer",
@@ -337,9 +884,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{pay_api_base_url}}",
+              "raw": "{{client_base_url}}/payments/heartbeat",
               "host": [
-                "{{pay_api_base_url}}"
+                "{{client_base_url}}"
+              ],
+              "path": [
+                "payments",
+                "heartbeat"
               ]
             }
           },

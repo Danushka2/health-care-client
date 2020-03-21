@@ -3,7 +3,7 @@ package lk.elevenzcode.healthcare.hospitalapi.config.security;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import lk.elevenzcode.healthcare.hospitalapi.config.property.SecurityProperties;
-import lk.elevenzcode.healthcare.hospitalapi.web.service.Constant;
+import lk.elevenzcode.healthcare.hospitalapi.web.util.Constant;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -51,10 +51,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.requestMatchers()
-        .and()
+    http.anonymous().disable()
         .authorizeRequests()
-        .antMatchers(API_PATTERN).hasRole(ROLE_HOSP);
+        .antMatchers(API_PATTERN).hasAnyRole(ROLE_HOSP, lk.elevenzcode.healthcare.commons.web
+        .util.Constant.ROLE_CLIENT)
+        .anyRequest()
+        .authenticated();
   }
 
   @Bean

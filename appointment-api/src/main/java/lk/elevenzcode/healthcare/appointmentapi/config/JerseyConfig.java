@@ -1,6 +1,6 @@
 package lk.elevenzcode.healthcare.appointmentapi.config;
 
-import lk.elevenzcode.healthcare.appointmentapi.web.service.AppointmentService;
+import lk.elevenzcode.healthcare.appointmentapi.web.service.AppointmentRestService;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
-        register(AppointmentService.class);
+        register(AppointmentRestService.class);
     }
 }

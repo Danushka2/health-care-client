@@ -1,6 +1,6 @@
 package lk.elevenzcode.healthcare.paymentapi.config;
 
-import lk.elevenzcode.healthcare.paymentapi.web.service.PaymentService;
+import lk.elevenzcode.healthcare.paymentapi.web.service.PaymentRestService;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class JerseyConfig extends ResourceConfig {
-    public JerseyConfig() {
-        register(PaymentService.class);
-    }
+  public JerseyConfig() {
+    register(PaymentRestService.class);
+  }
 }
