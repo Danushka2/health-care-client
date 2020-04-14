@@ -3,7 +3,9 @@ package lk.elevenzcode.healthcare.hospitalapi.web.service;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
+import lk.elevenzcode.healthcare.hospitalapi.domain.Hospital;
 import lk.elevenzcode.healthcare.hospitalapi.service.HospitalService;
+import lk.elevenzcode.healthcare.hospitalapi.service.impl.HospitalServiceImpl;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.AppointmentIntegrationService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.DoctorIntegrationService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.AppointmentInfo;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -32,6 +35,7 @@ public class HospitalRestService extends BaseRestService {
 
   @Autowired
   private HospitalService hospitalService;
+  private HospitalServiceImpl hospitalServiceImp;
 
   @Autowired
   private DoctorIntegrationService doctorIntegrationService;
@@ -39,6 +43,30 @@ public class HospitalRestService extends BaseRestService {
   @Autowired
   private AppointmentIntegrationService appointmentIntegrationService;
 
+  
+  
+  @POST
+  @Path("/create")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response createHospital() {
+    Response response = null;
+    Hospital hospital = null;
+    hospital.setHospitalName("Asiri Hospital");
+    hospital.setHospitalAddress("colombo 12");
+    hospital.setHospitalContact("+94 772261647");
+    hospital.setHospitalDetails("good");
+    try {
+      System.out.println("inside the create method");
+      hospitalServiceImp.createHospital(hospital);
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+        response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+  
+
+  
   @GET
   @Path("/heartbeat")
   @Produces(value = MediaType.TEXT_PLAIN)
