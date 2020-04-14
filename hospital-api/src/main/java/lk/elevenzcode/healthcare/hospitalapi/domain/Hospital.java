@@ -5,33 +5,50 @@ import lk.elevenzcode.healthcare.hospitalapi.util.Constant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * Created by හShaන් සNදීප on 3/21/2020 9:56 PM
- */
-// TODO: 3/21/2020 update with neccessory attributes & annotations
 @Entity
 @Table(name = Hospital.TABLE_NAME)
 public class Hospital extends BaseDomain {
   public static final String TABLE_NAME = "hospital";
 
-  @Column(name = "name", length = Constant.NAME_LENGTH, nullable = false)
-  private String name;
+  @Id
+  @GeneratedValue(strategy= GenerationType.IDENTITY)
+  @Column(name = "h_id", nullable = false)
+  private Integer hospitalId;
+
+  @Column(name = "h_name", length = 100, nullable = false)
+  private String hospitalName;
+
+  @Column(name = "h_address", length = 255, nullable = false)
+  private String hospitalAddress; 
+
+  @Column(name = "h_email", length = 100, nullable = false)
+  private String hospitalEmail; 
+
+  @Column(name = "h_type", length = 100, nullable = false)
+  private String hospitalType;
+
+  @Column(name = "h_details", length = 255, nullable = false)
+  private String hospitalDetails;
+
+  @Column(name = "h_contact", length = 100, nullable = false)
+  private String hospitalContact;
 
   public Hospital() {
   }
 
-  public Hospital(Integer id, String name) {
-    super(id);
-    this.name = name;
+  public Hospital(Integer id, String name, String address, String email, String type, String details, String contact) {
+    this.hospitalId = id;
+    this.hospitalName = name;
+    this.hospitalAddress = address;
+    this.hospitalEmail = email;
+    this.hospitalType = type;
+    this.hospitalDetails = details;
+    this.hospitalContact = contact;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 }
