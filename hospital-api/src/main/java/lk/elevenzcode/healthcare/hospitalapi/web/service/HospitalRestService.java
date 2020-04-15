@@ -35,7 +35,6 @@ public class HospitalRestService extends BaseRestService {
 
   @Autowired
   private HospitalService hospitalService;
-  private HospitalServiceImpl hospitalServiceImp;
 
   @Autowired
   private DoctorIntegrationService doctorIntegrationService;
@@ -43,29 +42,27 @@ public class HospitalRestService extends BaseRestService {
   @Autowired
   private AppointmentIntegrationService appointmentIntegrationService;
 
-  
-  
   @POST
-  @Path("/create")
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response createHospital() {
     Response response = null;
-    Hospital hospital = null;
+    Hospital hospital = new Hospital();
     hospital.setHospitalName("Asiri Hospital");
     hospital.setHospitalAddress("colombo 12");
     hospital.setHospitalContact("+94 772261647");
     hospital.setHospitalDetails("good");
+    hospital.setHospitalType("Private");
+    hospital.setHospitalEmail("hospital@gmail.com");
     try {
       System.out.println("inside the create method");
-      hospitalServiceImp.createHospital(hospital);
+      hospitalService.insert(hospital);
+      response = RESTfulUtil.getOk(hospital.getId());
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
         response = RESTfulUtil.getInternalServerError();
     }
     return response;
   }
-  
-
   
   @GET
   @Path("/heartbeat")
