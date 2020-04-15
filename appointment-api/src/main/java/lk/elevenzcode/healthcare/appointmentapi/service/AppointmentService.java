@@ -10,15 +10,12 @@ import java.util.List;
  * @author Yasas Alwis
  */
 public interface AppointmentService extends GenericService<Appointment> {
-  void createAppointment(Appointment appointment);
-
-  void updateAppointment(Appointment appointment);
 
   void deleteAppointment(Appointment appointment);
 
   Iterable<Appointment> findAll();
 
-  List<Appointment> findByDoctor(int doctorId) throws ServiceException;
-
   List<Appointment> findByPatient(int patientId) throws ServiceException;
+  
+  List<Appointment> findBySessionId(int sessionId) throws ServiceException;
 }
