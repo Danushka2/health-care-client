@@ -5,6 +5,7 @@ import lk.elevenzcode.healthcare.commons.service.impl.GenericServiceImpl;
 import lk.elevenzcode.healthcare.paymentapi.domain.Payment;
 import lk.elevenzcode.healthcare.paymentapi.repository.PaymentRepository;
 import lk.elevenzcode.healthcare.paymentapi.service.PaymentService;
+import lk.elevenzcode.healthcare.paymentapi.service.integration.AppointmentIntegrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ import javax.annotation.PostConstruct;
 public class PaymentServiceImpl extends GenericServiceImpl<Payment> implements PaymentService {
   @Autowired
   private PaymentRepository paymentRepository;
+
+  @Autowired
+  private AppointmentIntegrationService appointmentIntegrationService;
 
   @PostConstruct
   void init() {
