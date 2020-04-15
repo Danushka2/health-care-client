@@ -14,6 +14,13 @@ public class RESTfulUtil {
   }
 
   /*
+  Construct response with HTTP 200
+   */
+  public static Response getOk() {
+    return Response.status(Response.Status.OK).build();
+  }
+
+  /*
   Construct response with HTTP 201
    */
   public static Response getCreated(Object ob) {
