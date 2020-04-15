@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by හShaන් සNදීප on 3/9/2020 5:20 PM
  */
 public class DefaultPasswordEncoderFactories {
-    static PasswordEncoder createDelegatingPasswordEncoder() {
+    public static PasswordEncoder createDelegatingPasswordEncoder() {
         String encodingId = "bcrypt";
         Map<String, PasswordEncoder> encoders = new HashMap<>();
         encoders.put(encodingId, new BCryptPasswordEncoder());

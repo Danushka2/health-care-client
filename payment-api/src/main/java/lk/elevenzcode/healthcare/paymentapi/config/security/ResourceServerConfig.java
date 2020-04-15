@@ -29,10 +29,11 @@ import javax.annotation.PostConstruct;
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   private static final String ROLE_PAY = "PAY";
+  private static final String ROLE_MAKE_PAY = "MAKE_PAY";
   private final SecurityProperties securityProperties;
   @Value("${spring.jersey.application-path}")
   private String serviceContext;
-  private String API_PATTERN;
+  private String API_BASE_PATTERN;
   private TokenStore tokenStore;
 
   public ResourceServerConfig(final SecurityProperties securityProperties) {
@@ -41,7 +42,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @PostConstruct
   void init() {
-    API_PATTERN = String.format("%s/%s/%s/**", serviceContext, Constant.API_VER,
+    API_BASE_PATTERN = String.format("%s/%s/%s/", serviceContext, Constant.API_VER,
         Constant.API_PATH);
   }
 
@@ -54,8 +55,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http.anonymous().disable()
         .authorizeRequests()
-        .antMatchers(API_PATTERN).hasAnyRole(ROLE_PAY, lk.elevenzcode.healthcare.commons.web
-        .util.Constant.ROLE_CLIENT)
+        .antMatchers("/js/**")
+        .permitAll()
+        .antMatchers(API_BASE_PATTERN + "**").hasAnyRole(ROLE_PAY,
+        lk.elevenzcode.healthcare.commons.web.util.Constant.ROLE_CLIENT)
+        .antMatchers(API_BASE_PATTERN + "init").hasRole(ROLE_MAKE_PAY)
         .anyRequest()
         .authenticated();
   }
