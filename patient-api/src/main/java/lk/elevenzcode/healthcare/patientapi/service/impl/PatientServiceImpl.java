@@ -15,9 +15,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 
-/**
- * Created by හShaන් සNදීප on 3/21/2020 10:25 PM
- */
+
 @Service
 public class PatientServiceImpl extends GenericServiceImpl<Patient> implements PatientService {
   @Autowired

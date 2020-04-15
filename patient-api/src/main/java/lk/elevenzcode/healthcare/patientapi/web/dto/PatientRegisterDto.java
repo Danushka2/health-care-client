@@ -1,8 +1,6 @@
 package lk.elevenzcode.healthcare.patientapi.web.dto;
 
-/**
- * Created by Asus-pc on 4/15/2020 6:16 PM
- */
+
 public class PatientRegisterDto {
   private String name, email, phoneNo,user_name,password;
   private short age;

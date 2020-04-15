@@ -10,9 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
-/**
- * Created by හShaන් සNදීප on 3/21/2020 10:26 PM
- */
+
 @Entity
 @Table(name = Patient.TABLE_NAME)
 public class Patient extends BaseDomain {

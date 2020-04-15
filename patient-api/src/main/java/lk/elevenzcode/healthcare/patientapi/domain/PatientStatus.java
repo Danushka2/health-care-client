@@ -6,9 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * Created by Asus-pc on 4/15/2020 4:07 PM
- */
+
 @Entity
 @Table(name = PatientStatus.TABLE_NAME)
 public class PatientStatus extends BaseDomain {
