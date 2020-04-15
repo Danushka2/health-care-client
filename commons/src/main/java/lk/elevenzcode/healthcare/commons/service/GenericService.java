@@ -8,7 +8,7 @@ import java.util.List;
  * Created by හShaන් සNදීප on 3/21/2020 8:40 PM
  */
 public interface GenericService<T> {
-  void insert(T domain) throws ServiceException;
+  int insert(T domain) throws ServiceException;
 
   void update(T domain) throws ServiceException;
 

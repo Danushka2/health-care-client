@@ -22,56 +22,46 @@ import javax.annotation.PostConstruct;
  */
 @Service
 public class AppointmentServiceImpl extends GenericServiceImpl<Appointment> implements AppointmentService {
-  private static final Logger LOGGER = LoggerFactory.getLogger(AppointmentServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AppointmentServiceImpl.class);
 
-  @Autowired
-  private AppointmentRepository appointmentRepository;
+	@Autowired
+	private AppointmentRepository appointmentRepository;
 
-  @PostConstruct
-  void init() {
-    init(appointmentRepository);
-  }
+	@PostConstruct
+	void init() {
+		init(appointmentRepository);
+	}
 
-  @Override
-  public void createAppointment(Appointment appointment) {
-    appointmentRepository.save(appointment);
-  }
+	@Override
+	public void deleteAppointment(Appointment appointment) {
+		if (appointmentRepository.existsById(appointment.getId())) {
+			appointmentRepository.delete(appointment);
+		}
+	}
 
-  @Override
-  public void updateAppointment(Appointment appointment) {
-    appointmentRepository.save(appointment);
-  }
+	@Override
+	public Iterable<Appointment> findAll() {
+		Iterable<Appointment> appointments = appointmentRepository.findAll();
+		return appointments;
+	}
 
-  @Override
-  public void deleteAppointment(Appointment appointment) {
-    if (appointmentRepository.existsById(appointment.getId())) {
-      appointmentRepository.delete(appointment);
-    }
-  }
+	@Override
+	public List<Appointment> findByPatient(int patientId) throws ServiceException {
+		try {
+			return appointmentRepository.findByPatientId(patientId);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+			throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
+		}
+	}
 
-  @Override
-  public Iterable<Appointment> findAll() {
-    Iterable<Appointment> appointments = appointmentRepository.findAll();
-    return appointments;
-  }
-
-  @Override
-  public List<Appointment> findByPatient(int patientId) throws ServiceException {
-    try {
-      return appointmentRepository.findByPatientId(patientId);
-    } catch (Exception e) {
-      LOGGER.error(e.getMessage(), e);
-      throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
-    }
-  }
-
-  @Override
-  public List<Appointment> findByDoctor(int doctorId) throws ServiceException {
-    try {
-      return appointmentRepository.findByDoctorId(doctorId);
-    } catch (Exception e) {
-      LOGGER.error(e.getMessage(), e);
-      throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
-    }
-  }
+	@Override
+	public List<Appointment> findBySessionId(int sessionId) throws ServiceException {
+		try {
+			return appointmentRepository.findBySessionId(sessionId);
+		}catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+			throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
+		}
+	}
 }

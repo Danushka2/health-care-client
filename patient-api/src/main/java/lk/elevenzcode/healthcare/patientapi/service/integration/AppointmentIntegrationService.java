@@ -4,9 +4,7 @@ import lk.elevenzcode.healthcare.patientapi.service.integration.dto.AppointmentI
 
 import java.util.List;
 
-/**
- * Created by හShaන් සNදීප on 3/22/2020 1:11 AM
- */
+
 public interface AppointmentIntegrationService {
   List<AppointmentInfo> getByPtId(int ptId);
 }

@@ -12,6 +12,5 @@ import java.util.List;
 @Repository
 public interface AppointmentRepository extends GenericRepository<Appointment> {
   List<Appointment> findByPatientId(int patientId);
-
-  List<Appointment> findByDoctorId(int doctorId);
+  List<Appointment> findBySessionId(int sessionId);
 }
