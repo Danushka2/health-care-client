@@ -22,9 +22,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by හShaන් සNදීප on 3/9/2020 8:46 PM
- */
+
 @Component
 @Path(Constant.API_VER + "/" + Constant.API_PATH)
 public class DoctorRestService extends BaseRestService {

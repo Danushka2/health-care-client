@@ -30,6 +30,10 @@ public class HospitalServiceImpl extends GenericServiceImpl<Hospital> implements
     hospitalRepository.save(hospital);
   }
 
+  public void deleteHospital(int id){
+    hospitalRepository.deleteById(id);
+  }
+
   public void updateHospital(Hospital hospital) {
     hospitalRepository.save(hospital);
   }

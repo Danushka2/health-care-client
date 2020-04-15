@@ -5,7 +5,6 @@ import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.hospitalapi.domain.Hospital;
 import lk.elevenzcode.healthcare.hospitalapi.service.HospitalService;
-import lk.elevenzcode.healthcare.hospitalapi.service.impl.HospitalServiceImpl;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.AppointmentIntegrationService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.DoctorIntegrationService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.AppointmentInfo;
@@ -17,17 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by හShaන් සNදීප on 3/9/2020 8:45 PM
- */
+
 @Component
 @Path(Constant.API_VER + "/" + Constant.API_PATH)
 public class HospitalRestService extends BaseRestService {
@@ -42,28 +41,6 @@ public class HospitalRestService extends BaseRestService {
   @Autowired
   private AppointmentIntegrationService appointmentIntegrationService;
 
-  @POST
-  @Produces(value = MediaType.APPLICATION_JSON)
-  public Response createHospital() {
-    Response response = null;
-    Hospital hospital = new Hospital();
-    hospital.setHospitalName("Asiri Hospital");
-    hospital.setHospitalAddress("colombo 12");
-    hospital.setHospitalContact("+94 772261647");
-    hospital.setHospitalDetails("good");
-    hospital.setHospitalType("Private");
-    hospital.setHospitalEmail("hospital@gmail.com");
-    try {
-      System.out.println("inside the create method");
-      hospitalService.insert(hospital);
-      response = RESTfulUtil.getOk(hospital.getId());
-    } catch (Exception e) {
-      LOGGER.error(e.getMessage(), e);
-        response = RESTfulUtil.getInternalServerError();
-    }
-    return response;
-  }
-  
   @GET
   @Path("/heartbeat")
   @Produces(value = MediaType.TEXT_PLAIN)
@@ -92,6 +69,21 @@ public class HospitalRestService extends BaseRestService {
     return heartbeatMsg.toString();
   }
 
+
+  @POST
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response createHospital(Hospital hospital) {
+    Response response = null;
+    try {
+      hospitalService.insert(hospital);
+      response = RESTfulUtil.getOk(hospital.toString());
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
   @GET
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response getAll() {
@@ -104,6 +96,7 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
 
   @GET
   @Path("/{id}")
@@ -122,4 +115,37 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
+  @DELETE
+  @Path("/{id}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response deleteById(@PathParam("id") int id) {
+    Response response;
+    try {
+      hospitalService.deleteHospital(id);
+      response = RESTfulUtil.getOk("deleted");
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+        response = RESTfulUtil.getNotFound();
+
+    }
+    return response;
+  }
+
+  @PUT
+  @Path("/{id}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response updateHospital(@PathParam("id") int id, Hospital hospital) {
+    Response response;
+    try {
+      hospital.setId(id);
+      hospitalService.update(hospital);
+      response = RESTfulUtil.getOk("updated"+ hospital.getId());
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getNotFound();
+    }
+    return response;
+  }
+
 }
