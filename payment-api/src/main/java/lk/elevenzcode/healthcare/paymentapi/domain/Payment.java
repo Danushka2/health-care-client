@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 
@@ -15,6 +19,7 @@ import javax.validation.constraints.Digits;
  */
 @Entity
 @Table(name = Payment.TABLE_NAME)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Payment extends BaseDomain {
   public static final String TABLE_NAME = "payment";
 
@@ -22,16 +27,37 @@ public class Payment extends BaseDomain {
   @Digits(integer = Constant.DEFAULT_MONEY_INT, fraction = Constant.DEFAULT_MONEY_FRAC)
   private BigDecimal amount;
 
+  @Column(name = "stripe_intent_id", nullable = false, length = 30)
+  private String stripeIntentId;
+
+  @Column(name = "reference", nullable = false, length = 15)
+  private String reference;
+
+  @Column(name = "appointment_id", nullable = false)
+  private Integer appointmentId;
+
   @Column(name = "pay_on", nullable = false)
-  private LocalDateTime payOn;
+  private LocalDateTime paidOn = LocalDateTime.now();
+
+  @ManyToOne
+  @JoinColumn(name = "status", nullable = false)
+  private PaymentStatus status;
 
   public Payment() {
   }
 
-  public Payment(Integer id, BigDecimal amount, LocalDateTime payOn) {
-    super(id);
+  public Payment(Integer id, BigDecimal amount, LocalDateTime paidOn) {
+    this.id = id;
     this.amount = amount;
-    this.payOn = payOn;
+    this.paidOn = paidOn;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public BigDecimal getAmount() {
@@ -42,11 +68,43 @@ public class Payment extends BaseDomain {
     this.amount = amount;
   }
 
-  public LocalDateTime getPayOn() {
-    return payOn;
+  public String getStripeIntentId() {
+    return stripeIntentId;
   }
 
-  public void setPayOn(LocalDateTime payOn) {
-    this.payOn = payOn;
+  public void setStripeIntentId(String stripeIntentId) {
+    this.stripeIntentId = stripeIntentId;
+  }
+
+  public String getReference() {
+    return reference;
+  }
+
+  public void setReference(String reference) {
+    this.reference = reference;
+  }
+
+  public Integer getAppointmentId() {
+    return appointmentId;
+  }
+
+  public void setAppointmentId(Integer appointmentId) {
+    this.appointmentId = appointmentId;
+  }
+
+  public LocalDateTime getPaidOn() {
+    return paidOn;
+  }
+
+  public void setPaidOn(LocalDateTime paidOn) {
+    this.paidOn = paidOn;
+  }
+
+  public PaymentStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(PaymentStatus status) {
+    this.status = status;
   }
 }
