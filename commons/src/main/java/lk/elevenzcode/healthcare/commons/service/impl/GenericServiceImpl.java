@@ -33,13 +33,14 @@ public class GenericServiceImpl<T> implements GenericService<T> {
   }
 
   @Override
-  public void insert(T domain) throws ServiceException {
+  public int insert(T domain) throws ServiceException {
     try {
       genericRepository.save(domain);
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
     }
+    return 0;
   }
 
   @Override
