@@ -6,9 +6,6 @@ import lk.elevenzcode.healthcare.hospitalapi.util.Constant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -16,35 +13,44 @@ import javax.persistence.Table;
 public class Hospital extends BaseDomain {
   public static final String TABLE_NAME = "hospital";
 
-  @Column(name = "h_name", length = 100, nullable = false)
+  @Column(name = "h_name", length = Constant.NORMAL_LENGTH, nullable = false)
   private String hospitalName;
 
-  @Column(name = "h_address", length = 255, nullable = false)
+  @Column(name = "h_address", length = Constant.LONG_LENGTH, nullable = false)
   private String hospitalAddress; 
 
-  @Column(name = "h_email", length = 100, nullable = false)
+  @Column(name = "h_email", length = Constant.NORMAL_LENGTH, nullable = false)
   private String hospitalEmail; 
 
-  @Column(name = "h_type", length = 100, nullable = false)
+  @Column(name = "h_type", length = Constant.NORMAL_LENGTH, nullable = false)
   private String hospitalType;
 
-  @Column(name = "h_details", length = 255, nullable = false)
-  private String hospitalDetails;
+  @Column(name = "h_status", length = Constant.NORMAL_LENGTH, nullable = false)
+  private String hospitalStatus;
 
-  @Column(name = "h_contact", length = 100, nullable = false)
-  private String hospitalContact;
+  @Column(name = "h_fax", length = Constant.NORMAL_LENGTH)
+  private String hospitalFax;
+
+  @Column(name = "h_tell", length = Constant.NORMAL_LENGTH, nullable = false)
+  private String hospitalTell;
+
+  @Column(name = "user_id", length = Constant.NORMAL_LENGTH, nullable = false)
+  private Integer userId;
 
   public Hospital() {
   }
 
-  public Hospital(Integer id, String name, String address, String email, String type, String details, String contact) {
+  public Hospital(Integer id, String name, String address, String email, String type, String fax,
+                  String tell, String status, Integer userId) {
     super(id);
     this.hospitalName = name;
     this.hospitalAddress = address;
     this.hospitalEmail = email;
     this.hospitalType = type;
-    this.hospitalDetails = details;
-    this.hospitalContact = contact;
+    this.hospitalFax = fax;
+    this.hospitalTell = tell;
+    this.hospitalStatus = status;
+    this.userId = userId;
   }
 
   public String getHospitalName() {
@@ -79,31 +85,49 @@ public class Hospital extends BaseDomain {
     this.hospitalType = hospitalType;
   }
 
-  public String getHospitalDetails() {
-    return hospitalDetails;
+  public String getHospitalStatus() {
+    return hospitalStatus;
   }
 
-  public void setHospitalDetails(String hospitalDetails) {
-    this.hospitalDetails = hospitalDetails;
+  public void setHospitalStatus(String hospitalStatus) {
+    this.hospitalStatus = hospitalStatus;
   }
 
-  public String getHospitalContact() {
-    return hospitalContact;
+  public String getHospitalFax() {
+    return hospitalFax;
   }
 
-  public void setHospitalContact(String hospitalContact) {
-    this.hospitalContact = hospitalContact;
+  public void setHospitalFax(String hospitalFax) {
+    this.hospitalFax = hospitalFax;
+  }
+
+  public String getHospitalTell() {
+    return hospitalTell;
+  }
+
+  public void setHospitalTell(String hospitalTell) {
+    this.hospitalTell = hospitalTell;
+  }
+
+  public Integer getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Integer userId) {
+    this.userId = userId;
   }
 
   @Override
   public String toString() {
     return "Hospital{" +
-        ", hospitalName='" + hospitalName + '\'' +
+        "hospitalName='" + hospitalName + '\'' +
         ", hospitalAddress='" + hospitalAddress + '\'' +
         ", hospitalEmail='" + hospitalEmail + '\'' +
         ", hospitalType='" + hospitalType + '\'' +
-        ", hospitalDetails='" + hospitalDetails + '\'' +
-        ", hospitalContact='" + hospitalContact + '\'' +
+        ", hospitalStatus='" + hospitalStatus + '\'' +
+        ", hospitalFax='" + hospitalFax + '\'' +
+        ", hospitalTell='" + hospitalTell + '\'' +
+        ", userId='" + userId + '\'' +
         '}';
   }
 }
