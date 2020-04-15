@@ -185,12 +185,8 @@ public class AppointmentRestService extends BaseRestService {
 		Response response = null;
 		try {
 				if(appointment.getSessionId() != null) {
-					if(patientIntegrationService.getById(appointment.getPatientId()) != null) {
-						
-							appointmentService.insert(appointment);
-							response = RESTfulUtil.getCreated(appointment);
-						
-					}
+					appointmentService.insert(appointment);
+					response = RESTfulUtil.getCreated(appointment);
 				}
 			}catch (ServiceException e) {
 				response = RESTfulUtil.getBadRequest();
@@ -205,10 +201,8 @@ public class AppointmentRestService extends BaseRestService {
 	public Response putAppointment(@RequestBody Appointment appointment) {
 		Response response = null;
 		try {
-			if(patientIntegrationService.getById(appointment.getPatientId()) != null) {
-				appointmentService.update(appointment);
-				response = RESTfulUtil.getOk(appointment);
-			}
+			appointmentService.update(appointment);
+			response = RESTfulUtil.getOk(appointment);
 		} catch (Exception e) {
 			response = RESTfulUtil.getBadRequest();
 		}

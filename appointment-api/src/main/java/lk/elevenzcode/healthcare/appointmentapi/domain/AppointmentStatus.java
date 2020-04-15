@@ -28,10 +28,8 @@ public class AppointmentStatus extends BaseDomain {
 	public AppointmentStatus(Integer id) {
 		super(id);
 	}
-
+	
 	public AppointmentStatus() {
 		super();
 	}
-	
-	
 }

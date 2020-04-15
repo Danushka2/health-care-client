@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -42,7 +43,7 @@ public class Appointment extends BaseDomain {
 	private LocalDateTime createDate; // Created time and date of appointment
 	
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	private AppointmentStatus status;
 	
 	public Appointment() {
