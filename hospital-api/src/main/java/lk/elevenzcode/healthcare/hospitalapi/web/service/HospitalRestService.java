@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -46,7 +47,7 @@ public class HospitalRestService extends BaseRestService {
   @Produces(value = MediaType.TEXT_PLAIN)
   public String heartbeat() {
     final StringBuffer heartbeatMsg = new StringBuffer("Hospital API is online");
-    final List<DoctorInfo> doctors = doctorIntegrationService.getByHospId(1);
+    final List<DoctorInfo> doctors = new ArrayList<>()/*doctorIntegrationService.getByHospId(1)*/;
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("doctors : {}", doctors);
     }
@@ -56,7 +57,7 @@ public class HospitalRestService extends BaseRestService {
     } else {
       heartbeatMsg.append("Fail");
     }
-    final List<AppointmentInfo> appointments = appointmentIntegrationService.getByHospId(1);
+    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService.getByHospId(1)*/;
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("appointments : {}", appointments);
     }

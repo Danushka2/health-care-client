@@ -24,3 +24,12 @@ INSERT INTO user_type_authority(type, authority) VALUES(3,'ROLE_REG_DOC'),(3,'RO
 
 -- Authorities for Patient
 INSERT INTO user_type_authority(type, authority) VALUES(4, 'ROLE_GET_ALL_HOSP'),(4, 'ROLE_GET_HOSP'),(4, 'ROLE_GET_ROOM'),(4, 'ROLE_GET_ALL_DOC'),(4, 'ROLE_GET_DOC'),(4, 'ROLE_REG_PT'),(4, 'ROLE_GET_PT'),(4, 'ROLE_MAKE_APPT'),(4, 'ROLE_GET_PT_APPT'),(4, 'ROLE_MAKE_PAY'),(4, 'ROLE_GET_APPT_PAY');
+
+-- DELETE FROM `authorities` WHERE username IN ('api', 'appointment-api', 'doctor-api', 'hospital-api', 'patient-api', 'payment-api');
+
+INSERT INTO `authorities` SELECT DISTINCT 'api', authority FROM user_type_authority;
+INSERT INTO `authorities` SELECT DISTINCT 'appointment-api', authority FROM user_type_authority;
+INSERT INTO `authorities` SELECT DISTINCT 'doctor-api', authority FROM user_type_authority;
+INSERT INTO `authorities` SELECT DISTINCT 'hospital-api', authority FROM user_type_authority;
+INSERT INTO `authorities` SELECT DISTINCT 'patient-api', authority FROM user_type_authority;
+INSERT INTO `authorities` SELECT DISTINCT 'payment-api', authority FROM user_type_authority;

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -47,7 +48,7 @@ public class PatientRestService extends BaseRestService {
   @Produces(value = MediaType.TEXT_PLAIN)
   public String heartbeat() {
     final StringBuffer heartbeatMsg = new StringBuffer("Patient API is online");
-    final List<AppointmentInfo> appointments = appointmentIntegrationService.getByPtId(1);
+    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService.getByPtId(1)*/;
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("appointments : {}", appointments);
     }

@@ -106,7 +106,7 @@ public class AppointmentRestService extends BaseRestService {
 		} else {
 			heartbeatMsg.append("Fail");
 		}
-		final PaymentInfo payment = paymentIntegrationService.getByAppointmentId(1);
+		final PaymentInfo payment = new PaymentInfo()/*paymentIntegrationService.getByAppointmentId(1)*/;
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("payment:1 : {}", payment);
 		}
