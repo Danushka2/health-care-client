@@ -7,7 +7,6 @@ import lk.elevenzcode.healthcare.authapi.web.dto.UserInfoDto;
 import lk.elevenzcode.healthcare.authapi.web.util.Constant;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
-import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,18 +60,15 @@ public class AuthRestService extends BaseRestService {
   @Path("/users")
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response createUser(UserCreationDto dto) {
-    final ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
     Response response;
     try {
-      serviceResponse.setBody(userService.createUser(dto));
-      response = RESTfulUtil.getOk(serviceResponse);
+      response = RESTfulUtil.getOk(userService.createUser(dto));
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
-        serviceResponse.setError(getMessage(e.getMessage()));
-        response = RESTfulUtil.getOk(serviceResponse);
-      } else {
+      if (e.getCode() == ServiceException.PROCESSING_FAILURE) {
         response = RESTfulUtil.getInternalServerError();
+      } else {
+        response = RESTfulUtil.getBadRequest();
       }
     }
     return response;

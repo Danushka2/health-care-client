@@ -9,5 +9,5 @@ import java.util.List;
 public interface PatientRepository extends GenericRepository<Patient> {
   List<Patient> findAllByStatusIsNot(int status);
 
-  public Patient findAllById(Integer id);
+  Patient findByIdAndStatusIsNot(Integer id, int status);
 }

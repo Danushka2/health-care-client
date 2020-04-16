@@ -2,6 +2,7 @@ package lk.elevenzcode.healthcare.patientapi.web.service;
 
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
+import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.patientapi.domain.Patient;
 import lk.elevenzcode.healthcare.patientapi.domain.PatientStatus;
@@ -65,14 +66,9 @@ public class PatientRestService extends BaseRestService {
   public Response registerPatient(PatientRegisterDto registerDto) {
     Response response;
     try {
-      final Patient patient = new Patient();
-      patient.setName(registerDto.getName());
-      patient.setEmail(registerDto.getEmail());
-      patient.setPhoneNumber(registerDto.getPhoneNo());
-      patient.setAge(registerDto.getAge());
-      patient.setAge(registerDto.getAge());
-      patient.setStatus(new PatientStatus(PatientStatus.STATUS_ACTIVE));
-      response = RESTfulUtil.getCreated(patientService.insert(patient));
+      final ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
+      serviceResponse.setBody(patientService.register(registerDto));
+      response = RESTfulUtil.getCreated(serviceResponse);
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getInternalServerError();

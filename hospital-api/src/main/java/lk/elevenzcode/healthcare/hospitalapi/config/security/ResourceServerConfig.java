@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -29,10 +30,18 @@ import javax.annotation.PostConstruct;
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   private static final String ROLE_HOSP = "HOSP";
+  private static final String ROLE_ADD_HOSP = "ADD_HOSP";
+  private static final String ROLE_GET_ALL_HOSP = "GET_ALL_HOSP";
+  private static final String ROLE_GET_HOSP = "GET_HOSP";
+  private static final String ROLE_UPDATE_HOSP = "UPDATE_HOSP";
+  private static final String ROLE_ADD_ROOM = "ADD_ROOM";
+  private static final String ROLE_GET_ROOM = "GET_ROOM";
+  private static final String ROLE_UPDATE_ROOM = "UPDATE_ROOM";
+  private static final String ROLE_DELETE_ROOM = "DELETE_ROOM";
   private final SecurityProperties securityProperties;
   @Value("${spring.jersey.application-path}")
   private String serviceContext;
-  private String API_PATTERN;
+  private String API_BASE_PATTERN;
   private TokenStore tokenStore;
 
   public ResourceServerConfig(final SecurityProperties securityProperties) {
@@ -41,7 +50,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @PostConstruct
   void init() {
-    API_PATTERN = String.format("%s/%s/%s/**", serviceContext, Constant.API_VER, Constant.API_PATH);
+    API_BASE_PATTERN = String.format("%s/%s/%s", serviceContext, Constant.API_VER,
+        Constant.API_PATH);
   }
 
   @Override
@@ -53,8 +63,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http.anonymous().disable()
         .authorizeRequests()
-        .antMatchers(API_PATTERN).hasAnyRole(ROLE_HOSP, lk.elevenzcode.healthcare.commons.web
-        .util.Constant.ROLE_CLIENT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/heartbeat").hasRole(ROLE_HOSP)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasRole(ROLE_ADD_HOSP)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasRole(ROLE_GET_ALL_HOSP)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}").hasRole(ROLE_GET_HOSP)
+        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/{id}").hasRole(ROLE_UPDATE_HOSP)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN + "/{id}/rooms").hasRole(ROLE_ADD_ROOM)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}/rooms", API_BASE_PATTERN
+            + "/rooms/{roomId}").hasRole(ROLE_GET_ROOM)
+        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/rooms/{roomId}").hasRole(ROLE_UPDATE_ROOM)
+        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/rooms/{roomId}").hasRole(ROLE_DELETE_ROOM)
         .anyRequest()
         .authenticated();
   }

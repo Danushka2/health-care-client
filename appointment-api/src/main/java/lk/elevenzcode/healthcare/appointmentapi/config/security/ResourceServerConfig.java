@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -29,10 +30,15 @@ import javax.annotation.PostConstruct;
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   private static final String ROLE_APPT = "APPT";
+  private static final String ROLE_GET_APPT = "GET_APPT";
+  private static final String ROLE_GET_PT_APPT = "GET_PT_APPT";
+  private static final String ROLE_MAKE_APPT = "MAKE_APPT";
+  private static final String ROLE_UPDATE_APPT = "UPDATE_APPT";
+  private static final String ROLE_CANCEL_APPT = "CANCEL_APPT";
   private final SecurityProperties securityProperties;
   @Value("${spring.jersey.application-path}")
   private String serviceContext;
-  private String API_PATTERN;
+  private String API_BASE_PATTERN;
   private TokenStore tokenStore;
 
   public ResourceServerConfig(final SecurityProperties securityProperties) {
@@ -41,7 +47,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @PostConstruct
   void init() {
-    API_PATTERN = String.format("%s/%s/%s/**", serviceContext, Constant.API_VER, Constant.API_PATH);
+    API_BASE_PATTERN = String.format("%s/%s/%s", serviceContext, Constant.API_VER,
+        Constant.API_PATH);
   }
 
   @Override
@@ -53,8 +60,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
     http.anonymous().disable()
         .authorizeRequests()
-        .antMatchers(API_PATTERN).hasAnyRole(ROLE_APPT, lk.elevenzcode.healthcare.commons.web
-        .util.Constant.ROLE_CLIENT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/heartbeat").hasRole(ROLE_APPT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/sessions/{id}").hasRole(ROLE_GET_APPT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/patients/{id}").hasRole(ROLE_GET_PT_APPT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN, API_BASE_PATTERN + "/{id}").hasRole(ROLE_GET_APPT)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasRole(ROLE_MAKE_APPT)
+        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN).hasRole(ROLE_UPDATE_APPT)
+        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN).hasRole(ROLE_CANCEL_APPT)
         .anyRequest()
         .authenticated();
   }
