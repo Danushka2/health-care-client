@@ -34,7 +34,7 @@ public class Hospital extends BaseDomain {
   @Column(name = "h_tell", length = Constant.NORMAL_LENGTH, nullable = false)
   private String hospitalTell;
 
-  @Column(name = "user_id", length = Constant.NORMAL_LENGTH, nullable = false)
+  @Column(name = "user_id", length = Constant.NORMAL_LENGTH)
   private Integer userId;
 
   public Hospital() {

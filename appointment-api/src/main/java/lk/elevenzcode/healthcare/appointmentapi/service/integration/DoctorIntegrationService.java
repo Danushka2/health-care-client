@@ -1,6 +1,7 @@
 package lk.elevenzcode.healthcare.appointmentapi.service.integration;
 
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.dto.DoctorInfo;
+import lk.elevenzcode.healthcare.appointmentapi.service.integration.dto.DoctorSessionInfo;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ public interface DoctorIntegrationService {
   DoctorInfo getById(int id);
 
   List<DoctorInfo> getAll();
+
+  DoctorSessionInfo getSessionInfo(int sessionId);
 }

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class User extends BaseDomain {
   public static final String TABLE_NAME = "users";
 
-  @Column(name = "username", nullable = false)
+  @Column(name = "username", nullable = false, length = 50)
   private String username;
 
   @Column(name = "password", nullable = false)
@@ -29,7 +29,7 @@ public class User extends BaseDomain {
   private boolean isEnabled;
 
   @ManyToOne
-  @JoinColumn(name = "type", nullable = false)
+  @JoinColumn(name = "type", nullable = false, columnDefinition = "int(11) default 1")
   private UserType type;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)

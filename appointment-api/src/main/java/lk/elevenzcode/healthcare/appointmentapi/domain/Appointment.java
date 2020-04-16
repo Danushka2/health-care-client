@@ -11,15 +11,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.hibernate.annotations.Type;
 
 //Appointment class that store appointment details
 @Entity // Javax persistence entity annotation
@@ -36,11 +30,8 @@ public class Appointment extends BaseDomain {
 	@Column(name = "appointment_date", nullable = false)
 	private LocalDate appointmentDate; // Appointment date
 
-	@Column(name = "appointment_time", nullable = false)
-	private LocalTime appointmentTime; // Appointment Time
-
 	@Column(name = "create_datetime", nullable = false)
-	private LocalDateTime createDate; // Created time and date of appointment
+	private LocalDateTime createDate = LocalDateTime.now(); // Created time and date of appointment
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -56,7 +47,6 @@ public class Appointment extends BaseDomain {
 		this.sessionId = sessionId;
 		this.patientId = patientId;
 		this.appointmentDate = appointmentDate;
-		this.appointmentTime = appointmentTime;
 		this.createDate = createDate;
 	}
 
@@ -68,10 +58,6 @@ public class Appointment extends BaseDomain {
 
 	public LocalDate getAppointmentDate() {
 		return appointmentDate;
-	}
-
-	public LocalTime getAppointmentTime() {
-		return appointmentTime;
 	}
 
 	public LocalDateTime getCreateDate() {
@@ -94,8 +80,8 @@ public class Appointment extends BaseDomain {
 
 	@Override
 	public String toString() {
-		return "Appointment [sessionId=" + sessionId + ", patientId=" + patientId + ", appointmentDate="
-				+ appointmentDate + ", appointmentTime=" + appointmentTime + ", createDate=" + createDate + ", status="
-				+ status + "]";
+		return "Appointment [sessionId=" + sessionId + ", patientId=" + patientId + ", " +
+				"appointmentDate="
+				+ appointmentDate + ", createDate=" + createDate + ", status=" + status + "]";
 	}
 }

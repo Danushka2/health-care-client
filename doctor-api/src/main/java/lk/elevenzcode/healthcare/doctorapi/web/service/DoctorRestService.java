@@ -5,14 +5,18 @@ import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.doctorapi.domain.Doctor;
 import lk.elevenzcode.healthcare.doctorapi.domain.DoctorHospital;
+import lk.elevenzcode.healthcare.doctorapi.domain.DoctorSession;
 import lk.elevenzcode.healthcare.doctorapi.repository.DoctorRepository;
+import lk.elevenzcode.healthcare.doctorapi.service.DoctorHospitalService;
 import lk.elevenzcode.healthcare.doctorapi.service.DoctorService;
-import lk.elevenzcode.healthcare.doctorapi.service.impl.DoctorHospitalServiceImpl;
+import lk.elevenzcode.healthcare.doctorapi.service.DoctorSessionService;
 import lk.elevenzcode.healthcare.doctorapi.service.impl.DoctorServiceImpl;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.AppointmentIntegrationService;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.HospitalIntegrationService;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.AppointmentInfo;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.HospitalInfo;
+import lk.elevenzcode.healthcare.doctorapi.web.dto.AssignHospitalReq;
+import lk.elevenzcode.healthcare.doctorapi.web.dto.DoctorSessionResp;
 import lk.elevenzcode.healthcare.doctorapi.web.util.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +58,10 @@ public class DoctorRestService extends BaseRestService {
   private AppointmentIntegrationService appointmentIntegrationService;
 
   @Autowired
-  private DoctorHospitalServiceImpl doctorHospitalServiceimpl;
+  private DoctorHospitalService doctorHospitalService;
 
+  @Autowired
+  private DoctorSessionService doctorSessionService;
 
 
   @GET
@@ -73,7 +79,8 @@ public class DoctorRestService extends BaseRestService {
     } else {
       heartbeatMsg.append("Fail");
     }
-    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService.getByDocId(1)*/;
+    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService
+    .getByDocId(1)*/;
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("appointments : {}", appointments);
     }
@@ -161,23 +168,20 @@ public class DoctorRestService extends BaseRestService {
   //insert doctor hospital
   @POST
   @Path("/{doctorId}/hospitals/{hostpitleId}")
-  public Response doctorHospitalInsert(@PathParam("doctorId") Integer doctorId, @PathParam(
-      "hostpitleId") Integer hostpitleId,
-                                       DoctorHospital doctorHospital) throws ServiceException {
+  public Response doctorHospitalInsert(@PathParam("doctorId") Integer doctorId,
+                                       @PathParam("hostpitleId") Integer hostpitleId,
+                                       AssignHospitalReq req) {
     Response response;
     try {
-      doctorHospitalServiceimpl.insert(doctorHospital, doctorId, hostpitleId);
-      response = RESTfulUtil.getOk(doctorHospital.getDoctor_id());
+      doctorHospitalService.insert(new DoctorHospital(new Doctor(doctorId), hostpitleId,
+          req.getDoctorFee()));
+      response = RESTfulUtil.getOk();
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getInternalServerError();
     }
     return response;
   }
-
-
-
-
 
 
   @GET
@@ -188,6 +192,38 @@ public class DoctorRestService extends BaseRestService {
     try {
       // TODO: 3/22/2020 set doctors who works in given hospital
       response = RESTfulUtil.getOk(doctorService.getAll());
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
+        response = RESTfulUtil.getNotFound();
+      } else {
+        response = RESTfulUtil.getInternalServerError();
+      }
+    }
+    return response;
+  }
+
+  @GET
+  @Path("/hospitals/sessions/{sessionId}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response getSessionDetails(@PathParam("sessionId") int sessionId) {
+    Response response;
+    try {
+      final DoctorSession doctorSession = doctorSessionService.get(sessionId);
+      if (doctorSession != null) {
+        DoctorSessionResp doctorSessionResp = new DoctorSessionResp();
+        doctorSessionResp.setRoom(hospitalIntegrationService.getByRoomId(doctorSession.getRoomId()));
+        doctorSessionResp.setDoctor(doctorSessionResp.getDoctor());
+        doctorSessionResp.setFrom(doctorSessionResp.getFrom());
+        doctorSessionResp.setTo(doctorSessionResp.getTo());
+        final DoctorHospital doctorHospital = doctorHospitalService.get(doctorSession.getDoctor()
+            .getId(), doctorSessionResp.getRoom().getHospital().getId());
+        doctorSessionResp.setDocFee(doctorHospital.getDoctorFee());
+        doctorSessionResp.setStatus(doctorSessionResp.getStatus());
+        response = RESTfulUtil.getOk(doctorSessionResp);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
       if (e.getCode() == ServiceException.VALIDATION_FAILURE) {

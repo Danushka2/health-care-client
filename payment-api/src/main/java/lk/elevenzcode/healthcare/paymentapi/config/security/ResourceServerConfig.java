@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -28,8 +29,14 @@ import javax.annotation.PostConstruct;
 @EnableResourceServer
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+  private static final String ROLE_CLIENT = "CLIENT";
   private static final String ROLE_PAY = "PAY";
   private static final String ROLE_MAKE_PAY = "MAKE_PAY";
+  private static final String ROLE_GET_ALL_PAY = "GET_ALL_PAY";
+  private static final String ROLE_GET_APPT_PAY = "GET_APPT_PAY";
+  private static final String ROLE_GET_APPT = "GET_APPT";
+  private static final String ROLE_REFUND_PAY = "REFUND_PAY";
+  private static final String ROLE_GET_PAY = "GET_PAY";
   private final SecurityProperties securityProperties;
   @Value("${spring.jersey.application-path}")
   private String serviceContext;
@@ -42,7 +49,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @PostConstruct
   void init() {
-    API_BASE_PATTERN = String.format("%s/%s/%s/", serviceContext, Constant.API_VER,
+    API_BASE_PATTERN = String.format("%s/%s/%s", serviceContext, Constant.API_VER,
         Constant.API_PATH);
   }
 
@@ -57,9 +64,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .authorizeRequests()
         .antMatchers("/js/**")
         .permitAll()
-        .antMatchers(API_BASE_PATTERN + "**").hasAnyRole(ROLE_PAY,
-        lk.elevenzcode.healthcare.commons.web.util.Constant.ROLE_CLIENT)
-        .antMatchers(API_BASE_PATTERN + "init").hasRole(ROLE_MAKE_PAY)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/heartbeat").hasAnyRole(ROLE_PAY)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN + "/init").hasRole(ROLE_MAKE_PAY)
+        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/complete").hasRole(ROLE_MAKE_PAY)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasRole(ROLE_GET_ALL_PAY)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/appointments/{apptId}")
+        .access("hasRole('" + ROLE_GET_APPT_PAY + "') AND hasRole('" + ROLE_GET_APPT + "')")
+        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/appointments/{apptId}").hasAnyRole(ROLE_REFUND_PAY, ROLE_CLIENT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}").hasRole(ROLE_GET_PAY)
+        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/{id}").hasRole(ROLE_REFUND_PAY)
         .anyRequest()
         .authenticated();
   }
