@@ -2,6 +2,7 @@ package lk.elevenzcode.healthcare.appointmentapi.service.integration.impl;
 
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.DoctorIntegrationService;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.dto.DoctorInfo;
+import lk.elevenzcode.healthcare.appointmentapi.service.integration.dto.DoctorSessionInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class DoctorIntegrationServiceImpl implements DoctorIntegrationService {
   @Value("${integ.service.doctor.getall.url}")
   private String getAllUrl;
 
+  @Value("${integ.service.doctor.session.getbyid.url}")
+  private String getSessionByIdUrl;
+
   @Override
   public DoctorInfo getById(int id) {
     return oAuth2RestTemplate.getForEntity(getByIdUrl, DoctorInfo.class, id).getBody();
@@ -39,5 +43,10 @@ public class DoctorIntegrationServiceImpl implements DoctorIntegrationService {
     return oAuth2RestTemplate.exchange(getAllUrl, HttpMethod.GET, null,
         new ParameterizedTypeReference<List<DoctorInfo>>() {
         }).getBody();
+  }
+
+  @Override
+  public DoctorSessionInfo getSessionInfo(int sessionId) {
+    return oAuth2RestTemplate.getForEntity(getSessionByIdUrl, DoctorSessionInfo.class, sessionId).getBody();
   }
 }

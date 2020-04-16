@@ -29,6 +29,7 @@ import javax.annotation.PostConstruct;
 @EnableResourceServer
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+  private static final String ROLE_CLIENT = "CLIENT";
   private static final String ROLE_HOSP = "HOSP";
   private static final String ROLE_ADD_HOSP = "ADD_HOSP";
   private static final String ROLE_GET_ALL_HOSP = "GET_ALL_HOSP";
@@ -64,15 +65,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http.anonymous().disable()
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/heartbeat").hasRole(ROLE_HOSP)
-        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasRole(ROLE_ADD_HOSP)
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasRole(ROLE_GET_ALL_HOSP)
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}").hasRole(ROLE_GET_HOSP)
-        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/{id}").hasRole(ROLE_UPDATE_HOSP)
-        .antMatchers(HttpMethod.POST, API_BASE_PATTERN + "/{id}/rooms").hasRole(ROLE_ADD_ROOM)
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}/rooms", API_BASE_PATTERN
-            + "/rooms/{roomId}").hasRole(ROLE_GET_ROOM)
-        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/rooms/{roomId}").hasRole(ROLE_UPDATE_ROOM)
-        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/rooms/{roomId}").hasRole(ROLE_DELETE_ROOM)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasAnyRole(ROLE_ADD_HOSP, ROLE_CLIENT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasAnyRole(ROLE_GET_ALL_HOSP, ROLE_CLIENT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}").hasAnyRole(ROLE_GET_HOSP,
+        ROLE_CLIENT).antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/{id}")
+        .hasAnyRole(ROLE_UPDATE_HOSP, ROLE_CLIENT)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN + "/{id}/rooms").hasAnyRole(ROLE_ADD_ROOM,
+        ROLE_CLIENT).antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}/rooms", API_BASE_PATTERN
+        + "/rooms/{roomId}").hasAnyRole(ROLE_GET_ROOM, ROLE_CLIENT)
+        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/rooms/{roomId}").hasAnyRole(ROLE_UPDATE_ROOM, ROLE_CLIENT)
+        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/rooms/{roomId}").hasAnyRole(ROLE_DELETE_ROOM, ROLE_CLIENT)
         .anyRequest()
         .authenticated();
   }

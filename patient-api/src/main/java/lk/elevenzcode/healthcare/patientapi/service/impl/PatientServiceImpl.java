@@ -35,7 +35,7 @@ public class PatientServiceImpl extends GenericServiceImpl<Patient> implements P
 
   @Override
   public Patient get(Integer id) throws ServiceException {
-    Patient patient = patientRepository.findByIdAndStatusIsNot(id, PatientStatus.STATUS_DELETED);
+    Patient patient = patientRepository.findByIdAndStatusIdIsNot(id, PatientStatus.STATUS_DELETED);
     if (patient != null) {
       return patient;
     } else {
@@ -46,7 +46,7 @@ public class PatientServiceImpl extends GenericServiceImpl<Patient> implements P
 
   @Override
   public List<Patient> getAll() throws ServiceException {
-    return patientRepository.findAllByStatusIsNot(PatientStatus.STATUS_DELETED);
+    return patientRepository.findAllByStatusIdIsNot(PatientStatus.STATUS_DELETED);
   }
 
   @Override

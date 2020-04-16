@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 @EnableResourceServer
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+  private static final String ROLE_CLIENT = "CLIENT";
   private static final String ROLE_PT = "PT";
   private static final String ROLE_REG_PT = "REG_PT";
   private static final String ROLE_GET_ALL_PT = "GET_ALL_PT";
@@ -59,11 +60,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http.anonymous().disable()
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/heartbeat").hasRole(ROLE_PT)
-        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasRole(ROLE_REG_PT)
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasRole(ROLE_GET_ALL_PT)
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}").hasRole(ROLE_GET_PT)
-        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/{id}").hasRole(ROLE_UPDATE_PT)
-        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/{id}").hasRole(ROLE_DELETE_PT)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasAnyRole(ROLE_REG_PT, ROLE_CLIENT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasAnyRole(ROLE_GET_ALL_PT, ROLE_CLIENT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}").hasAnyRole(ROLE_GET_PT,
+        ROLE_CLIENT)
+        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/{id}").hasAnyRole(ROLE_UPDATE_PT,
+        ROLE_CLIENT)
+        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/{id}").hasAnyRole(ROLE_DELETE_PT,
+        ROLE_CLIENT)
         .anyRequest()
         .authenticated();
   }

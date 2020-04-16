@@ -4,11 +4,15 @@ import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.hospitalapi.domain.Hospital;
+import lk.elevenzcode.healthcare.hospitalapi.domain.HospitalRoom;
+import lk.elevenzcode.healthcare.hospitalapi.service.HospitalRoomService;
 import lk.elevenzcode.healthcare.hospitalapi.service.HospitalService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.AppointmentIntegrationService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.DoctorIntegrationService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.AppointmentInfo;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.DoctorInfo;
+import lk.elevenzcode.healthcare.hospitalapi.web.dto.HospitalInfoResp;
+import lk.elevenzcode.healthcare.hospitalapi.web.dto.RoomInfoResp;
 import lk.elevenzcode.healthcare.hospitalapi.web.util.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +46,9 @@ public class HospitalRestService extends BaseRestService {
   @Autowired
   private AppointmentIntegrationService appointmentIntegrationService;
 
+  @Autowired
+  private HospitalRoomService hospitalRoomService;
+
   @GET
   @Path("/heartbeat")
   @Produces(value = MediaType.TEXT_PLAIN)
@@ -57,7 +64,8 @@ public class HospitalRestService extends BaseRestService {
     } else {
       heartbeatMsg.append("Fail");
     }
-    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService.getByHospId(1)*/;
+    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService
+    .getByHospId(1)*/;
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("appointments : {}", appointments);
     }
@@ -77,7 +85,7 @@ public class HospitalRestService extends BaseRestService {
     Response response = null;
     try {
       hospitalService.insert(hospital);
-      response = RESTfulUtil.getOk(hospital.toString());
+      response = RESTfulUtil.getOk(hospital);
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getInternalServerError();
@@ -97,7 +105,6 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
-
 
   @GET
   @Path("/{id}")
@@ -127,7 +134,7 @@ public class HospitalRestService extends BaseRestService {
       response = RESTfulUtil.getOk("deleted");
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
-        response = RESTfulUtil.getNotFound();
+      response = RESTfulUtil.getNotFound();
 
     }
     return response;
@@ -141,10 +148,42 @@ public class HospitalRestService extends BaseRestService {
     try {
       hospital.setId(id);
       hospitalService.update(hospital);
-      response = RESTfulUtil.getOk("updated"+ hospital.getId());
+      response = RESTfulUtil.getOk("updated" + hospital.getId());
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getNotFound();
+    }
+    return response;
+  }
+
+  @GET
+  @Path("/rooms/{roomId}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response getRoomById(@PathParam("roomId") int roomId) {
+    Response response;
+    try {
+      final HospitalRoom room = hospitalRoomService.get(roomId);
+      if (room != null) {
+        RoomInfoResp roomInfoResp = new RoomInfoResp();
+        roomInfoResp.setId(room.getId());
+        final Hospital hospital = room.getHospital();
+        roomInfoResp.setHospital(new HospitalInfoResp(hospital.getId(),
+            hospital.getHospitalName(), hospital.getHospitalAddress(),
+            hospital.getHospitalEmail(), hospital.getHospitalFax(), hospital.getHospitalTell()));
+        roomInfoResp.setRoomNo(room.getRoomNo());
+        roomInfoResp.setLocation(room.getLocation());
+        roomInfoResp.setRoomFee(room.getFee());
+        response = RESTfulUtil.getOk(roomInfoResp);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
+        response = RESTfulUtil.getNotFound();
+      } else {
+        response = RESTfulUtil.getInternalServerError();
+      }
     }
     return response;
   }

@@ -27,8 +27,9 @@ public class DoctorServiceImpl extends GenericServiceImpl<Doctor> implements Doc
 
   //insert doctor service layer
   @Override
-  public void insert(Doctor domain) throws ServiceException {
+  public int insert(Doctor domain) throws ServiceException {
     doctorRepository.save(domain);
+    return 0;
   }
 
 

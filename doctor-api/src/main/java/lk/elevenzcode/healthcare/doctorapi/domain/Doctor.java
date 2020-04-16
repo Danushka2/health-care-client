@@ -15,14 +15,17 @@ public class Doctor extends BaseDomain {
 
   private String specialization;
   private String name;
-  private Integer tel;
+  private String tel;
   private String email;
   private String status;
   private String user_id;
 
 
-
   public Doctor() {
+  }
+
+  public Doctor(Integer id) {
+    super(id);
   }
 
   public Doctor(Integer id, String name) {
@@ -46,11 +49,11 @@ public class Doctor extends BaseDomain {
     this.specialization = specialization;
   }
 
-  public Integer getTel() {
+  public String getTel() {
     return tel;
   }
 
-  public void setTel(Integer tel) {
+  public void setTel(String tel) {
     this.tel = tel;
   }
 

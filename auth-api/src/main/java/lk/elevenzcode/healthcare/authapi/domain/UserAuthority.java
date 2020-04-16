@@ -18,11 +18,12 @@ public class UserAuthority implements Serializable {
 
   @Id
   @ManyToOne
-  @JoinColumn(name = "username", nullable = false, referencedColumnName = "username")
+  @JoinColumn(name = "username", nullable = false, referencedColumnName = "username",
+      columnDefinition = "varchar(50)")
   private User user;
 
   @Id
-  @Column(name = "authority", nullable = false)
+  @Column(name = "authority", nullable = false, length = 50)
   private String authority;
 
   public UserAuthority() {

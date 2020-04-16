@@ -7,6 +7,7 @@ import com.stripe.model.Refund;
 import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.RefundCreateParams;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
+import lk.elevenzcode.healthcare.commons.service.integration.BaseIntegrationService;
 import lk.elevenzcode.healthcare.paymentapi.service.integration.StripeIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import javax.annotation.PostConstruct;
  * Created by හShaන් සNදීප on 4/15/2020 4:12 PM
  */
 @Service
-public class StripeIntegrationServiceImpl implements StripeIntegrationService {
+public class StripeIntegrationServiceImpl extends BaseIntegrationService implements StripeIntegrationService {
   private static final Logger LOGGER = LoggerFactory.getLogger(StripeIntegrationServiceImpl.class);
 
   @Value("${stripe.api.secret.key}")
@@ -34,11 +35,10 @@ public class StripeIntegrationServiceImpl implements StripeIntegrationService {
   }
 
   @Override
-  public PaymentIntent initPayment(String description, long amount) throws ServiceException {
+  public PaymentIntent initPayment(long amount) throws ServiceException {
     final PaymentIntentCreateParams createParams = PaymentIntentCreateParams.builder()
         .setCurrency(currency)
         .setAmount(amount)
-        .setDescription(description)
         // Verify your integration in this guide by including this parameter
         .putMetadata("integration_check", "accept_a_payment")
         .build();
@@ -48,7 +48,7 @@ public class StripeIntegrationServiceImpl implements StripeIntegrationService {
     } catch (StripeException e) {
       LOGGER.error(e.getMessage(), e);
       throw new ServiceException(ServiceException.PROCESSING_FAILURE,
-          "label.err.stripe.integration.failed");
+          getMessage("label.err.stripe.integration.failed"));
     }
   }
 
@@ -59,7 +59,7 @@ public class StripeIntegrationServiceImpl implements StripeIntegrationService {
     } catch (StripeException e) {
       LOGGER.error(e.getMessage(), e);
       throw new ServiceException(ServiceException.PROCESSING_FAILURE,
-          "label.err.stripe.integration.failed");
+          getMessage("label.err.stripe.integration.failed"));
     }
   }
 
@@ -73,7 +73,7 @@ public class StripeIntegrationServiceImpl implements StripeIntegrationService {
     } catch (StripeException e) {
       LOGGER.error(e.getMessage(), e);
       throw new ServiceException(ServiceException.PROCESSING_FAILURE,
-          "label.err.stripe.integration.failed");
+          getMessage("label.err.stripe.integration.failed"));
     }
   }
 }

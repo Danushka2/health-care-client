@@ -29,6 +29,7 @@ import javax.annotation.PostConstruct;
 @EnableResourceServer
 @EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+  private static final String ROLE_CLIENT = "CLIENT";
   private static final String ROLE_DOC = "DOC";
   private static final String ROLE_GET_HOSP = "GET_HOSP";
   private static final String ROLE_GET_DOC = "GET_DOC";
@@ -65,20 +66,23 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     http.anonymous().disable()
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/heartbeat").hasRole(ROLE_DOC)
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasRole(ROLE_GET_ALL_DOC)
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}").hasRole(ROLE_GET_DOC)
-        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasRole(ROLE_REG_DOC)
-        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/{id}").hasRole(ROLE_UPDATE_DOC)
-        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/{id}").hasRole(ROLE_DELETE_DOC)
-        .antMatchers(HttpMethod.POST, API_BASE_PATTERN + "/{id}/hospitals/{hospitalId}")
-        .access("hasRole('" + ROLE_REG_DOC + "') AND hasRole('" + ROLE_UPDATE_DOC + "')")
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}/hospitals")
-        .access("hasRole('" + ROLE_REG_DOC + "') AND hasRole('" + ROLE_GET_HOSP + "')")
-        .antMatchers(HttpMethod.POST, API_BASE_PATTERN + "/{id}/hospitals/sessions")
-        .access("hasRole('" + ROLE_UPDATE_DOC + "') AND hasRole('" + ROLE_UPDATE_ROOM + "')")
-        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}/hospitals/{hospitalId}/sessions")
-        .access("hasRole('" + ROLE_GET_DOC + "') AND hasRole('" + ROLE_GET_HOSP + "') AND hasRole" +
-            "('" + ROLE_GET_ROOM + "')")
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasAnyRole(ROLE_GET_ALL_DOC, ROLE_CLIENT)
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{doctorId}").hasAnyRole(ROLE_GET_DOC,
+        ROLE_CLIENT)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasAnyRole(ROLE_REG_DOC, ROLE_CLIENT)
+        .antMatchers(HttpMethod.PUT, API_BASE_PATTERN + "/{doctorId}").hasAnyRole(ROLE_UPDATE_DOC
+        , ROLE_CLIENT)
+        .antMatchers(HttpMethod.DELETE, API_BASE_PATTERN + "/{doctorId}").hasAnyRole(ROLE_DELETE_DOC, ROLE_CLIENT)
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN + "/{doctorId}/hospitals/{hospitalId}")
+        .access("hasAnyRole('" + ROLE_REG_DOC + "','" + ROLE_CLIENT + "') AND hasAnyRole('" + ROLE_UPDATE_DOC + "','" + ROLE_CLIENT + "')")
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{doctorId}/hospitals")
+        .access("hasAnyRole('" + ROLE_REG_DOC + "','" + ROLE_CLIENT + "') AND hasAnyRole('" + ROLE_GET_HOSP + "','" + ROLE_CLIENT + "')")
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN + "/{doctorId}/hospitals/sessions")
+        .access("hasAnyRole('" + ROLE_UPDATE_DOC + "','" + ROLE_CLIENT + "') AND hasAnyRole('" + ROLE_UPDATE_ROOM + "','" + ROLE_CLIENT + "')")
+        .antMatchers(HttpMethod.GET, API_BASE_PATTERN
+            + "/{doctorId}/hospitals/{hospitalId}/sessions")
+        .access("hasAnyRole('" + ROLE_GET_DOC + "','" + ROLE_CLIENT + "') AND hasAnyRole('" + ROLE_GET_HOSP + "','" + ROLE_CLIENT + "') AND " +
+            "hasAnyRole('" + ROLE_GET_ROOM + "','" + ROLE_CLIENT + "')")
         .anyRequest()
         .authenticated();
   }

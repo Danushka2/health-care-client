@@ -9,4 +9,10 @@ import lk.elevenzcode.healthcare.paymentapi.domain.Payment;
  */
 public interface PaymentService extends GenericService<Payment> {
   Payment getByAppointmentId(int apptId) throws ServiceException;
+
+  int save(int apptId, String paymentIntentId) throws ServiceException;
+
+  void refundByAppt(int apptId, String reason) throws ServiceException;
+
+  void refund(int id, String reason) throws ServiceException;
 }

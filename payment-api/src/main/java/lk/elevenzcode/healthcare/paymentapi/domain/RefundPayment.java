@@ -1,9 +1,12 @@
 package lk.elevenzcode.healthcare.paymentapi.domain;
 
+import lk.elevenzcode.healthcare.commons.domain.BaseDomain;
+
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -11,10 +14,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = RefundPayment.TABLE_NAME)
-@PrimaryKeyJoinColumn(name = RefundPayment.REFERENCED_COLUMN_NAME, referencedColumnName = "id")
-public class RefundPayment extends Payment {
+public class RefundPayment extends BaseDomain {
   public static final String TABLE_NAME = "refund_payment";
-  public static final String REFERENCED_COLUMN_NAME = "payment_id";
+
+  @OneToOne
+  @JoinColumn(name = "payment_id", nullable = false, unique = true)
+  private Payment payment;
 
   @Column(name = "reason", nullable = false, length = 100)
   private String reason;
@@ -24,6 +29,14 @@ public class RefundPayment extends Payment {
 
   @Column(name = "refund_on", nullable = false)
   private LocalDateTime refundOn = LocalDateTime.now();
+
+  public Payment getPayment() {
+    return payment;
+  }
+
+  public void setPayment(Payment payment) {
+    this.payment = payment;
+  }
 
   public String getReason() {
     return reason;

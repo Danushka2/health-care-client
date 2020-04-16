@@ -2,6 +2,7 @@ package lk.elevenzcode.healthcare.doctorapi.service.integration.impl;
 
 import lk.elevenzcode.healthcare.doctorapi.service.integration.HospitalIntegrationService;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.HospitalInfo;
+import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.RoomInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,16 @@ public class HospitalIntegrationServiceImpl implements HospitalIntegrationServic
   @Value("${integ.service.hospital.getbyid.url}")
   private String getByIdUrl;
 
+  @Value("${integ.service.hospital.room.getbyid.url}")
+  private String getRoomByIdUrl;
+
   @Override
   public HospitalInfo getById(int id) {
     return oAuth2RestTemplate.getForEntity(getByIdUrl, HospitalInfo.class, id).getBody();
+  }
+
+  @Override
+  public RoomInfo getByRoomId(int roomId) {
+    return oAuth2RestTemplate.getForEntity(getRoomByIdUrl, RoomInfo.class, roomId).getBody();
   }
 }
