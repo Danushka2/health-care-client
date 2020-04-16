@@ -3,7 +3,12 @@ package lk.elevenzcode.healthcare.doctorapi.web.service;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
+import lk.elevenzcode.healthcare.doctorapi.domain.Doctor;
+import lk.elevenzcode.healthcare.doctorapi.domain.DoctorHospital;
+import lk.elevenzcode.healthcare.doctorapi.repository.DoctorRepository;
 import lk.elevenzcode.healthcare.doctorapi.service.DoctorService;
+import lk.elevenzcode.healthcare.doctorapi.service.impl.DoctorHospitalServiceImpl;
+import lk.elevenzcode.healthcare.doctorapi.service.impl.DoctorServiceImpl;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.AppointmentIntegrationService;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.HospitalIntegrationService;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.AppointmentInfo;
@@ -16,7 +21,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -32,11 +40,23 @@ public class DoctorRestService extends BaseRestService {
   @Autowired
   private DoctorService doctorService;
 
+
+  @Autowired
+  private DoctorRepository doctorRepository;
+
+  @Autowired
+  private DoctorServiceImpl doctorServiceimpl;
+
   @Autowired
   private HospitalIntegrationService hospitalIntegrationService;
 
   @Autowired
   private AppointmentIntegrationService appointmentIntegrationService;
+
+  @Autowired
+  private DoctorHospitalServiceImpl doctorHospitalServiceimpl;
+
+
 
   @GET
   @Path("/heartbeat")
@@ -66,6 +86,23 @@ public class DoctorRestService extends BaseRestService {
     return heartbeatMsg.toString();
   }
 
+
+  //insert doctor
+  @POST
+  public Response insert(Doctor domain) throws ServiceException {
+    Response response;
+    try {
+      doctorService.insert(domain);
+      response = RESTfulUtil.getOk(domain.getId());
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
+
+  //get all doctor sevice
   @GET
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response getAll() {
@@ -79,10 +116,12 @@ public class DoctorRestService extends BaseRestService {
     return response;
   }
 
+
+  //get one doctor sevice
   @GET
-  @Path("/{id}")
+  @Path("/{doctorId}")
   @Produces(value = MediaType.APPLICATION_JSON)
-  public Response getById(@PathParam("id") int id) {
+  public Response getById(@PathParam("doctorId") int id) {
     Response response;
     try {
       response = RESTfulUtil.getOk(doctorService.get(id));
@@ -96,6 +135,50 @@ public class DoctorRestService extends BaseRestService {
     }
     return response;
   }
+
+
+  //update one doctor
+  @PUT
+  @Path("/{doctorId}")
+  public void update(@PathParam("doctorId") Integer id, Doctor domain) throws ServiceException {
+    Doctor Doc = doctorRepository.findById(id).get();
+
+    if (Doc != null) {
+
+      doctorServiceimpl.update(domain, Doc);
+    }
+  }
+
+
+  //delete one doctor
+  @DELETE
+  @Path("/{doctorId}")
+  public void delete(@PathParam("doctorId") Integer id) throws ServiceException {
+    doctorServiceimpl.delete(id);
+  }
+
+
+  //insert doctor hospital
+  @POST
+  @Path("/{doctorId}/hospitals/{hostpitleId}")
+  public Response doctorHospitalInsert(@PathParam("doctorId") Integer doctorId, @PathParam(
+      "hostpitleId") Integer hostpitleId,
+                                       DoctorHospital doctorHospital) throws ServiceException {
+    Response response;
+    try {
+      doctorHospitalServiceimpl.insert(doctorHospital, doctorId, hostpitleId);
+      response = RESTfulUtil.getOk(doctorHospital.getDoctor_id());
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
+
+
+
+
 
   @GET
   @Path("/hospitals/{id}")

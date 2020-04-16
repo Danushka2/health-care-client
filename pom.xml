@@ -28,12 +28,13 @@
         <module>client-app</module>
     </modules>
 
+
     <properties>
         <java.version>8</java.version>
         <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
         <api.jdbc.driver.class>com.mysql.cj.jdbc.Driver</api.jdbc.driver.class>
         <api.jdbc.hibernate.dialect>org.hibernate.dialect.MySQL5Dialect</api.jdbc.hibernate.dialect>
-        <api.jdbc.hibernate.ddl.auto>update</api.jdbc.hibernate.ddl.auto>
+        <api.jdbc.hibernate.ddl.auto>create</api.jdbc.hibernate.ddl.auto>
         <api.auth.url>http://localhost:8081</api.auth.url>
         <api.hospital.url>http://localhost:8082</api.hospital.url>
         <api.doctor.url>http://localhost:8083</api.doctor.url>

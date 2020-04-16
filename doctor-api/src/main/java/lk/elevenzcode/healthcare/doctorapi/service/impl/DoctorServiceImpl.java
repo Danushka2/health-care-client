@@ -8,13 +8,10 @@ import lk.elevenzcode.healthcare.doctorapi.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 
-/**
- * Created by හShaන් සNදීප on 3/21/2020 9:10 PM
- */
+
 @Service
 public class DoctorServiceImpl extends GenericServiceImpl<Doctor> implements DoctorService {
   @Autowired
@@ -26,19 +23,44 @@ public class DoctorServiceImpl extends GenericServiceImpl<Doctor> implements Doc
   }
 
   // TODO: 3/21/2020 these are mock methods, remove once you implement the data layer ==============
+
+
+  //insert doctor service layer
   @Override
-  public Doctor get(Integer id) throws ServiceException {
-    if (id == 1) {
-      return new Doctor(1, "Aravinda");
-    } else {
-      throw new ServiceException(ServiceException.VALIDATION_FAILURE,
-          "label.doctor.err.invalid.id");
-    }
+  public void insert(Doctor domain) throws ServiceException {
+    doctorRepository.save(domain);
   }
 
-  @Override
+
+  //get all doctor service layer
   public List<Doctor> getAll() throws ServiceException {
-    return Arrays.asList(new Doctor(1, "Aravinda"), new Doctor(2, "Hashan"));
+    return (List<Doctor>) doctorRepository.findAll();
   }
-  //================================================================================================
+
+
+  //get one doctor service layer
+  public Doctor get(Integer id) throws ServiceException {
+    return doctorRepository.findById(id).get();
+  }
+
+
+  //get update service layer
+  public void update(Doctor domain, Doctor doc) throws ServiceException {
+
+    doc.setSpecialization(domain.getSpecialization());
+    doc.setName(domain.getName());
+    doc.setTel(domain.getTel());
+    doc.setEmail(domain.getEmail());
+
+
+    doctorRepository.save(doc);
+  }
+
+
+  //delete one doctor service layer
+  public void delete(Integer id) throws ServiceException {
+    doctorRepository.deleteById(id);
+  }
+
+
 }

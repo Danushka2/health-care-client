@@ -3,6 +3,7 @@
 DROP SCHEMA IF EXISTS sch_auth;
 CREATE SCHEMA sch_auth;
 
+drop user 'usr_auth'@'localhost';
 CREATE USER 'usr_auth'@'localhost' IDENTIFIED BY 'Auth@HealthCare';
 GRANT ALL PRIVILEGES ON sch_auth.* TO 'usr_auth'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -12,6 +13,7 @@ FLUSH PRIVILEGES;
 DROP SCHEMA IF EXISTS sch_hospital;
 CREATE SCHEMA sch_hospital;
 
+drop user 'usr_hosp'@'localhost';
 CREATE USER 'usr_hosp'@'localhost' IDENTIFIED BY 'Hops@HealthCare';
 GRANT ALL PRIVILEGES ON sch_hospital.* TO 'usr_hosp'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -21,6 +23,7 @@ FLUSH PRIVILEGES;
 DROP SCHEMA IF EXISTS sch_doctor;
 CREATE SCHEMA sch_doctor;
 
+drop user 'usr_doc'@'localhost';
 CREATE USER 'usr_doc'@'localhost' IDENTIFIED BY 'Doc@HealthCare';
 GRANT ALL PRIVILEGES ON sch_doctor.* TO 'usr_doc'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -30,6 +33,7 @@ FLUSH PRIVILEGES;
 DROP SCHEMA IF EXISTS sch_patient;
 CREATE SCHEMA sch_patient;
 
+drop user 'usr_pt'@'localhost';
 CREATE USER 'usr_pt'@'localhost' IDENTIFIED BY 'Pt@HealthCare';
 GRANT ALL PRIVILEGES ON sch_patient.* TO 'usr_pt'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -39,6 +43,7 @@ FLUSH PRIVILEGES;
 DROP SCHEMA IF EXISTS sch_appointment;
 CREATE SCHEMA sch_appointment;
 
+drop user 'usr_appt'@'localhost';
 CREATE USER 'usr_appt'@'localhost' IDENTIFIED BY 'Appt@HealthCare';
 GRANT ALL PRIVILEGES ON sch_appointment.* TO 'usr_appt'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -48,6 +53,7 @@ FLUSH PRIVILEGES;
 DROP SCHEMA IF EXISTS sch_payment;
 CREATE SCHEMA sch_payment;
 
+drop user 'usr_pay'@'localhost';
 CREATE USER 'usr_pay'@'localhost' IDENTIFIED BY 'Pay@HealthCare';
 GRANT ALL PRIVILEGES ON sch_payment.* TO 'usr_pay'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
