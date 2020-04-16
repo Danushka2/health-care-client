@@ -31,7 +31,7 @@ public class Appointment extends BaseDomain {
 	private LocalDate appointmentDate; // Appointment date
 
 	@Column(name = "create_datetime", nullable = false)
-	private LocalDateTime createDate = LocalDateTime.now(); // Created time and date of appointment
+    private LocalDateTime createDate = LocalDateTime.now(); // Created time and date of appointment
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -80,8 +80,8 @@ public class Appointment extends BaseDomain {
 
 	@Override
 	public String toString() {
-		return "Appointment [sessionId=" + sessionId + ", patientId=" + patientId + ", " +
-				"appointmentDate="
-				+ appointmentDate + ", createDate=" + createDate + ", status=" + status + "]";
+      return "Appointment [sessionId=" + sessionId + ", patientId=" + patientId + ", " +
+          "appointmentDate="
+          + appointmentDate + ", createDate=" + createDate + ", status=" + status + "]";
 	}
 }
