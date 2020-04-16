@@ -4,6 +4,7 @@
 package lk.elevenzcode.healthcare.appointmentapi.service.impl;
 
 import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
+import lk.elevenzcode.healthcare.appointmentapi.domain.AppointmentStatus;
 import lk.elevenzcode.healthcare.appointmentapi.repository.AppointmentRepository;
 import lk.elevenzcode.healthcare.appointmentapi.service.AppointmentService;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
@@ -59,6 +60,16 @@ public class AppointmentServiceImpl extends GenericServiceImpl<Appointment> impl
 	public List<Appointment> findBySessionId(int sessionId) throws ServiceException {
 		try {
 			return appointmentRepository.findBySessionId(sessionId);
+		}catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+			throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
+		}
+	}
+
+	@Override
+	public List<Appointment> findByStatus(AppointmentStatus status) throws ServiceException {
+		try {
+			return appointmentRepository.findByStatus(status);
 		}catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());

@@ -44,7 +44,7 @@ public class Appointment extends BaseDomain {
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private AppointmentStatus status;
+	private AppointmentStatus status = new AppointmentStatus(AppointmentStatus.STATUS_PENDING);
 	
 	public Appointment() {
 	}
@@ -58,7 +58,6 @@ public class Appointment extends BaseDomain {
 		this.appointmentDate = appointmentDate;
 		this.appointmentTime = appointmentTime;
 		this.createDate = createDate;
-		this.status = new AppointmentStatus(AppointmentStatus.STATUS_PENDING);
 	}
 
 	// ---------------------------------- Getter to get
