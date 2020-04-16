@@ -70,7 +70,7 @@
 
         <!--Appointment API DB Properties-->
         <appointment.api.jdbc.url>
-            jdbc:mysql://localhost:3306/sch_appointment?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
+            jdbc:mysql://localhost:3306/sch_appointment?useEncoding=true&amp;characterEncoding=UTF-8&amp;
         </appointment.api.jdbc.url>
         <appointment.api.jdbc.username>usr_appt</appointment.api.jdbc.username>
         <appointment.api.jdbc.password>Appt@HealthCare</appointment.api.jdbc.password>

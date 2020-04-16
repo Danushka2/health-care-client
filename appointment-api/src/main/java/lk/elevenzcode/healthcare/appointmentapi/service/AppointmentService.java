@@ -1,6 +1,7 @@
 package lk.elevenzcode.healthcare.appointmentapi.service;
 
 import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
+import lk.elevenzcode.healthcare.appointmentapi.domain.AppointmentStatus;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.service.GenericService;
 
@@ -18,4 +19,6 @@ public interface AppointmentService extends GenericService<Appointment> {
   List<Appointment> findByPatient(int patientId) throws ServiceException;
   
   List<Appointment> findBySessionId(int sessionId) throws ServiceException;
+  
+  List<Appointment> findByStatus(AppointmentStatus status) throws ServiceException;
 }

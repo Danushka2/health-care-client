@@ -1,6 +1,7 @@
 package lk.elevenzcode.healthcare.appointmentapi.web.service;
 
 import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
+import lk.elevenzcode.healthcare.appointmentapi.domain.AppointmentStatus;
 import lk.elevenzcode.healthcare.appointmentapi.service.AppointmentService;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.DoctorIntegrationService;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.HospitalIntegrationService;
@@ -40,9 +41,10 @@ import javax.ws.rs.core.Response;
 @Path(Constant.API_VER + "/" + Constant.API_PATH)
 public class AppointmentRestService extends BaseRestService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppointmentRestService.class);
-	
-	//Spring boot automatically wire the objects to following parameters when using @autowired annotation 
-	
+
+	// Spring boot automatically wire the objects to following parameters when using
+	// @autowired annotation
+
 	@Autowired
 	private AppointmentService appointmentService;
 
@@ -58,7 +60,7 @@ public class AppointmentRestService extends BaseRestService {
 	@Autowired
 	private PaymentIntegrationService paymentIntegrationService;
 
-	//This method uses to check the availability of the services
+	// This method uses to check the availability of the services
 	@GET
 	@Path("/heartbeat")
 	@Produces(value = MediaType.TEXT_PLAIN)
@@ -118,8 +120,8 @@ public class AppointmentRestService extends BaseRestService {
 		}
 		return heartbeatMsg.toString();
 	}
-	
-	//Returns appointments by given session id
+
+	// Returns appointments by given session id
 	@GET
 	@Path("/sessions/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -127,16 +129,16 @@ public class AppointmentRestService extends BaseRestService {
 		Response response;
 		try {
 			response = RESTfulUtil.getOk(appointmentService.findBySessionId(id));
-		}catch (ServiceException e) {
-			if(e.getCode() == ServiceException.PROCESSING_FAILURE) 
+		} catch (ServiceException e) {
+			if (e.getCode() == ServiceException.PROCESSING_FAILURE)
 				response = RESTfulUtil.getNotFound();
 			else
 				response = RESTfulUtil.getInternalServerError();
 		}
 		return response;
 	}
-	
-	//Returns appointments with by patient id 
+
+	// Returns appointments with by patient id
 	@GET
 	@Path("/patients/{id}")
 	@Produces(value = MediaType.APPLICATION_JSON)
@@ -154,15 +156,23 @@ public class AppointmentRestService extends BaseRestService {
 		}
 		return response;
 	}
-	
-	//Returns all appointments as JSON array
+
+	// Returns all appointments as JSON array
 	@GET
-  	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAppointment() throws ServiceException{
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAppointment() throws ServiceException {
 		return RESTfulUtil.getOk(appointmentService.findAll());
 	}
-	
-	//Returns appointments by given id
+
+	// Returns all appointments as JSON array
+	@GET
+	@Path("/status/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAppointmentByResponse(@PathParam("id") int id) throws ServiceException {
+		return RESTfulUtil.getOk(appointmentService.findByStatus(new AppointmentStatus(id)));
+	}
+
+	// Returns appointments by given id
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -170,31 +180,33 @@ public class AppointmentRestService extends BaseRestService {
 		Response response;
 		try {
 			response = RESTfulUtil.getOk(appointmentService.get(id));
-		}catch (ServiceException e) {
-			if(e.getCode() == ServiceException.PROCESSING_FAILURE) response = RESTfulUtil.getNotFound();
-			else response = RESTfulUtil.getBadRequest();
+		} catch (ServiceException e) {
+			if (e.getCode() == ServiceException.PROCESSING_FAILURE)
+				response = RESTfulUtil.getNotFound();
+			else
+				response = RESTfulUtil.getBadRequest();
 		}
 		return response;
 	}
-	
-	//Creates new appointment using JSON object
+
+	// Creates new appointment using JSON object
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createAppointment(@RequestBody Appointment appointment) {
 		Response response = null;
 		try {
-				if(appointment.getSessionId() != null) {
-					appointmentService.insert(appointment);
-					response = RESTfulUtil.getCreated(appointment);
-				}
-			}catch (ServiceException e) {
-				response = RESTfulUtil.getBadRequest();
+			if (appointment.getSessionId() != null) {
+				appointmentService.insert(appointment);
+				response = RESTfulUtil.getCreated(appointment);
 			}
+		} catch (ServiceException e) {
+			response = RESTfulUtil.getBadRequest();
+		}
 		return response;
 	}
-	
-	//Update Existing appointment
+
+	// Update Existing appointment
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -208,13 +220,13 @@ public class AppointmentRestService extends BaseRestService {
 		}
 		return response;
 	}
-	
-	//Delete existing appointment
+
+	// Delete existing appointment
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteAppointment(@RequestBody Appointment appointment) throws ServiceException {
-		if(appointmentService.get(appointment.getId()) != null) {
+		if (appointmentService.get(appointment.getId()) != null) {
 			appointmentService.deleteAppointment(appointment);
 			return RESTfulUtil.getOk(appointment);
 		}
