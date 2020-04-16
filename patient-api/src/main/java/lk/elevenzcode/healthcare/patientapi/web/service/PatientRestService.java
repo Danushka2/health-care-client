@@ -6,7 +6,9 @@ import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.patientapi.domain.Patient;
 import lk.elevenzcode.healthcare.patientapi.domain.PatientStatus;
+import lk.elevenzcode.healthcare.patientapi.repository.PatientRepository;
 import lk.elevenzcode.healthcare.patientapi.service.PatientService;
+import lk.elevenzcode.healthcare.patientapi.service.impl.PatientServiceImpl;
 import lk.elevenzcode.healthcare.patientapi.service.integration.AppointmentIntegrationService;
 import lk.elevenzcode.healthcare.patientapi.service.integration.dto.AppointmentInfo;
 import lk.elevenzcode.healthcare.patientapi.web.dto.PatientRegisterDto;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,36 +80,19 @@ public class PatientRestService extends BaseRestService {
     return response;
   }
 
-  @GET
-  @Produces(value = MediaType.APPLICATION_JSON)
-  public Response getAll() {
-    Response response;
-    try {
-      response = RESTfulUtil.getOk(patientService.getAll());
-    } catch (ServiceException e) {
-      LOGGER.error(e.getMessage(), e);
-      response = RESTfulUtil.getInternalServerError();
-    }
-    return response;
+
+  @Autowired
+  private PatientServiceImpl patientre;
+
+  @GetMapping("/readall")
+  public List<Patient> getAll() throws ServiceException {
+    return patientre.getAll();
   }
 
-  @GET
-  @Path("/{id}")
-  @Produces(value = MediaType.APPLICATION_JSON)
-  public Response getById(@PathParam("id") int id) {
-    Response response;
-    try {
-      response = RESTfulUtil.getOk(patientService.get(id));
-    } catch (ServiceException e) {
-      LOGGER.error(e.getMessage(), e);
-      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
-        response = RESTfulUtil.getNotFound();
-      } else {
-        response = RESTfulUtil.getInternalServerError();
-      }
-    }
-    return response;
-  }
+
+
+
+
 
   @PUT
   @Path("/{id}")
