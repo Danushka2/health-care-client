@@ -36,6 +36,17 @@ public class HospitalRoom extends BaseDomain {
   @Column(name = "status", nullable = false)
   private short status = STATUS_AVAILABLE;
 
+  public HospitalRoom(){
+  }
+
+  public HospitalRoom(Hospital hospital, String roomNo, String location, BigDecimal fee, Short status){
+    this.hospital = hospital;
+    this.roomNo = roomNo;
+    this.location = location;
+    this.fee = fee;
+    this.status = status;
+  }
+
   public Hospital getHospital() {
     return hospital;
   }
@@ -74,5 +85,16 @@ public class HospitalRoom extends BaseDomain {
 
   public void setStatus(short status) {
     this.status = status;
+  }
+
+  @Override
+  public String toString() {
+    return "HospitalRoom{" +
+        "hospital=" + hospital +
+        ", roomNo='" + roomNo + '\'' +
+        ", location='" + location + '\'' +
+        ", fee=" + fee +
+        ", status=" + status +
+        '}';
   }
 }

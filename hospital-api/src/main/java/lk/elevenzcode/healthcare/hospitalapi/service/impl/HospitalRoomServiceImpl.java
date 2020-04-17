@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
-/**
- * Created by හShaන් සNදීප on 4/16/2020 4:29 PM
- */
+
 @Service
 public class HospitalRoomServiceImpl extends GenericServiceImpl<HospitalRoom> implements HospitalRoomService {
   @Autowired

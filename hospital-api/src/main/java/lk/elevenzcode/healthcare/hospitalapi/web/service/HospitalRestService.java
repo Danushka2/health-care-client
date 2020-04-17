@@ -156,6 +156,29 @@ public class HospitalRestService extends BaseRestService {
     return response;
   }
 
+  @POST
+  @Path("/rooms")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response createRoom(HospitalRoom room) {
+    Response response = null;
+    try{
+      Hospital hospital = hospitalService.get(2);
+      room.setHospital(hospitalService.get(2));
+    }catch (Exception e){
+      System.out.println("testing e");
+    }
+
+
+    try {
+      hospitalRoomService.insert(room);
+      response = RESTfulUtil.getOk(room);
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
   @GET
   @Path("/rooms/{roomId}")
   @Produces(value = MediaType.APPLICATION_JSON)
