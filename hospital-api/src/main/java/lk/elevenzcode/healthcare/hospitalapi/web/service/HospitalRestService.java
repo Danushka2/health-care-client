@@ -163,7 +163,6 @@ public class HospitalRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response createRoom(RoomInfoRequest room) {
     Response response = null;
-    System.out.println(room);
     try{
       Hospital hospital = hospitalService.get(room.getHospitalId());
       HospitalRoom hospRoom = new HospitalRoom();
@@ -175,13 +174,29 @@ public class HospitalRestService extends BaseRestService {
       hospRoom.setStatus(room.getStatus());
 
       hospitalRoomService.insert(hospRoom);
-      response = RESTfulUtil.getOk(room);
+      response = RESTfulUtil.getOk(hospRoom);
     }catch (Exception e){
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getInternalServerError();
     }
     return response;
   }
+
+
+  @GET
+  @Path("/rooms")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response getAllRooms() {
+    Response response;
+    try {
+      response = RESTfulUtil.getOk(hospitalRoomService.getAll());
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+  
 
   @GET
   @Path("/rooms/{roomId}")
