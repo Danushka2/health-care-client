@@ -7,6 +7,7 @@ import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.patientapi.domain.Patient;
 import lk.elevenzcode.healthcare.patientapi.domain.PatientStatus;
 import lk.elevenzcode.healthcare.patientapi.service.PatientService;
+import lk.elevenzcode.healthcare.patientapi.service.impl.PatientServiceImpl;
 import lk.elevenzcode.healthcare.patientapi.service.integration.AppointmentIntegrationService;
 import lk.elevenzcode.healthcare.patientapi.service.integration.dto.AppointmentInfo;
 import lk.elevenzcode.healthcare.patientapi.web.dto.PatientRegisterDto;
@@ -43,6 +44,9 @@ public class PatientRestService extends BaseRestService {
   @Autowired
   private AppointmentIntegrationService appointmentIntegrationService;
 
+  @Autowired
+  private PatientServiceImpl patientre;
+
   @GET
   @Path("/heartbeat")
   @Produces(value = MediaType.TEXT_PLAIN)
@@ -77,26 +81,27 @@ public class PatientRestService extends BaseRestService {
     return response;
   }
 
+
+
+
+//give all patient information
   @GET
-  @Produces(value = MediaType.APPLICATION_JSON)
-  public Response getAll() {
-    Response response;
-    try {
-      response = RESTfulUtil.getOk(patientService.getAll());
-    } catch (ServiceException e) {
-      LOGGER.error(e.getMessage(), e);
-      response = RESTfulUtil.getInternalServerError();
-    }
-    return response;
+  @Path("/read")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getPatient() throws ServiceException {
+    return RESTfulUtil.getOk(patientService.findAll());
   }
 
+
+
+  // return information by given id
   @GET
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)
-  public Response getById(@PathParam("id") int id) {
+  public Response getByPatientId(@PathParam("id") int id) {
     Response response;
     try {
-      response = RESTfulUtil.getOk(patientService.get(id));
+      response = RESTfulUtil.getOk(patientService.getPatientById(id));
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
       if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
@@ -108,6 +113,10 @@ public class PatientRestService extends BaseRestService {
     return response;
   }
 
+
+
+
+//update patient details for given id
   @PUT
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)

@@ -33,8 +33,16 @@ public class PatientServiceImpl extends GenericServiceImpl<Patient> implements P
     init(patientRepository);
   }
 
+
   @Override
-  public Patient get(Integer id) throws ServiceException {
+  public Iterable<Patient> findAll() {
+    Iterable<Patient> patients = patientRepository.findAll();
+    return patients;
+  }
+
+
+  @Override
+  public Patient getPatientById(Integer id) throws ServiceException {
     Patient patient = patientRepository.findByIdAndStatusIdIsNot(id, PatientStatus.STATUS_DELETED);
     if (patient != null) {
       return patient;
@@ -71,4 +79,6 @@ public class PatientServiceImpl extends GenericServiceImpl<Patient> implements P
 
     return patient.getId();
   }
+
+
 }
