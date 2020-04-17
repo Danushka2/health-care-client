@@ -6,7 +6,6 @@ import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.patientapi.domain.Patient;
 import lk.elevenzcode.healthcare.patientapi.domain.PatientStatus;
-import lk.elevenzcode.healthcare.patientapi.repository.PatientRepository;
 import lk.elevenzcode.healthcare.patientapi.service.PatientService;
 import lk.elevenzcode.healthcare.patientapi.service.impl.PatientServiceImpl;
 import lk.elevenzcode.healthcare.patientapi.service.integration.AppointmentIntegrationService;
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +43,9 @@ public class PatientRestService extends BaseRestService {
 
   @Autowired
   private AppointmentIntegrationService appointmentIntegrationService;
+
+  @Autowired
+  private PatientServiceImpl patientre;
 
   @GET
   @Path("/heartbeat")
@@ -81,19 +82,41 @@ public class PatientRestService extends BaseRestService {
   }
 
 
-  @Autowired
-  private PatientServiceImpl patientre;
 
-  @GetMapping("/readall")
-  public List<Patient> getAll() throws ServiceException {
-    return patientre.getAll();
+
+//give all patient information
+  @GET
+  @Path("/read")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getPatient() throws ServiceException {
+    return RESTfulUtil.getOk(patientService.findAll());
+  }
+
+
+
+  // return information by given id
+  @GET
+  @Path("/{id}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response getByPatientId(@PathParam("id") int id) {
+    Response response;
+    try {
+      response = RESTfulUtil.getOk(patientService.getPatientById(id));
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
+        response = RESTfulUtil.getNotFound();
+      } else {
+        response = RESTfulUtil.getInternalServerError();
+      }
+    }
+    return response;
   }
 
 
 
 
-
-
+//update patient details for given id
   @PUT
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)
