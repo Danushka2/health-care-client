@@ -213,13 +213,13 @@ public class DoctorRestService extends BaseRestService {
       if (doctorSession != null) {
         DoctorSessionResp doctorSessionResp = new DoctorSessionResp();
         doctorSessionResp.setRoom(hospitalIntegrationService.getByRoomId(doctorSession.getRoomId()));
-        doctorSessionResp.setDoctor(doctorSessionResp.getDoctor());
-        doctorSessionResp.setFrom(doctorSessionResp.getFrom());
-        doctorSessionResp.setTo(doctorSessionResp.getTo());
+        doctorSessionResp.setDoctor(doctorSession.getDoctor());
+        doctorSessionResp.setFrom(doctorSession.getFrom());
+        doctorSessionResp.setTo(doctorSession.getTo());
         final DoctorHospital doctorHospital = doctorHospitalService.get(doctorSession.getDoctor()
             .getId(), doctorSessionResp.getRoom().getHospital().getId());
         doctorSessionResp.setDocFee(doctorHospital.getDoctorFee());
-        doctorSessionResp.setStatus(doctorSessionResp.getStatus());
+        doctorSessionResp.setStatus(doctorSession.getStatus());
         response = RESTfulUtil.getOk(doctorSessionResp);
       } else {
         response = RESTfulUtil.getNotFound();

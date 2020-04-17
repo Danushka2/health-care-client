@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <style>
+        .appointment-container {
+            font-family: Nunito, sans-serif;
+            font-size: .875rem;
+            color: #8492a6;
+        }
+
+        .appointment-container .logo {
+            height: 239px;
+            width: 254px;
+        }
+
+        .appointment-container .title {
+            text-transform: uppercase;
+        }
+
+        table tr td {
+            font-size: 15px;
+            text-align: start;
+            vertical-align: top;
+        }
+
+        .heading {
+            min-width: 150px;
+            font-weight: bold;
+            color: #696666 !important;
+        }
+
+        .separator {
+            min-width: 15px;
+        }
+
+        .align-right {
+            text-align: end;
+        }
+
+        .mw100 {
+            min-width: 100px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="appointment-container">
+    <img class="logo" src="https://i.ibb.co/6vRPk2f/logo.png"/>
+    <h2 class="title">Appointment Receipt</h2>
+    <h3>Appointment Details</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td class="heading">Reference Number</td>
+            <td class="separator">:</td>
+            <td th:text="${ref}"></td>
+        </tr>
+        <tr>
+            <td class="heading">Date</td>
+            <td class="separator">:</td>
+            <td th:text="${apptDate}"></td>
+        </tr>
+        <tr>
+            <td class="heading">Time</td>
+            <td class="separator">:</td>
+            <td th:text="${apptTime}"></td>
+        </tr>
+        <tr>
+            <td class="heading">Fee (LKR)</td>
+            <td class="separator">:</td>
+            <td>
+                <table>
+                    <tr>
+                        <td class="heading mw100">Doctor Fee</td>
+                        <td class="separator">:</td>
+                        <td class="align-right" th:text="${docFee}"></td>
+                    </tr>
+                    <tr>
+                        <td class="heading mw100">Hospital Fee</td>
+                        <td class="separator">:</td>
+                        <td class="align-right" th:text="${hospFee}"></td>
+                    </tr>
+                    <tr>
+                        <td class="heading mw100">Total Fee</td>
+                        <td class="separator">:</td>
+                        <td class="align-right" th:text="${totFee}"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Patient Details</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td class="heading">Name</td>
+            <td class="separator">:</td>
+            <td th:text="${ptName}"></td>
+        </tr>
+        <tr>
+            <td class="heading">Age</td>
+            <td class="separator">:</td>
+            <td th:text="${ptAge}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Doctor Details</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td class="heading">Name</td>
+            <td class="separator">:</td>
+            <td th:text="${docName}"></td>
+        </tr>
+        <tr>
+            <td class="heading">Specialization</td>
+            <td class="separator">:</td>
+            <td th:text="${docSpec}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Hospital Details</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td class="heading">Name</td>
+            <td class="separator">:</td>
+            <td th:text="${hospName}"></td>
+        </tr>
+        <tr>
+            <td class="heading">Address</td>
+            <td class="separator">:</td>
+            <td>
+                <a th:href="@{maps.google.com/(q=${hospAddress})}" th:text="${hospAddress}"></a>
+            </td>
+        </tr>
+        <tr>
+            <td class="heading">Contact No</td>
+            <td class="separator">:</td>
+            <td th:text="${hospContactNo}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

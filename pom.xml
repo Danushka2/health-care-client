@@ -42,42 +42,42 @@
         <api.payment.url>http://localhost:8086</api.payment.url>
         <!--Auth API DB Properties-->
         <auth.api.jdbc.url>
-            jdbc:mysql://localhost:3306/sch_auth?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
+            jdbc:mysql://localhost:3306/sch_auth?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Colombo
         </auth.api.jdbc.url>
         <auth.api.jdbc.username>usr_auth</auth.api.jdbc.username>
         <auth.api.jdbc.password>Auth@HealthCare</auth.api.jdbc.password>
 
         <!--Hospital API DB Properties-->
         <hospital.api.jdbc.url>
-            jdbc:mysql://localhost:3306/sch_hospital?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
+            jdbc:mysql://localhost:3306/sch_hospital?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Colombo
         </hospital.api.jdbc.url>
         <hospital.api.jdbc.username>usr_hosp</hospital.api.jdbc.username>
         <hospital.api.jdbc.password>Hops@HealthCare</hospital.api.jdbc.password>
 
         <!--Doctor API DB Properties-->
         <doctor.api.jdbc.url>
-            jdbc:mysql://localhost:3306/sch_doctor?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
+            jdbc:mysql://localhost:3306/sch_doctor?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Colombo
         </doctor.api.jdbc.url>
         <doctor.api.jdbc.username>usr_doc</doctor.api.jdbc.username>
         <doctor.api.jdbc.password>Doc@HealthCare</doctor.api.jdbc.password>
 
         <!--Patient API DB Properties-->
         <patient.api.jdbc.url>
-            jdbc:mysql://localhost:3306/sch_patient?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
+            jdbc:mysql://localhost:3306/sch_patient?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Colombo
         </patient.api.jdbc.url>
         <patient.api.jdbc.username>usr_pt</patient.api.jdbc.username>
         <patient.api.jdbc.password>Pt@HealthCare</patient.api.jdbc.password>
 
         <!--Appointment API DB Properties-->
         <appointment.api.jdbc.url>
-            jdbc:mysql://localhost:3306/sch_appointment?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
+            jdbc:mysql://localhost:3306/sch_appointment?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Colombo
         </appointment.api.jdbc.url>
         <appointment.api.jdbc.username>usr_appt</appointment.api.jdbc.username>
         <appointment.api.jdbc.password>Appt@HealthCare</appointment.api.jdbc.password>
 
         <!--Payment API DB Properties-->
         <payment.api.jdbc.url>
-            jdbc:mysql://localhost:3306/sch_payment?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC
+            jdbc:mysql://localhost:3306/sch_payment?useEncoding=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Colombo
         </payment.api.jdbc.url>
         <payment.api.jdbc.username>usr_pay</payment.api.jdbc.username>
         <payment.api.jdbc.password>Pay@HealthCare</payment.api.jdbc.password>

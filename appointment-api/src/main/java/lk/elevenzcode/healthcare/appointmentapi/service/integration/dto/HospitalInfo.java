@@ -9,7 +9,7 @@ import lk.elevenzcode.healthcare.commons.util.JsonUtil;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HospitalInfo {
   private Integer id;
-  private String name;
+  private String name, address, tel;
 
   public Integer getId() {
     return id;
@@ -25,6 +25,22 @@ public class HospitalInfo {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getTel() {
+    return tel;
+  }
+
+  public void setTel(String tel) {
+    this.tel = tel;
   }
 
   @Override

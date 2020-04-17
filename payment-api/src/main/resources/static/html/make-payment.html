@@ -1,0 +1,225 @@
+<html>
+<head>
+    <title>Make Payment</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.2.1.slim.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        #payment-form-container {
+            width: 500px;
+        }
+
+        #payment-form {
+            padding: 25px;
+        }
+
+        #payment-form #clientSecret {
+            margin-bottom: 15px;
+        }
+
+        #payment-form #submit {
+            margin-top: 15px;
+        }
+
+        #test-cards-container {
+            width: 700px;
+        }
+
+        #payment-form-container, #test-cards-container {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card-number span {
+            display: inline-block;
+            width: 8px;
+        }
+
+        .error {
+            color: #d9534f;
+            margin-top: 5px;
+        }
+
+        #payIntentId {
+            color: #5cb85c;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="payment-form-container">
+    <form id="payment-form">
+        <input id="clientSecret" type="text" class="form-control" placeholder="Client Secret"
+               required>
+        <div id="card-element">
+            <!-- Elements will create input elements here -->
+        </div>
+
+        <!-- We'll put the error messages in this element -->
+        <div id="card-errors" role="alert" class="error"></div>
+
+        <center>
+            <button id="submit" class="btn btn-primary" type="submit">Pay</button>
+        </center>
+    </form>
+</div>
+<center>
+    <div id="payIntentId"></div>
+</center>
+<div id="test-cards-container">
+    <h2>Test Cards</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Number</th>
+            <th>Brand</th>
+            <th>CVC</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="card-number">4242<span></span>4242<span></span>4242<span></span>4242</td>
+            <td>Visa</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">4000<span></span>0566<span></span>5566<span></span>5556</td>
+            <td>Visa (debit)</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">5555<span></span>5555<span></span>5555<span></span>4444</td>
+            <td>Mastercard</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">2223<span></span>0031<span></span>2200<span></span>3222</td>
+            <td>Mastercard (2-series)</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">5200<span></span>8282<span></span>8282<span></span>8210</td>
+            <td>Mastercard (debit)</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">5105<span></span>1051<span></span>0510<span></span>5100</td>
+            <td>Mastercard (prepaid)</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">3782<span></span>822463<span></span>10005</td>
+            <td>American Express</td>
+            <td>Any 4 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">3714<span></span>496353<span></span>98431</td>
+            <td>American Express</td>
+            <td>Any 4 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">6011<span></span>1111<span></span>1111<span></span>1117</td>
+            <td>Discover</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">6011<span></span>0009<span></span>9013<span></span>9424</td>
+            <td>Discover</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">3056<span></span>9300<span></span>0902<span></span>0004</td>
+            <td>Diners Club</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">3622<span></span>7206<span></span>2716<span></span>67</td>
+            <td>Diners Club (14 digit card)</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">3566<span></span>0020<span></span>2036<span></span>0505</td>
+            <td>JCB</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        <tr>
+            <td class="card-number">6200<span></span>0000<span></span>0000<span></span>0005</td>
+            <td>UnionPay</td>
+            <td>Any 3 digits</td>
+            <td>Any future date</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    var stripe = Stripe('pk_test_ZihsequdXDHlLpxAmYjzqCUE00cujjwpI9');
+    var elements = stripe.elements();
+
+    // Set up Stripe.js and Elements to use in checkout form
+    var style = {
+        base: {
+            color: "#32325d",
+        }
+    };
+
+    var card = elements.create("card", {style: style});
+    card.mount("#card-element");
+
+    card.addEventListener('change', ({error}) => {
+        const displayError = document.getElementById('card-errors');
+        if (error) {
+            displayError.textContent = error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    var form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        $('#payIntentId').empty();
+        $('#submit').prop("disabled", true);
+        $('#submit').html('Processing...');
+        stripe.confirmCardPayment($('#clientSecret').val(), {
+            payment_method: {
+                card: card
+            }
+        }).then(function (result) {
+            $('#submit').html('Pay');
+            $('#submit').removeAttr("disabled");
+            if (result.error) {
+                $('#card-errors').html(result.error.message +
+                    "<br>Note: You may try make payment using same client secret, Please initiate the payment first.");
+            } else {
+                $('#payIntentId + .alert').remove();
+                if (result.paymentIntent.status === 'succeeded') {
+                    console.log('result - ', result);
+                    $('#payIntentId').html('Use this id as <b>paymentIntentId</b> to complete the payment : <b>' + result.paymentIntent.id + '</b>');
+                }
+            }
+        });
+    });
+
+    $('#clientSecret').on('change', function () {
+        $('#card-errors').empty();
+    });
+</script>
+</body>
+</html>

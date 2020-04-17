@@ -39,11 +39,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.requestMatchers()
+    http.authorizeRequests()
+        .antMatchers("/oauth/**", "/payments/js/**", "/payments/css/**", "/payments/html/**")
+        .permitAll()
         .and()
         .authorizeRequests()
-        .antMatchers("/oauth/**", "/payments/js/**")
-        .permitAll()
         .antMatchers("/**")
         .authenticated();
   }

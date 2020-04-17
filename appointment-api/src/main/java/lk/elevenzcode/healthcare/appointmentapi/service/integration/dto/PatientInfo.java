@@ -9,7 +9,8 @@ import lk.elevenzcode.healthcare.commons.util.JsonUtil;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PatientInfo {
   private Integer id;
-  private String name;
+  private String name, email;
+  private short age;
 
   public Integer getId() {
     return id;
@@ -25,6 +26,22 @@ public class PatientInfo {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public short getAge() {
+    return age;
+  }
+
+  public void setAge(short age) {
+    this.age = age;
   }
 
   @Override
