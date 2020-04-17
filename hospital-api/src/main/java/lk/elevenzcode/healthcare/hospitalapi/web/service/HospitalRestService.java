@@ -257,5 +257,24 @@ public class HospitalRestService extends BaseRestService {
   }
 
 
+  @DELETE
+  @Path("/rooms/{id}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response deleteRoomById(@PathParam("id") int id) {
+    Response response;
+    try {
+      HospitalRoom hospitalRoom = hospitalRoomService.get(id);
+      hospitalRoom.setStatus((short) 3);
+      hospitalRoomService.update(hospitalRoom);
+      response = RESTfulUtil.getOk("deleted");
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getNotFound();
+
+    }
+    return response;
+  }
+
+
 
 }
