@@ -12,6 +12,7 @@ import lk.elevenzcode.healthcare.hospitalapi.service.integration.DoctorIntegrati
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.AppointmentInfo;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.DoctorInfo;
 import lk.elevenzcode.healthcare.hospitalapi.web.dto.HospitalInfoResp;
+import lk.elevenzcode.healthcare.hospitalapi.web.dto.RoomInfoRequest;
 import lk.elevenzcode.healthcare.hospitalapi.web.dto.RoomInfoResp;
 import lk.elevenzcode.healthcare.hospitalapi.web.util.Constant;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -111,8 +113,14 @@ public class HospitalRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response getById(@PathParam("id") int id) {
     Response response;
+    Hospital hospital;
     try {
-      response = RESTfulUtil.getOk(hospitalService.get(id));
+      hospital = hospitalService.get(id);
+      if (hospital != null) {
+        response = RESTfulUtil.getOk(hospital);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
       if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
@@ -135,7 +143,6 @@ public class HospitalRestService extends BaseRestService {
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getNotFound();
-
     }
     return response;
   }
@@ -155,6 +162,51 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
+  @POST
+  @Path("/rooms")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response createRoom(RoomInfoRequest room) {
+    Response response = null;
+    try{
+      Hospital hospital = hospitalService.get(room.getHospitalId());
+      HospitalRoom hospRoom = new HospitalRoom();
+
+      if (hospital != null) {
+        hospRoom.setHospital(hospital);
+        hospRoom.setRoomNo(room.getRoomNo());
+        hospRoom.setLocation(room.getLocation());
+        hospRoom.setFee(room.getRoomFee());
+        hospRoom.setStatus(room.getStatus());
+
+        hospitalRoomService.insert(hospRoom);
+        response = RESTfulUtil.getOk(hospRoom);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
+
+    }catch (Exception e){
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
+
+  @GET
+  @Path("/rooms")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response getAllRooms() {
+    Response response;
+    try {
+      response = RESTfulUtil.getOk(hospitalRoomService.getAll());
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
 
   @GET
   @Path("/rooms/{roomId}")
@@ -187,5 +239,57 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
+
+  @PUT
+  @Path("/rooms/{id}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response updateHospitalRoom(@PathParam("id") int id, RoomInfoRequest room) {
+    Response response = null;
+    try{
+      Hospital hospital = hospitalService.get(room.getHospitalId());
+      HospitalRoom hospRoom = new HospitalRoom();
+
+      if (hospital != null) {
+        hospRoom.setId(id);
+        hospRoom.setHospital(hospital);
+        hospRoom.setRoomNo(room.getRoomNo());
+        hospRoom.setLocation(room.getLocation());
+        hospRoom.setFee(room.getRoomFee());
+        hospRoom.setStatus(room.getStatus());
+
+        hospitalRoomService.update(hospRoom);
+        response = RESTfulUtil.getOk(hospRoom);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
+
+    }catch (Exception e){
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
+
+  @DELETE
+  @Path("/rooms/{id}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response deleteRoomById(@PathParam("id") int id) {
+    Response response;
+    try {
+      HospitalRoom hospitalRoom = hospitalRoomService.get(id);
+      hospitalRoom.setStatus((short) 3);
+      hospitalRoomService.update(hospitalRoom);
+      response = RESTfulUtil.getOk("deleted");
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getNotFound();
+
+    }
+    return response;
+  }
+
+
 
 }

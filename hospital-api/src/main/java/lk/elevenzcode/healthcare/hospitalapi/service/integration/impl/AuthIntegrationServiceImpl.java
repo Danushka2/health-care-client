@@ -14,9 +14,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
-/**
- * Created by හShaන් සNදීප on 4/16/2020 9:03 AM
- */
+
 @Service
 public class AuthIntegrationServiceImpl extends BaseIntegrationService implements AuthIntegrationService {
   private static final Logger LOGGER = LoggerFactory.getLogger(AppointmentIntegrationServiceImpl
