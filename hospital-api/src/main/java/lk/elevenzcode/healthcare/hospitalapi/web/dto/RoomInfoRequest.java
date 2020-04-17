@@ -3,18 +3,28 @@ package lk.elevenzcode.healthcare.hospitalapi.web.dto;
 import java.math.BigDecimal;
 
 public class RoomInfoRequest {
-  private Integer hospitalId;
+  private Integer roomId, hospitalId;
   private String roomNo, location;
   private BigDecimal roomFee;
   private Short status;
 
-  public RoomInfoRequest(Integer hospitalId, String roomNo, String location, BigDecimal roomFee,
+  public RoomInfoRequest(Integer roomId, Integer hospitalId, String roomNo, String location,
+                         BigDecimal roomFee,
                          Short status) {
+    this.roomId = roomId;
     this.hospitalId = hospitalId;
     this.roomNo = roomNo;
     this.location = location;
     this.roomFee = roomFee;
     this.status = status;
+  }
+
+  public Integer getRoomId() {
+    return roomId;
+  }
+
+  public void setRoomId(Integer roomId) {
+    this.roomId = roomId;
   }
 
   public Integer getHospitalId() {

@@ -196,7 +196,7 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
-  
+
 
   @GET
   @Path("/rooms/{roomId}")
@@ -229,5 +229,33 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
+
+  @PUT
+  @Path("/rooms/{id}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response updateHospitalRoom(@PathParam("id") int id, RoomInfoRequest room) {
+    Response response = null;
+    try{
+      Hospital hospital = hospitalService.get(room.getHospitalId());
+      HospitalRoom hospRoom = new HospitalRoom();
+
+      hospRoom.setId(id);
+      hospRoom.setHospital(hospital);
+      hospRoom.setRoomNo(room.getRoomNo());
+      hospRoom.setLocation(room.getLocation());
+      hospRoom.setFee(room.getRoomFee());
+      hospRoom.setStatus(room.getStatus());
+
+      hospitalRoomService.update(hospRoom);
+      response = RESTfulUtil.getOk(hospRoom);
+    }catch (Exception e){
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
+
 
 }
