@@ -5,6 +5,8 @@ import lk.elevenzcode.healthcare.commons.service.impl.GenericServiceImpl;
 import lk.elevenzcode.healthcare.doctorapi.domain.DoctorHospital;
 import lk.elevenzcode.healthcare.doctorapi.repository.DoctorHospitalRepository;
 import lk.elevenzcode.healthcare.doctorapi.service.DoctorHospitalService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +17,23 @@ import javax.annotation.PostConstruct;
  */
 @Service
 public class DoctorHospitalServiceImpl extends GenericServiceImpl<DoctorHospital> implements DoctorHospitalService {
+  private static final Logger LOGGER = LoggerFactory.getLogger(DoctorHospitalServiceImpl.class);
+
   @Autowired
   private DoctorHospitalRepository doctorHospitalRepository;
 
-
   @PostConstruct
-  void init() {
+  private void init() {
     init(doctorHospitalRepository);
   }
 
-  //insert doctor service layer
-
-  public void insert(DoctorHospital domain, int doctorId, int hostpitleId) throws ServiceException {
-
-    domain.setDoctor_id(doctorId);
-    domain.setDoctor_fee(domain.getDoctor_fee());
-    domain.setHospital_id(hostpitleId);
-    doctorHospitalRepository.save(domain);
+  @Override
+  public DoctorHospital get(int doctorId, int hospitalId) throws ServiceException {
+    try {
+      return doctorHospitalRepository.findByDoctorIdAndHospitalId(doctorId, hospitalId);
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+      throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
+    }
   }
 }

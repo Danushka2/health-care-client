@@ -1,13 +1,16 @@
 package lk.elevenzcode.healthcare.doctorapi.domain;
 
 
-import java.io.Serializable;
+import lk.elevenzcode.healthcare.commons.domain.BaseDomain;
+import lk.elevenzcode.healthcare.commons.util.Constant;
+
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 
 /**
  * Created by Aravinda on 4/15/2020 7:17 PM
@@ -15,85 +18,50 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = DoctorHospital.TABLE_NAME)
-@IdClass(DoctorHospital.DoctorHospitalID.class)
-
-public class DoctorHospital implements Serializable {
+public class DoctorHospital extends BaseDomain {
   public static final String TABLE_NAME = "doctor_hospital";
 
-  @Id
+  @ManyToOne
   @JoinColumn(name = "doctor_id", nullable = false)
-  private Integer doctor_id;
+  private Doctor doctor;
 
+  @Column(name = "hospital_id", nullable = false)
+  private int hospitalId;
 
-  @Id
-  @Column(name = "hospital_id", nullable = false, length = 50)
-  private Integer hospital_id;
+  @Column(name = "doctor_free", nullable = false)
+  @Digits(integer = Constant.DEFAULT_MONEY_INT, fraction = Constant.DEFAULT_MONEY_FRAC)
+  private BigDecimal doctorFee;
 
-  private double doctor_fee;
-
-  public Integer getDoctor_id() {
-    return doctor_id;
+  public DoctorHospital() {
   }
 
-  public void setDoctor_id(Integer doctor_id) {
-    this.doctor_id = doctor_id;
+  public DoctorHospital(Doctor doctor, int hospitalId, BigDecimal doctorFee) {
+    this.doctor = doctor;
+    this.hospitalId = hospitalId;
+    this.doctorFee = doctorFee;
   }
 
-  public Integer getHospital_id() {
-    return hospital_id;
+  public Doctor getDoctor() {
+    return doctor;
   }
 
-  public void setHospital_id(Integer hospital_id) {
-    this.hospital_id = hospital_id;
+  public void setDoctor(Doctor doctor) {
+    this.doctor = doctor;
   }
 
-  public double getDoctor_fee() {
-    return doctor_fee;
+  public int getHospitalId() {
+    return hospitalId;
   }
 
-  public void setDoctor_fee(double doctor_fee) {
-    this.doctor_fee = doctor_fee;
+  public void setHospitalId(int hospitalId) {
+    this.hospitalId = hospitalId;
   }
 
-
-  public static class DoctorHospitalID implements Serializable {
-
-    private Integer doctor_id;
-    private Integer hospital_id;
-
-    public DoctorHospitalID() {
-    }
-
-    public DoctorHospitalID(Integer doctor_id, Integer hospital_id) {
-      this.doctor_id = doctor_id;
-      this.hospital_id = hospital_id;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (o == null || getClass() != o.getClass()) {
-        return false;
-      }
-
-      DoctorHospitalID that = (DoctorHospitalID) o;
-
-      if (!doctor_id.equals(that.doctor_id)) {
-        return false;
-      }
-      return hospital_id.equals(that.hospital_id);
-    }
-
-    @Override
-    public int hashCode() {
-      int result = doctor_id.hashCode();
-      result = 31 * result + hospital_id.hashCode();
-      return result;
-    }
+  public BigDecimal getDoctorFee() {
+    return doctorFee;
   }
 
-
+  public void setDoctorFee(BigDecimal doctorFee) {
+    this.doctorFee = doctorFee;
+  }
 }

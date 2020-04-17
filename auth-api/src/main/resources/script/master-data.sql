@@ -1,8 +1,6 @@
 USE sch_auth;
 
-DELETE
-FROM oauth_client_details
-WHERE 1 = 1;
+DELETE FROM oauth_client_details WHERE 1 = 1;
 
 -- The encrypted client_secret it `secret`
 INSERT INTO oauth_client_details (client_id, client_secret, scope, authorized_grant_types,authorities, access_token_validity) VALUES ('client', '{bcrypt}$2a$10$HCAzE/AaRy8PvB/yML8eneoeXlt72sCRo5UsutuFum68dJLG.dYLi','read,write', 'password,refresh_token,client_credentials', 'ROLE_CLIENT', 300),('hospital-api','{bcrypt}$2a$10$FYTANNqzZqI7ZzS5eiV/Fu3JbZkrjEMr9/IXewyY7cus1MpajHHvq','read,write', 'password,refresh_token,client_credentials', 'ROLE_CLIENT', 300),('doctor-api','{bcrypt}$2a$10$qhsUMd3OfEn1xRk3osB1Iu8jwqnU9xKLfdS8uJA15mEJxHJxoLRvO','read,write', 'password,refresh_token,client_credentials', 'ROLE_CLIENT', 300),('patient-api','{bcrypt}$2a$10$XNjMMXPDiMk2KadFwZbl2e9LBcv8PDt5qsHsL6mYh6lr2qWMboKhK','read,write', 'password,refresh_token,client_credentials', 'ROLE_CLIENT', 300),('appointment-api','{bcrypt}$2a$10$8APcZGMyrr9w7CxZjjQtme/MpzQu0KtNU0mHbQ1cI2TSOxn3kFlwG','read,write', 'password,refresh_token,client_credentials', 'ROLE_CLIENT', 300),('payment-api','{bcrypt}$2a$10$aZOYlVmToSFlbjrOGSsY6uq/.MwfRG7PcpKvSvX.wv0Eh/SoUiNYe','read,write', 'password,refresh_token,client_credentials', 'ROLE_CLIENT', 300);
@@ -28,21 +26,9 @@ INSERT INTO user_type_authority(type, authority) VALUES(4, 'ROLE_GET_ALL_HOSP'),
 
 -- DELETE FROM `authorities` WHERE username IN ('api', 'appointment-api', 'doctor-api', 'hospital-api', 'patient-api', 'payment-api');
 
-INSERT INTO `authorities`(username, authority)
-SELECT DISTINCT 'api', authority
-FROM user_type_authority;
-INSERT INTO `authorities`(username, authority)
-SELECT DISTINCT 'appointment-api', authority
-FROM user_type_authority;
-INSERT INTO `authorities`(username, authority)
-SELECT DISTINCT 'doctor-api', authority
-FROM user_type_authority;
-INSERT INTO `authorities`(username, authority)
-SELECT DISTINCT 'hospital-api', authority
-FROM user_type_authority;
-INSERT INTO `authorities`(username, authority)
-SELECT DISTINCT 'patient-api', authority
-FROM user_type_authority;
-INSERT INTO `authorities`(username, authority)
-SELECT DISTINCT 'payment-api', authority
-FROM user_type_authority;
+INSERT INTO `authorities`(username, authority) SELECT DISTINCT 'api', authority FROM user_type_authority;
+INSERT INTO `authorities`(username, authority) SELECT DISTINCT 'appointment-api', authority FROM user_type_authority;
+INSERT INTO `authorities`(username, authority) SELECT DISTINCT 'doctor-api', authority FROM user_type_authority;
+INSERT INTO `authorities`(username, authority) SELECT DISTINCT 'hospital-api', authority FROM user_type_authority;
+INSERT INTO `authorities`(username, authority) SELECT DISTINCT 'patient-api', authority FROM user_type_authority;
+INSERT INTO `authorities`(username, authority) SELECT DISTINCT 'payment-api', authority FROM user_type_authority;
