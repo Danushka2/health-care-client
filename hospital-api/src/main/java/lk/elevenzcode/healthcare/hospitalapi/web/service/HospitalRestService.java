@@ -113,8 +113,14 @@ public class HospitalRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response getById(@PathParam("id") int id) {
     Response response;
+    Hospital hospital;
     try {
-      response = RESTfulUtil.getOk(hospitalService.get(id));
+      hospital = hospitalService.get(id);
+      if (hospital != null) {
+        response = RESTfulUtil.getOk(hospital);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
       if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
@@ -137,7 +143,6 @@ public class HospitalRestService extends BaseRestService {
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getNotFound();
-
     }
     return response;
   }
@@ -167,14 +172,19 @@ public class HospitalRestService extends BaseRestService {
       Hospital hospital = hospitalService.get(room.getHospitalId());
       HospitalRoom hospRoom = new HospitalRoom();
 
-      hospRoom.setHospital(hospital);
-      hospRoom.setRoomNo(room.getRoomNo());
-      hospRoom.setLocation(room.getLocation());
-      hospRoom.setFee(room.getRoomFee());
-      hospRoom.setStatus(room.getStatus());
+      if (hospital != null) {
+        hospRoom.setHospital(hospital);
+        hospRoom.setRoomNo(room.getRoomNo());
+        hospRoom.setLocation(room.getLocation());
+        hospRoom.setFee(room.getRoomFee());
+        hospRoom.setStatus(room.getStatus());
 
-      hospitalRoomService.insert(hospRoom);
-      response = RESTfulUtil.getOk(hospRoom);
+        hospitalRoomService.insert(hospRoom);
+        response = RESTfulUtil.getOk(hospRoom);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
+
     }catch (Exception e){
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getInternalServerError();
@@ -240,15 +250,20 @@ public class HospitalRestService extends BaseRestService {
       Hospital hospital = hospitalService.get(room.getHospitalId());
       HospitalRoom hospRoom = new HospitalRoom();
 
-      hospRoom.setId(id);
-      hospRoom.setHospital(hospital);
-      hospRoom.setRoomNo(room.getRoomNo());
-      hospRoom.setLocation(room.getLocation());
-      hospRoom.setFee(room.getRoomFee());
-      hospRoom.setStatus(room.getStatus());
+      if (hospital != null) {
+        hospRoom.setId(id);
+        hospRoom.setHospital(hospital);
+        hospRoom.setRoomNo(room.getRoomNo());
+        hospRoom.setLocation(room.getLocation());
+        hospRoom.setFee(room.getRoomFee());
+        hospRoom.setStatus(room.getStatus());
 
-      hospitalRoomService.update(hospRoom);
-      response = RESTfulUtil.getOk(hospRoom);
+        hospitalRoomService.update(hospRoom);
+        response = RESTfulUtil.getOk(hospRoom);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
+
     }catch (Exception e){
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getInternalServerError();
