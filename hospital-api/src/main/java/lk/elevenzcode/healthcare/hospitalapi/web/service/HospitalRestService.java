@@ -12,6 +12,7 @@ import lk.elevenzcode.healthcare.hospitalapi.service.integration.DoctorIntegrati
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.AppointmentInfo;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.DoctorInfo;
 import lk.elevenzcode.healthcare.hospitalapi.web.dto.HospitalInfoResp;
+import lk.elevenzcode.healthcare.hospitalapi.web.dto.RoomInfoRequest;
 import lk.elevenzcode.healthcare.hospitalapi.web.dto.RoomInfoResp;
 import lk.elevenzcode.healthcare.hospitalapi.web.util.Constant;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -159,20 +161,22 @@ public class HospitalRestService extends BaseRestService {
   @POST
   @Path("/rooms")
   @Produces(value = MediaType.APPLICATION_JSON)
-  public Response createRoom(HospitalRoom room) {
+  public Response createRoom(RoomInfoRequest room) {
     Response response = null;
+    System.out.println(room);
     try{
-      Hospital hospital = hospitalService.get(2);
-      room.setHospital(hospitalService.get(2));
-    }catch (Exception e){
-      System.out.println("testing e");
-    }
+      Hospital hospital = hospitalService.get(room.getHospitalId());
+      HospitalRoom hospRoom = new HospitalRoom();
 
+      hospRoom.setHospital(hospital);
+      hospRoom.setRoomNo(room.getRoomNo());
+      hospRoom.setLocation(room.getLocation());
+      hospRoom.setFee(room.getRoomFee());
+      hospRoom.setStatus(room.getStatus());
 
-    try {
-      hospitalRoomService.insert(room);
+      hospitalRoomService.insert(hospRoom);
       response = RESTfulUtil.getOk(room);
-    } catch (Exception e) {
+    }catch (Exception e){
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getInternalServerError();
     }
