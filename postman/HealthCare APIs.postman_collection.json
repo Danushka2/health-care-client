@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f38b02a1-18f3-4075-8b20-cc46dfe9ee6c",
+		"_postman_id": "75a36439-5247-436a-ae28-94e516fd5c73",
 		"name": "HealthCare APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -658,82 +658,6 @@
 					},
 					"response": [
 						{
-							"name": "Register Hospital - Nawaloka Hospitals",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"hospitalName\" : \"Nawaloka Hospitals\",\n\t\"hospitalAddress\" : \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n\t\"hospitalEmail\" : \"nawaloka@slt.lk\",\n\t\"hospitalType\" : \"Private\",\n\t\"hospitalStatus\" : \"Active\",\n\t\"hospitalFax\" : \"0112430393\",\n\t\"hospitalTell\" : \"0115577111\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/hospitals",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"hospitals"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Thu, 16 Apr 2020 13:00:05 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"id\": 1,\n    \"hospitalName\": \"Nawaloka Hospitals\",\n    \"hospitalAddress\": \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n    \"hospitalEmail\": \"nawaloka@slt.lk\",\n    \"hospitalType\": \"Private\",\n    \"hospitalStatus\": \"Active\",\n    \"hospitalFax\": \"0112430393\",\n    \"hospitalTell\": \"0115577111\",\n    \"userId\": null\n}"
-						},
-						{
 							"name": "Register Hospital - Lanka Hospitals",
 							"originalRequest": {
 								"method": "POST",
@@ -808,6 +732,82 @@
 							],
 							"cookie": [],
 							"body": "{\r\n    \"id\": 2,\r\n    \"hospitalName\": \"Lanka Hospitals\",\r\n    \"hospitalAddress\": \"578 Elvitigala Mawatha, Colombo\",\r\n    \"hospitalEmail\": \"info@lankahospitals.com\",\r\n    \"hospitalType\": \"Private\",\r\n    \"hospitalStatus\": \"Active\",\r\n    \"hospitalFax\": \"0114511199\",\r\n    \"hospitalTell\": \"0115430000\",\r\n    \"userId\": null\r\n}"
+						},
+						{
+							"name": "Register Hospital - Nawaloka Hospitals",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"hospitalName\" : \"Nawaloka Hospitals\",\n\t\"hospitalAddress\" : \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n\t\"hospitalEmail\" : \"nawaloka@slt.lk\",\n\t\"hospitalType\" : \"Private\",\n\t\"hospitalStatus\" : \"Active\",\n\t\"hospitalFax\" : \"0112430393\",\n\t\"hospitalTell\" : \"0115577111\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/hospitals",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"hospitals"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 13:00:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"hospitalName\": \"Nawaloka Hospitals\",\n    \"hospitalAddress\": \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n    \"hospitalEmail\": \"nawaloka@slt.lk\",\n    \"hospitalType\": \"Private\",\n    \"hospitalStatus\": \"Active\",\n    \"hospitalFax\": \"0112430393\",\n    \"hospitalTell\": \"0115577111\",\n    \"userId\": null\n}"
 						}
 					]
 				},
@@ -1797,6 +1797,99 @@
 					]
 				},
 				{
+					"name": "Get One Doctor ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/doctors/1",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"doctors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update One Doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"specialization\" : \"Cardiologists\",\n\t\"name\" : \"Dr. A.S.L rathnapala 1\",\n\t\"tel\" : \"0702378999\",\n\t\"email\" : \"liyanarachchi@gmail.com\",\n\t\"status\" : \"Active\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{client_base_url}}/doctors/1",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"doctors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete One Doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/doctors/1",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"doctors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Assign Doctor to Hospital",
 					"request": {
 						"auth": {
@@ -1910,6 +2003,104 @@
 							"body": ""
 						}
 					]
+				},
+				{
+					"name": "Get Doctor Hospital ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/doctors/1/hospitals",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"doctors",
+								"1",
+								"hospitals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Doctor sessions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"doctorFee\" : 1500.00,\r\n\t\"roomId\":1,\r\n\t\"from\":\"20:00:00\",\r\n\t\"to\":\"21:00:00\"\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{client_base_url}}/doctors/1/hospitals/sessions",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"doctors",
+								"1",
+								"hospitals",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get doctor sessions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/doctors/1/hospitals/sessions",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"doctors",
+								"1",
+								"hospitals",
+								"sessions"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -2787,83 +2978,6 @@
 					},
 					"response": [
 						{
-							"name": "Init Payment",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"appointmentId\" : {{appointment_id}}\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/payments/init",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"payments",
-										"init"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Thu, 16 Apr 2020 14:07:55 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"hasError\": false,\n    \"error\": null,\n    \"body\": {\n        \"clientSecret\": \"pi_1GYYNjGpCPBiNXLXpKLSlB4z_secret_ftPwRpIyPzOvDPtDbgcB5uuXm\"\n    }\n}"
-						},
-						{
 							"name": "Init Payment - Trying make payment for already paid appoinment",
 							"originalRequest": {
 								"method": "POST",
@@ -2939,6 +3053,83 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"hasError\": true,\n    \"error\": \"No pending appointment available\",\n    \"body\": null\n}"
+						},
+						{
+							"name": "Init Payment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"appointmentId\" : {{appointment_id}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/payments/init",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"payments",
+										"init"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 14:07:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"hasError\": false,\n    \"error\": null,\n    \"body\": {\n        \"clientSecret\": \"pi_1GYYNjGpCPBiNXLXpKLSlB4z_secret_ftPwRpIyPzOvDPtDbgcB5uuXm\"\n    }\n}"
 						}
 					]
 				},

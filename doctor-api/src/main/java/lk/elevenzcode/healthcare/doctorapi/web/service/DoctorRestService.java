@@ -223,7 +223,6 @@ public class DoctorRestService extends BaseRestService {
     return response;
   }
 
-
   //get doctor's session
   @GET
   @Path("/{doctorId}/hospitals/sessions")
