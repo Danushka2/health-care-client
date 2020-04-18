@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "75a36439-5247-436a-ae28-94e516fd5c73",
+		"_postman_id": "17130535-cd42-4b4d-88ff-6efe615fb3c6",
 		"name": "HealthCare APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1468,6 +1468,35 @@
 								"hospitals",
 								"rooms",
 								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hospital Doctors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/hospitals/doctors/2",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"hospitals",
+								"doctors",
+								"2"
 							]
 						}
 					},
