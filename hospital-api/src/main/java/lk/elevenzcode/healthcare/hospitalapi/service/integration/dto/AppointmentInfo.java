@@ -6,9 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-/**
- * Created by හShaන් සNදීප on 3/22/2020 12:09 AM
- */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AppointmentInfo {
   private Integer id;

@@ -56,31 +56,10 @@ public class HospitalRestService extends BaseRestService {
   @Produces(value = MediaType.TEXT_PLAIN)
   public String heartbeat() {
     final StringBuffer heartbeatMsg = new StringBuffer("Hospital API is online");
-    final List<DoctorInfo> doctors = new ArrayList<>()/*doctorIntegrationService.getByHospId(1)*/;
-    if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug("doctors : {}", doctors);
-    }
-    heartbeatMsg.append("\nIntegration with Doctor API : ");
-    if (doctors != null) {
-      heartbeatMsg.append("Success");
-    } else {
-      heartbeatMsg.append("Fail");
-    }
-    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService
-    .getByHospId(1)*/;
-    if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug("appointments : {}", appointments);
-    }
-    heartbeatMsg.append("\nIntegration with Appointment API : ");
-    if (appointments != null) {
-      heartbeatMsg.append("Success");
-    } else {
-      heartbeatMsg.append("Fail");
-    }
     return heartbeatMsg.toString();
   }
 
-
+  
   @POST
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response createHospital(Hospital hospital) {
@@ -95,6 +74,7 @@ public class HospitalRestService extends BaseRestService {
     return response;
   }
 
+
   @GET
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response getAll() {
@@ -107,6 +87,7 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
 
   @GET
   @Path("/{id}")
@@ -132,6 +113,7 @@ public class HospitalRestService extends BaseRestService {
     return response;
   }
 
+
   @DELETE
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)
@@ -146,6 +128,7 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
 
   @PUT
   @Path("/{id}")
@@ -162,6 +145,7 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
 
   @POST
   @Path("/rooms")
@@ -289,6 +273,35 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
+
+
+  @GET
+  @Path("/doctors/{hospId}")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response getDoctorsByHospId(@PathParam("hospId") int hospId) {
+    Response response;
+    Hospital hospital;
+    List<DoctorInfo> doctors;
+    System.out.println("Testing");
+    try {
+      hospital = hospitalService.get(hospId);
+      if (hospital != null) {
+        doctors = doctorIntegrationService.getByHospId(hospId);
+        response = RESTfulUtil.getOk(doctors);
+      } else {
+        response = RESTfulUtil.getNotFound();
+      }
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
+        response = RESTfulUtil.getNotFound();
+      } else {
+        response = RESTfulUtil.getInternalServerError();
+      }
+    }
+    return response;
+  }
+
 
 
 

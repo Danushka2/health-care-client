@@ -1,8 +1,6 @@
 package lk.elevenzcode.healthcare.hospitalapi.service.integration.dto;
 
-/**
- * Created by හShaන් සNදීප on 4/15/2020 8:43 PM
- */
+
 public class UserInfo {
   private int id;
   private String username, type;
