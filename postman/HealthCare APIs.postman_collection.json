@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5392bc64-7a79-4e8c-8179-f683336303ca",
+		"_postman_id": "d11f50fe-81b0-4765-a8d0-c50745d7c8a5",
 		"name": "HealthCare APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1900,7 +1900,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\" : \"hashan\",\n\t\"email\" : \"hashans95gmail.com\",\n\t\"phoneNo\" : \"0718761179\",\n\t\"user_name\" :  \"hashans95\",\n\t\"password\" : \"password\",\n\t\"age\" : 21\n}",
+							"raw": "{\n\t\"name\" : \"dinesh\",\n\t\"email\" : \"dinesh@gmail.com\",\n\t\"phoneNo\" : \"0714806130\",\n\t\"age\" : 25,\n    \"gender\": \"male\",\n    \"user_name\":\"dinna\",\n    \"password\":\"dinesh123\"\n   \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1995,6 +1995,127 @@
 							"body": "{\n    \"hasError\": false,\n    \"error\": null,\n    \"body\": 1\n}"
 						}
 					]
+				},
+				{
+					"name": "Get all patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/patients/read",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"patients",
+								"read"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get patient by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/patients/6",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"patients",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \r\n        \"name\": \"dineshi \",\r\n        \"email\": \"dineshi@gmail.com\",\r\n        \"phoneNumber\": \"033349642\",\r\n        \"age\": 28,\r\n        \"status\":2,\r\n        \"user_id\": 78,\r\n        \"gender\": \"female\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{client_base_url}}/patients/1",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"patients",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/patients/1",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"patients",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -2523,83 +2644,6 @@
 					},
 					"response": [
 						{
-							"name": "Init Payment",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"appointmentId\" : {{appointment_id}}\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/payments/init",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"payments",
-										"init"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Thu, 16 Apr 2020 14:07:55 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"hasError\": false,\n    \"error\": null,\n    \"body\": {\n        \"clientSecret\": \"pi_1GYYNjGpCPBiNXLXpKLSlB4z_secret_ftPwRpIyPzOvDPtDbgcB5uuXm\"\n    }\n}"
-						},
-						{
 							"name": "Init Payment - Trying make payment for already paid appoinment",
 							"originalRequest": {
 								"method": "POST",
@@ -2675,6 +2719,83 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"hasError\": true,\n    \"error\": \"No pending appointment available\",\n    \"body\": null\n}"
+						},
+						{
+							"name": "Init Payment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"appointmentId\" : {{appointment_id}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/payments/init",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"payments",
+										"init"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 14:07:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"hasError\": false,\n    \"error\": null,\n    \"body\": {\n        \"clientSecret\": \"pi_1GYYNjGpCPBiNXLXpKLSlB4z_secret_ftPwRpIyPzOvDPtDbgcB5uuXm\"\n    }\n}"
 						}
 					]
 				},

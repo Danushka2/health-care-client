@@ -65,6 +65,9 @@ public class PatientRestService extends BaseRestService {
     return heartbeatMsg.toString();
   }
 
+
+
+  //create new patient
   @POST
   @Produces(value = MediaType.APPLICATION_JSON)
   @Consumes(value = MediaType.APPLICATION_JSON)
@@ -125,17 +128,30 @@ public class PatientRestService extends BaseRestService {
     Response response;
     try {
       if (StringUtils.isNotEmpty(updateDto.getEmail()) || StringUtils.isNotEmpty(updateDto
-          .getPhoneNo()) || (updateDto.getStatus() != null && (updateDto.getStatus()
+          .getPhoneNumber()) || StringUtils.isNotEmpty(updateDto.getGender())|| updateDto.getAge() != 0 || (updateDto.getStatus() != null && (updateDto.getStatus()
           == PatientStatus.STATUS_INACTIVE || updateDto.getStatus() == PatientStatus.STATUS_ACTIVE
           || updateDto.getStatus() == PatientStatus.STATUS_DELETED))) {
         final Patient patient = patientService.get(id);
-        if (patient != null) {
-          if (StringUtils.isNotEmpty(updateDto.getEmail())) {
+
+       if (patient != null) {
+
+
+          if (StringUtils.isNotEmpty(updateDto.getEmail())){
             patient.setEmail(updateDto.getEmail());
           }
-          if (StringUtils.isNotEmpty(updateDto.getPhoneNo())) {
-            patient.setPhoneNumber(updateDto.getPhoneNo());
+          if (StringUtils.isNotEmpty(updateDto.getPhoneNumber())){
+            patient.setPhoneNumber(updateDto.getPhoneNumber());
           }
+          if(StringUtils.isNotEmpty(updateDto.getName())){
+            patient.setName(updateDto.getName());
+          }
+          if (StringUtils.isNotEmpty(updateDto.getGender())){
+            patient.setGender(updateDto.getGender());
+          }
+          if(updateDto.getAge() != 0){
+            patient.setAge(updateDto.getAge());
+          }
+
           if (updateDto.getStatus() == PatientStatus.STATUS_INACTIVE || updateDto.getStatus()
               == PatientStatus.STATUS_ACTIVE || updateDto.getStatus() == PatientStatus.STATUS_DELETED) {
             patient.setStatus(new PatientStatus(updateDto.getStatus()));
@@ -155,6 +171,8 @@ public class PatientRestService extends BaseRestService {
     return response;
   }
 
+
+//delete patient by ID
   @DELETE
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)

@@ -70,7 +70,7 @@ public class PatientServiceImpl extends GenericServiceImpl<Patient> implements P
     patient.setEmail(registerDto.getEmail());
     patient.setPhoneNumber(registerDto.getPhoneNo());
     patient.setAge(registerDto.getAge());
-    patient.setAge(registerDto.getAge());
+    patient.setGender(registerDto.getGender());
     patient.setStatus(new PatientStatus(PatientStatus.STATUS_ACTIVE));
     patient.setUser_id(userId);
     insert(patient);

@@ -2,8 +2,16 @@ package lk.elevenzcode.healthcare.patientapi.web.dto;
 
 
 public class PatientRegisterDto {
-  private String name, email, phoneNo,user_name,password;
+  private String name, email, phoneNo,gender,user_name,password;
   private short age;
+
+  public String getGender() {
+    return gender;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
 
   public String getUser_name() {
     return user_name;

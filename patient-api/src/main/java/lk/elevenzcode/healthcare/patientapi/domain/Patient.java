@@ -37,11 +37,14 @@ public class Patient extends BaseDomain {
   @Column(name = "user_id")
   private Integer user_id;
 
+  @Column(name = "gender")
+  private String gender;
+
   public Patient() {
   }
 
   public Patient(Integer id, String name, String email, String phoneNumber, short age,
-                 PatientStatus status, Integer user_id) {
+                 PatientStatus status, Integer user_id,String gender) {
     super(id);
     this.name = name;
     this.email = email;
@@ -49,6 +52,7 @@ public class Patient extends BaseDomain {
     this.age = age;
     this.status = status;
     this.user_id = user_id;
+    this.gender=gender;
   }
 
 
@@ -100,5 +104,13 @@ public class Patient extends BaseDomain {
 
   public void setUser_id(Integer user_id) {
     this.user_id = user_id;
+  }
+
+  public String getGender() {
+    return gender;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
   }
 }
