@@ -184,6 +184,83 @@ public class DoctorRestService extends BaseRestService {
   }
 
 
+  //get doctor's hospital
+  @GET
+  @Path("/{doctorId}/hospitals")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response doctorhospitalgetById(@PathParam("doctorId") int id) {
+    Response response;
+    try {
+      response = RESTfulUtil.getOk(doctorHospitalService.get(id));
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
+        response = RESTfulUtil.getNotFound();
+      } else {
+        response = RESTfulUtil.getInternalServerError();
+      }
+    }
+    return response;
+  }
+
+
+  //post doctor session
+  @POST
+  @Path("/{doctorId}/hospitals/sessions")
+  public Response doctorsession(@PathParam("doctorId") Integer doctorId, DoctorSession ds) {
+    Response response;
+    try {
+
+
+      doctorSessionService.insert(new DoctorSession(new Doctor(doctorId), ds.getRoomId(),
+          ds.getFrom(), ds.getTo(), ds.getStatus()));
+
+      response = RESTfulUtil.getOk();
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      response = RESTfulUtil.getInternalServerError();
+    }
+    return response;
+  }
+
+
+  //get doctor's session
+  @GET
+  @Path("/{doctorId}/hospitals/sessions")
+  @Produces(value = MediaType.APPLICATION_JSON)
+  public Response doctorsessiongetById(@PathParam("doctorId") int id) {
+    Response response;
+    try {
+      response = RESTfulUtil.getOk(doctorSessionService.get(id));
+    } catch (ServiceException e) {
+      LOGGER.error(e.getMessage(), e);
+      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
+        response = RESTfulUtil.getNotFound();
+      } else {
+        response = RESTfulUtil.getInternalServerError();
+      }
+    }
+    return response;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   @GET
   @Path("/hospitals/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)

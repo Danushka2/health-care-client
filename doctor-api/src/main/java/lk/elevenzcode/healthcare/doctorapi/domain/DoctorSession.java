@@ -71,4 +71,16 @@ public class DoctorSession extends BaseDomain {
   public void setStatus(short status) {
     this.status = status;
   }
+
+
+  public DoctorSession(Doctor doctor, int roomId, LocalTime from, LocalTime to, short status) {
+    this.doctor = doctor;
+    this.roomId = roomId;
+    this.from = from;
+    this.to = to;
+    this.status = status;
+  }
+
+  public DoctorSession() {
+  }
 }

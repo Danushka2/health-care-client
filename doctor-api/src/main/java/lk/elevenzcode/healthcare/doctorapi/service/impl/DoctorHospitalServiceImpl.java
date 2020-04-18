@@ -36,4 +36,6 @@ public class DoctorHospitalServiceImpl extends GenericServiceImpl<DoctorHospital
       throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
     }
   }
+
+
 }
