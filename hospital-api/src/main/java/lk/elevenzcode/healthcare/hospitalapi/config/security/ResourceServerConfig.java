@@ -22,9 +22,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 
-/**
- * Created by හShaන් සNදීප on 3/9/2020 2:04 PM
- */
+
 @Configuration
 @EnableResourceServer
 @EnableConfigurationProperties(SecurityProperties.class)

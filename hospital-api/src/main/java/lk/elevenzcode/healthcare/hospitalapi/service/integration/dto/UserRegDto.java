@@ -3,9 +3,7 @@ package lk.elevenzcode.healthcare.hospitalapi.service.integration.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.elevenzcode.healthcare.commons.enums.UserType;
 
-/**
- * Created by හShaන් සNදීප on 4/15/2020 8:46 PM
- */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRegDto {
   private String username, password;

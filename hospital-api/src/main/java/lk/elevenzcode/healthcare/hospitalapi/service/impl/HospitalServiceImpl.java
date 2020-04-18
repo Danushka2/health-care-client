@@ -22,9 +22,6 @@ public class HospitalServiceImpl extends GenericServiceImpl<Hospital> implements
   void init() {
     init(hospitalRepository);
   }
-
-  // TODO: 3/21/2020 these are mock methods, remove once you implement the data layer ==============
-  
   
   public void createHospital(Hospital hospital) {
     hospitalRepository.save(hospital);

@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by හShaන් සNදීප on 3/22/2020 12:51 AM
- */
+
 @Service
 public class DoctorIntegrationServiceImpl implements DoctorIntegrationService {
   private static final Logger LOGGER = LoggerFactory.getLogger(DoctorIntegrationServiceImpl.class);

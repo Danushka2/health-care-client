@@ -3,9 +3,7 @@ package lk.elevenzcode.healthcare.hospitalapi.config.property;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
 
-/**
- * Created by හShaන් සNදීප on 3/9/2020 1:22 PM
- */
+
 @ConfigurationProperties("security")
 public class SecurityProperties {
   private JwtProperties jwt;
