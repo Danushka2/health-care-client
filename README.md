@@ -1,12 +1,15 @@
 # HealthCare APIs
 
-**Steps to Start**
+**Steps to Get Started**
 1. Configure Intellij with Java 8
 2. Import `settings.zip` | File > Import Settings
-3. Update `jdbc.urls` for all APIs @ `pom.xml`
+3. Update `jdbc.urls` for all APIs @ parent `pom.xml`
 4. Execute `script/init-db.sql`
 5. Clean & Install `Health Care(root)` project
-6. Import `Postman collection & environment` files to test APIs
+6. Start Servers
+7. Update `api.jdbc.hibernate.ddl.auto` to `update` after first start @ parent `pom.xml`
+8. Import `Postman collection & environment` files to test APIs
+9. Have a happy testing.
 
 **OAuth2 Credentials**
 

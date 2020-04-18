@@ -75,8 +75,6 @@ public class PatientServiceImpl extends GenericServiceImpl<Patient> implements P
     patient.setUser_id(userId);
     insert(patient);
 
-    //// TODO: 4/16/2020 if patient insertion failure need to reverse user account creation
-
     return patient.getId();
   }
 
