@@ -9,4 +9,6 @@ import lk.elevenzcode.healthcare.doctorapi.domain.DoctorHospital;
  */
 public interface DoctorHospitalService extends GenericService<DoctorHospital> {
   DoctorHospital get(int doctorId, int hospitalId) throws ServiceException;
+
+
 }
