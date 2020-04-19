@@ -7,7 +7,7 @@
 4. Execute `script/init-db.sql`
 5. Clean & Install `Health Care(root)` project
 6. Start Servers
-7. Update `api.jdbc.hibernate.ddl.auto` to `update` after first start @ parent `pom.xml`
+7. Update `api.jdbc.hibernate.ddl.auto` to `none` after first start @ parent `pom.xml`
 8. Import `Postman collection & environment` files to test APIs
 9. Have a happy testing.
 
