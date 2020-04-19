@@ -35,7 +35,7 @@ public class AuthRestService extends BaseRestService {
 
   @GET
   @Path("/users/{username}")
-  @Produces(value = MediaType.TEXT_HTML)
+  @Produces(value = MediaType.APPLICATION_JSON)
   public Response getByUsername(@PathParam("username") String username) {
     Response response;
     try {
