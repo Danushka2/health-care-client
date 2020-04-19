@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9de28a17-76e1-4e9d-bfe1-630d23200cb3",
+		"_postman_id": "7977903a-f2d2-4897-b055-1c6dfd074717",
 		"name": "HealthCare APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -618,7 +618,7 @@
 							"script": {
 								"id": "0fcdb590-018b-482b-9c59-60e6f8ded635",
 								"exec": [
-									"pm.environment.set(\"hospital_id\", pm.response.json().id);"
+									"pm.environment.set(\"hospital_id\", pm.response.json().body.id);"
 								],
 								"type": "text/javascript"
 							}
@@ -657,82 +657,6 @@
 						}
 					},
 					"response": [
-						{
-							"name": "Register Hospital - Nawaloka Hospitals",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"hospitalName\" : \"Nawaloka Hospitals\",\n\t\"hospitalAddress\" : \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n\t\"hospitalEmail\" : \"nawaloka@slt.lk\",\n\t\"hospitalType\" : \"Private\",\n\t\"hospitalStatus\" : \"Active\",\n\t\"hospitalFax\" : \"0112430393\",\n\t\"hospitalTell\" : \"0115577111\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/hospitals",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"hospitals"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Thu, 16 Apr 2020 13:00:05 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"id\": 1,\n    \"hospitalName\": \"Nawaloka Hospitals\",\n    \"hospitalAddress\": \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n    \"hospitalEmail\": \"nawaloka@slt.lk\",\n    \"hospitalType\": \"Private\",\n    \"hospitalStatus\": \"Active\",\n    \"hospitalFax\": \"0112430393\",\n    \"hospitalTell\": \"0115577111\",\n    \"userId\": null\n}"
-						},
 						{
 							"name": "Register Hospital - Lanka Hospitals",
 							"originalRequest": {
@@ -808,6 +732,82 @@
 							],
 							"cookie": [],
 							"body": "{\r\n    \"id\": 2,\r\n    \"hospitalName\": \"Lanka Hospitals\",\r\n    \"hospitalAddress\": \"578 Elvitigala Mawatha, Colombo\",\r\n    \"hospitalEmail\": \"info@lankahospitals.com\",\r\n    \"hospitalType\": \"Private\",\r\n    \"hospitalStatus\": \"Active\",\r\n    \"hospitalFax\": \"0114511199\",\r\n    \"hospitalTell\": \"0115430000\",\r\n    \"userId\": null\r\n}"
+						},
+						{
+							"name": "Register Hospital - Nawaloka Hospitals",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"hospitalName\" : \"Nawaloka Hospitals\",\n\t\"hospitalAddress\" : \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n\t\"hospitalEmail\" : \"nawaloka@slt.lk\",\n\t\"hospitalType\" : \"Private\",\n\t\"hospitalStatus\" : \"Active\",\n\t\"hospitalFax\" : \"0112430393\",\n\t\"hospitalTell\" : \"0115577111\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/hospitals",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"hospitals"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 13:00:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"hospitalName\": \"Nawaloka Hospitals\",\n    \"hospitalAddress\": \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n    \"hospitalEmail\": \"nawaloka@slt.lk\",\n    \"hospitalType\": \"Private\",\n    \"hospitalStatus\": \"Active\",\n    \"hospitalFax\": \"0112430393\",\n    \"hospitalTell\": \"0115577111\",\n    \"userId\": null\n}"
 						}
 					]
 				},
@@ -1613,7 +1613,7 @@
 							"script": {
 								"id": "8ba86f74-3e2b-40c0-ba30-1721cb1569d7",
 								"exec": [
-									"pm.environment.set(\"doctor_id\", pm.response.text());"
+									"pm.environment.set(\"doctor_id\", pm.response.json().body);"
 								],
 								"type": "text/javascript"
 							}
@@ -2250,14 +2250,7 @@
 					],
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
 						"header": [],
@@ -2956,7 +2949,76 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Check Heartbeat",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/payments/heartbeat",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"payments",
+										"heartbeat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 12:10:20 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Payment API is online"
+						}
+					]
 				},
 				{
 					"name": "Init Payment",
@@ -3006,83 +3068,6 @@
 						}
 					},
 					"response": [
-						{
-							"name": "Init Payment",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"appointmentId\" : {{appointment_id}}\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/payments/init",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"payments",
-										"init"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Thu, 16 Apr 2020 14:07:55 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"hasError\": false,\n    \"error\": null,\n    \"body\": {\n        \"clientSecret\": \"pi_1GYYNjGpCPBiNXLXpKLSlB4z_secret_ftPwRpIyPzOvDPtDbgcB5uuXm\"\n    }\n}"
-						},
 						{
 							"name": "Init Payment - Trying make payment for already paid appoinment",
 							"originalRequest": {
@@ -3159,6 +3144,83 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"hasError\": true,\n    \"error\": \"No pending appointment available\",\n    \"body\": null\n}"
+						},
+						{
+							"name": "Init Payment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"appointmentId\" : {{appointment_id}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/payments/init",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"payments",
+										"init"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 14:07:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"hasError\": false,\r\n    \"error\": null,\r\n    \"body\": {\r\n        \"clientSecret\": \"pi_1GZbyqGpCPBiNXLXhQadM2Hb_secret_VkC23GCD44eZCFsEJEV3JyQAl\"\r\n    }\r\n}"
 						}
 					]
 				},
@@ -3295,7 +3357,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"hasError\": false,\n    \"error\": null,\n    \"body\": null\n}"
+							"body": "{\r\n    \"hasError\": false,\r\n    \"error\": null,\r\n    \"body\": 1\r\n}"
 						}
 					]
 				},
@@ -3406,7 +3468,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"id\": 14,\n    \"reference\": \"5A38252D9A92E\",\n    \"fee\": 1900,\n    \"paidOn\": \"2020-04-18T01:53:34\",\n    \"status\": \"Success\"\n}"
+							"body": "{\r\n    \"hasError\": false,\r\n    \"error\": null,\r\n    \"body\": {\r\n        \"id\": 1,\r\n        \"reference\": \"5A3A3AF1402AA\",\r\n        \"fee\": 1900.00,\r\n        \"paidOn\": \"2020-04-19T17:41:35\",\r\n        \"status\": \"Success\"\r\n    }\r\n}"
 						}
 					]
 				},
@@ -3515,7 +3577,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"id\": 14,\n        \"reference\": \"5A38252D9A92E\",\n        \"fee\": 1900,\n        \"paidOn\": \"2020-04-18T01:53:34\",\n        \"status\": \"Success\"\n    }\n]"
+							"body": "{\r\n    \"hasError\": false,\r\n    \"error\": null,\r\n    \"body\": [\r\n        {\r\n            \"id\": 1,\r\n            \"reference\": \"5A3A3AF1402AA\",\r\n            \"fee\": 1900.00,\r\n            \"paidOn\": \"2020-04-19T17:41:35\",\r\n            \"status\": \"Success\"\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"reference\": \"5A3A3B7F49D3B\",\r\n            \"fee\": 1900.00,\r\n            \"paidOn\": \"2020-04-19T17:44:04\",\r\n            \"status\": \"Success\"\r\n        }\r\n    ]\r\n}"
 						}
 					]
 				},
@@ -3624,7 +3686,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"id\": 14,\n        \"reference\": \"5A38252D9A92E\",\n        \"fee\": 1900,\n        \"paidOn\": \"2020-04-18T01:53:34\",\n        \"status\": \"Success\"\n    }\n]"
+							"body": "{\r\n    \"hasError\": false,\r\n    \"error\": null,\r\n    \"body\": {\r\n        \"id\": 2,\r\n        \"reference\": \"5A3A3B7F49D3B\",\r\n        \"fee\": 1900.00,\r\n        \"paidOn\": \"2020-04-19T17:44:04\",\r\n        \"status\": \"Success\"\r\n    }\r\n}"
 						}
 					]
 				},
@@ -3705,7 +3767,7 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "plain",
+							"_postman_previewlanguage": "json",
 							"header": [
 								{
 									"key": "Date",
@@ -3749,7 +3811,7 @@
 								}
 							],
 							"cookie": [],
-							"body": ""
+							"body": "{\r\n    \"hasError\": false,\r\n    \"error\": null,\r\n    \"body\": null\r\n}"
 						}
 					]
 				},
@@ -3828,10 +3890,10 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "Text",
+							"_postman_previewlanguage": "json",
 							"header": [],
 							"cookie": [],
-							"body": ""
+							"body": "{\n    \"hasError\": false,\n    \"error\": null,\n    \"body\": null\n}"
 						}
 					]
 				}
