@@ -5,19 +5,26 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HospitalInfoResp {
   private Integer id;
-  private String name, address, email, fax, tel;
+  private String name, address, email, fax, tel, type, status ;
+  private String username, password;
+
 
   public HospitalInfoResp() {
   }
 
   public HospitalInfoResp(Integer id, String name, String address, String email, String fax,
-                          String tel) {
+                          String tel, String type, String status, String username,
+                          String password) {
     this.id = id;
     this.name = name;
     this.address = address;
     this.email = email;
     this.fax = fax;
     this.tel = tel;
+    this.type = type;
+    this.status = status;
+    this.username = username;
+    this.password = password;
   }
 
   public Integer getId() {
@@ -67,4 +74,20 @@ public class HospitalInfoResp {
   public void setTel(String tel) {
     this.tel = tel;
   }
+
+  public String getUsername() { return username; }
+
+  public void setUsername(String username) { this.username = username; }
+
+  public String getPassword() { return password; }
+
+  public void setPassword(String password) { this.password = password; }
+
+  public String getType() { return type; }
+
+  public void setType(String type) { this.type = type; }
+
+  public String getStatus() { return status; }
+
+  public void setStatus(String status) { this.status = status; }
 }

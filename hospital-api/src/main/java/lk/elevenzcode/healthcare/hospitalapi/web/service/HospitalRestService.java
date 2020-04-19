@@ -2,6 +2,7 @@ package lk.elevenzcode.healthcare.hospitalapi.web.service;
 
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
+import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.hospitalapi.domain.Hospital;
 import lk.elevenzcode.healthcare.hospitalapi.domain.HospitalRoom;
@@ -11,6 +12,7 @@ import lk.elevenzcode.healthcare.hospitalapi.service.integration.AppointmentInte
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.DoctorIntegrationService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.AppointmentInfo;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.DoctorInfo;
+import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.UserRegDto;
 import lk.elevenzcode.healthcare.hospitalapi.web.dto.HospitalInfoResp;
 import lk.elevenzcode.healthcare.hospitalapi.web.dto.RoomInfoRequest;
 import lk.elevenzcode.healthcare.hospitalapi.web.dto.RoomInfoResp;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -62,9 +65,14 @@ public class HospitalRestService extends BaseRestService {
   
   @POST
   @Produces(value = MediaType.APPLICATION_JSON)
-  public Response createHospital(Hospital hospital) {
+  public Response createHospital(HospitalInfoResp hospitalDto) {
     Response response = null;
     try {
+      Integer userId = hospitalService.registerUser(hospitalDto.getUsername(),
+          hospitalDto.getPassword());
+      Hospital hospital = new Hospital(hospitalDto.getId(), hospitalDto.getName(),
+          hospitalDto.getAddress(), hospitalDto.getEmail(), hospitalDto.getType(), hospitalDto.getFax(),
+          hospitalDto.getTel(), hospitalDto.getStatus(), userId);
       hospitalService.insert(hospital);
       response = RESTfulUtil.getOk(hospital);
     } catch (Exception e) {
@@ -133,10 +141,12 @@ public class HospitalRestService extends BaseRestService {
   @PUT
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)
-  public Response updateHospital(@PathParam("id") int id, Hospital hospital) {
+  public Response updateHospital(@PathParam("id") int id, HospitalInfoResp hospitalDto) {
     Response response;
     try {
-      hospital.setId(id);
+      Hospital hospital = new Hospital(id, hospitalDto.getName(),
+          hospitalDto.getAddress(), hospitalDto.getEmail(), hospitalDto.getType(), hospitalDto.getFax(),
+          hospitalDto.getTel(), hospitalDto.getStatus(), null);
       hospitalService.update(hospital);
       response = RESTfulUtil.getOk("updated" + hospital.getId());
     } catch (Exception e) {
@@ -205,7 +215,8 @@ public class HospitalRestService extends BaseRestService {
         final Hospital hospital = room.getHospital();
         roomInfoResp.setHospital(new HospitalInfoResp(hospital.getId(),
             hospital.getHospitalName(), hospital.getHospitalAddress(),
-            hospital.getHospitalEmail(), hospital.getHospitalFax(), hospital.getHospitalTell()));
+            hospital.getHospitalEmail(), hospital.getHospitalFax(), hospital.getHospitalTell(),
+            hospital.getHospitalType(), hospital.getHospitalStatus(), null, null ));
         roomInfoResp.setRoomNo(room.getRoomNo());
         roomInfoResp.setLocation(room.getLocation());
         roomInfoResp.setRoomFee(room.getFee());
@@ -301,8 +312,6 @@ public class HospitalRestService extends BaseRestService {
     }
     return response;
   }
-
-
 
 
 }
