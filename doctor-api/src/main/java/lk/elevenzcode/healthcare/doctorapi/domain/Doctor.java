@@ -18,7 +18,7 @@ public class Doctor extends BaseDomain {
   private String tel;
   private String email;
   private String status;
-  private String user_id;
+  private Integer user_id;
 
 
   public Doctor() {
@@ -73,11 +73,11 @@ public class Doctor extends BaseDomain {
     this.status = status;
   }
 
-  public String getUser_id() {
+  public Integer getUser_id() {
     return user_id;
   }
 
-  public void setUser_id(String user_id) {
+  public void setUser_id(Integer user_id) {
     this.user_id = user_id;
   }
 

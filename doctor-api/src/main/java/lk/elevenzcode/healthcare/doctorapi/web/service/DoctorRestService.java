@@ -2,6 +2,7 @@ package lk.elevenzcode.healthcare.doctorapi.web.service;
 
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.web.service.BaseRestService;
+import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.commons.web.util.RESTfulUtil;
 import lk.elevenzcode.healthcare.doctorapi.domain.Doctor;
 import lk.elevenzcode.healthcare.doctorapi.domain.DoctorHospital;
@@ -16,6 +17,7 @@ import lk.elevenzcode.healthcare.doctorapi.service.integration.HospitalIntegrati
 import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.AppointmentInfo;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.HospitalInfo;
 import lk.elevenzcode.healthcare.doctorapi.web.dto.AssignHospitalReq;
+import lk.elevenzcode.healthcare.doctorapi.web.dto.DoctorRegistration;
 import lk.elevenzcode.healthcare.doctorapi.web.dto.DoctorSessionResp;
 import lk.elevenzcode.healthcare.doctorapi.web.util.Constant;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -94,13 +97,31 @@ public class DoctorRestService extends BaseRestService {
   }
 
 
-  //insert doctor
+//  //insert doctor
+////  @POST
+////  public Response insert(Doctor domain) throws ServiceException {
+////    Response response;
+////    try {
+////      doctorService.insert(domain);
+////      response = RESTfulUtil.getOk(domain.getId());
+////    } catch (ServiceException e) {
+////      LOGGER.error(e.getMessage(), e);
+////      response = RESTfulUtil.getInternalServerError();
+////    }
+////    return response;
+////  }
+
+
+  //create new patient
   @POST
-  public Response insert(Doctor domain) throws ServiceException {
+  @Produces(value = MediaType.APPLICATION_JSON)
+  @Consumes(value = MediaType.APPLICATION_JSON)
+  public Response registerPatient(DoctorRegistration registerDto) {
     Response response;
     try {
-      doctorService.insert(domain);
-      response = RESTfulUtil.getOk(domain.getId());
+      final ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
+      serviceResponse.setBody(doctorService.register(registerDto));
+      response = RESTfulUtil.getCreated(serviceResponse);
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getInternalServerError();
