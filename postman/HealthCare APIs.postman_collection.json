@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7977903a-f2d2-4897-b055-1c6dfd074717",
+		"_postman_id": "a4c96497-b9ba-4186-8b40-82f55ccfa7ef",
 		"name": "HealthCare APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2605,7 +2605,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"sessionId\" : 1,\n\t\"patientId\" : {{patient_id}},\n\t\"appointmentDate\" : \"2020-04-20\"\n}",
+							"raw": "{\n\t\"sessionId\" : 5,\n\t\"patientId\" : {{patient_id}},\n\t\"appointmentDate\" : \"2020-04-20\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2623,6 +2623,78 @@
 						}
 					},
 					"response": [
+						{
+							"name": "Make Appointment where no session id or patient id is invalid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sessionId\" : 5,\n\t\"patientId\" : 1,\n\t\"appointmentDate\" : \"2020-04-20\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/appointments",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:11:46 GMT"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2020-04-19T14:11:46.898+0000\",\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Bad Request\",\n    \"path\": \"/api/v1/appointments\"\n}"
+						},
 						{
 							"name": "Make Appointment",
 							"originalRequest": {
@@ -2727,44 +2799,140 @@
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "Insert Appointment",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+					"response": [
+						{
+							"name": "Delete Appointment",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/1",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
 								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:10:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
 								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"sessionId\":1,\n\t\"patientId\":1,\n\t\"appointmentDate\":\"2020-04-21\",\n\t\"createDate\":\"2020-04-22T10:45:15\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{client_base_url}}/appointments/",
-							"host": [
-								"{{client_base_url}}"
 							],
-							"path": [
-								"appointments",
-								""
-							]
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"sessionId\": 1,\n    \"patientId\": 1,\n    \"appointmentDate\": \"2020-04-21\",\n    \"createDate\": \"2020-04-22T10:45:15\",\n    \"status\": {\n        \"id\": 3,\n        \"name\": null\n    }\n}"
+						},
+						{
+							"name": "Delete Appointment where no value exists",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/10",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"10"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:10:38 GMT"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2020-04-19T14:10:38.063+0000\",\n    \"status\": 500,\n    \"error\": \"Internal Server Error\",\n    \"message\": \"lk.elevenzcode.healthcare.commons.exception.ServiceException: No value present\",\n    \"path\": \"/api/v1/appointments/10\"\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
 					"name": "Get Appointments",
@@ -2791,7 +2959,75 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Appointments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:06:46 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"sessionId\": 1,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-21\",\n        \"createDate\": \"2020-04-22T10:45:15\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    },\n    {\n        \"id\": 3,\n        \"sessionId\": 2,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-20\",\n        \"createDate\": \"2020-04-19T19:23:32\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get Appointment By Status",
@@ -2820,10 +3056,161 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Appointment By Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/status/1",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"status",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:07:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"sessionId\": 1,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-21\",\n        \"createDate\": \"2020-04-22T10:45:15\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    },\n    {\n        \"id\": 3,\n        \"sessionId\": 2,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-20\",\n        \"createDate\": \"2020-04-19T19:23:32\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    }\n]"
+						},
+						{
+							"name": "Get Appointment By Status Where no Appointments are available",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/status/3",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"status",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:07:39 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						}
+					]
 				},
 				{
 					"name": "Update Appointment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7f7106c-a992-4c64-9132-44ae44f02e0d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2857,7 +3244,158 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Appointment",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"status\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/appointments/1",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:06:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"sessionId\": 1,\n    \"patientId\": 1,\n    \"appointmentDate\": \"2020-04-21\",\n    \"createDate\": \"2020-04-22T10:45:15\",\n    \"status\": {\n        \"id\": 1,\n        \"name\": null\n    }\n}"
+						},
+						{
+							"name": "Update Appointment With non Existing Appointment ",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"status\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/appointments/10",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"10"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:05:12 GMT"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2020-04-19T14:05:12.624+0000\",\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Bad Request\",\n    \"path\": \"/api/v1/appointments/10\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Get Appointment By Session ID",
@@ -2886,7 +3424,146 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Appointment By Session ID where not exists",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/sessions/10",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"sessions",
+										"10"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:08:54 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						},
+						{
+							"name": "Get Appointment By Session ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/sessions/1",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"sessions",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:08:43 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"sessionId\": 1,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-21\",\n        \"createDate\": \"2020-04-22T10:45:15\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get Appoitnments By Patient ID",
@@ -2915,7 +3592,146 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Appoitnments By Patient ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/patients/1",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"patients",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:09:24 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"sessionId\": 1,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-21\",\n        \"createDate\": \"2020-04-22T10:45:15\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    },\n    {\n        \"id\": 3,\n        \"sessionId\": 2,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-20\",\n        \"createDate\": \"2020-04-19T19:23:32\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    }\n]"
+						},
+						{
+							"name": "Get Appoitnments By Patient ID where patient not appointed yet",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/patients/10",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"patients",
+										"10"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:09:39 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						}
+					]
 				}
 			],
 			"protocolProfileBehavior": {}

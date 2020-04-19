@@ -36,7 +36,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * Created by හShaන් සNදීප on 3/9/2020 8:46 PM
+ * @author Yasas Alwis
  */
 @Component
 @Path(Constant.API_VER + "/" + Constant.API_PATH)
@@ -242,6 +242,8 @@ public class AppointmentRestService extends BaseRestService {
 					existinOb.setStatus(new AppointmentStatus(updateReq.getStatus()));
 					appointmentService.update(existinOb);
 					response = RESTfulUtil.getOk(existinOb);
+				}else {
+					response = RESTfulUtil.getBadRequest();
 				}
 			} else {
 				response = RESTfulUtil.getBadRequest();
