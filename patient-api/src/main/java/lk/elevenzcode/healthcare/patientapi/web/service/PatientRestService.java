@@ -151,7 +151,7 @@ public class PatientRestService extends BaseRestService {
             patient.setStatus(new PatientStatus(updateDto.getStatus()));
           }
           patientService.update(patient);
-          response = RESTfulUtil.getOk();
+          response = RESTfulUtil.getOk("Patient details updated ");
         } else {
           response = RESTfulUtil.getBadRequest();
         }
@@ -172,12 +172,13 @@ public class PatientRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response deletePatient(@PathParam(value = "id") int id) {
     Response response;
+
     try {
       final Patient patient = patientService.get(id);
       if (patient != null) {
         patient.setStatus(new PatientStatus(PatientStatus.STATUS_DELETED));
         patientService.update(patient);
-        response = RESTfulUtil.getOk();
+        response = RESTfulUtil.getOk("Status change to deleted ");
       } else {
         response = RESTfulUtil.getBadRequest();
       }
@@ -186,5 +187,6 @@ public class PatientRestService extends BaseRestService {
       response = RESTfulUtil.getInternalServerError();
     }
     return response;
+
   }
 }

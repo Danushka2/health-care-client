@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a4c96497-b9ba-4186-8b40-82f55ccfa7ef",
+		"_postman_id": "81f1bab6-5c7a-450d-95c8-140d46e755a7",
 		"name": "HealthCare APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -658,82 +658,6 @@
 					},
 					"response": [
 						{
-							"name": "Register Hospital - Lanka Hospitals",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"hospitalName\" : \"Lanka Hospitals\",\n\t\"hospitalAddress\" : \"578 Elvitigala Mawatha, Colombo\",\n\t\"hospitalEmail\" : \"info@lankahospitals.com\",\n\t\"hospitalType\" : \"Private\",\n\t\"hospitalStatus\" : \"Active\",\n\t\"hospitalFax\" : \"0114511199\",\n\t\"hospitalTell\" : \"0115430000\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/hospitals",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"hospitals"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Thu, 16 Apr 2020 12:54:41 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\r\n    \"id\": 2,\r\n    \"hospitalName\": \"Lanka Hospitals\",\r\n    \"hospitalAddress\": \"578 Elvitigala Mawatha, Colombo\",\r\n    \"hospitalEmail\": \"info@lankahospitals.com\",\r\n    \"hospitalType\": \"Private\",\r\n    \"hospitalStatus\": \"Active\",\r\n    \"hospitalFax\": \"0114511199\",\r\n    \"hospitalTell\": \"0115430000\",\r\n    \"userId\": null\r\n}"
-						},
-						{
 							"name": "Register Hospital - Nawaloka Hospitals",
 							"originalRequest": {
 								"method": "POST",
@@ -808,6 +732,82 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"hospitalName\": \"Nawaloka Hospitals\",\n    \"hospitalAddress\": \"23, Deshamanya H. K Dharmadasa Mawatha, Colombo 2\",\n    \"hospitalEmail\": \"nawaloka@slt.lk\",\n    \"hospitalType\": \"Private\",\n    \"hospitalStatus\": \"Active\",\n    \"hospitalFax\": \"0112430393\",\n    \"hospitalTell\": \"0115577111\",\n    \"userId\": null\n}"
+						},
+						{
+							"name": "Register Hospital - Lanka Hospitals",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"hospitalName\" : \"Lanka Hospitals\",\n\t\"hospitalAddress\" : \"578 Elvitigala Mawatha, Colombo\",\n\t\"hospitalEmail\" : \"info@lankahospitals.com\",\n\t\"hospitalType\" : \"Private\",\n\t\"hospitalStatus\" : \"Active\",\n\t\"hospitalFax\" : \"0114511199\",\n\t\"hospitalTell\" : \"0115430000\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/hospitals",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"hospitals"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 12:54:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"id\": 2,\r\n    \"hospitalName\": \"Lanka Hospitals\",\r\n    \"hospitalAddress\": \"578 Elvitigala Mawatha, Colombo\",\r\n    \"hospitalEmail\": \"info@lankahospitals.com\",\r\n    \"hospitalType\": \"Private\",\r\n    \"hospitalStatus\": \"Active\",\r\n    \"hospitalFax\": \"0114511199\",\r\n    \"hospitalTell\": \"0115430000\",\r\n    \"userId\": null\r\n}"
 						}
 					]
 				},
@@ -2624,78 +2624,6 @@
 					},
 					"response": [
 						{
-							"name": "Make Appointment where no session id or patient id is invalid",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"sessionId\" : 5,\n\t\"patientId\" : 1,\n\t\"appointmentDate\" : \"2020-04-20\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/appointments",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"appointments"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sun, 19 Apr 2020 14:11:46 GMT"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "close"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"timestamp\": \"2020-04-19T14:11:46.898+0000\",\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Bad Request\",\n    \"path\": \"/api/v1/appointments\"\n}"
-						},
-						{
 							"name": "Make Appointment",
 							"originalRequest": {
 								"method": "POST",
@@ -2770,6 +2698,78 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"sessionId\": 1,\n    \"patientId\": 1,\n    \"appointmentDate\": \"2020-04-20\",\n    \"createDate\": \"2020-04-16T19:11:43.094\",\n    \"status\": {\n        \"id\": 1,\n        \"name\": null\n    }\n}"
+						},
+						{
+							"name": "Make Appointment where no session id or patient id is invalid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sessionId\" : 5,\n\t\"patientId\" : 1,\n\t\"appointmentDate\" : \"2020-04-20\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/appointments",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:11:46 GMT"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2020-04-19T14:11:46.898+0000\",\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Bad Request\",\n    \"path\": \"/api/v1/appointments\"\n}"
 						}
 					]
 				},
@@ -3246,6 +3246,79 @@
 					},
 					"response": [
 						{
+							"name": "Update Appointment With non Existing Appointment ",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"status\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/appointments/10",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"10"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:05:12 GMT"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2020-04-19T14:05:12.624+0000\",\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Bad Request\",\n    \"path\": \"/api/v1/appointments/10\"\n}"
+						},
+						{
 							"name": "Update Appointment",
 							"originalRequest": {
 								"method": "PUT",
@@ -3321,79 +3394,6 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"sessionId\": 1,\n    \"patientId\": 1,\n    \"appointmentDate\": \"2020-04-21\",\n    \"createDate\": \"2020-04-22T10:45:15\",\n    \"status\": {\n        \"id\": 1,\n        \"name\": null\n    }\n}"
-						},
-						{
-							"name": "Update Appointment With non Existing Appointment ",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"status\":1\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/appointments/10",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"appointments",
-										"10"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sun, 19 Apr 2020 14:05:12 GMT"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "close"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"timestamp\": \"2020-04-19T14:05:12.624+0000\",\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Bad Request\",\n    \"path\": \"/api/v1/appointments/10\"\n}"
 						}
 					]
 				},
@@ -3425,75 +3425,6 @@
 						}
 					},
 					"response": [
-						{
-							"name": "Get Appointment By Session ID where not exists",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{client_base_url}}/appointments/sessions/10",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"appointments",
-										"sessions",
-										"10"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sun, 19 Apr 2020 14:08:54 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "[]"
-						},
 						{
 							"name": "Get Appointment By Session ID",
 							"originalRequest": {
@@ -3562,51 +3493,21 @@
 							],
 							"cookie": [],
 							"body": "[\n    {\n        \"id\": 1,\n        \"sessionId\": 1,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-21\",\n        \"createDate\": \"2020-04-22T10:45:15\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    }\n]"
-						}
-					]
-				},
-				{
-					"name": "Get Appoitnments By Patient ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
 						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{client_base_url}}/appointments/patients/1",
-							"host": [
-								"{{client_base_url}}"
-							],
-							"path": [
-								"appointments",
-								"patients",
-								"1"
-							]
-						}
-					},
-					"response": [
 						{
-							"name": "Get Appoitnments By Patient ID",
+							"name": "Get Appointment By Session ID where not exists",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{client_base_url}}/appointments/patients/1",
+									"raw": "{{client_base_url}}/appointments/sessions/10",
 									"host": [
 										"{{client_base_url}}"
 									],
 									"path": [
 										"appointments",
-										"patients",
-										"1"
+										"sessions",
+										"10"
 									]
 								}
 							},
@@ -3616,7 +3517,7 @@
 							"header": [
 								{
 									"key": "Date",
-									"value": "Sun, 19 Apr 2020 14:09:24 GMT"
+									"value": "Sun, 19 Apr 2020 14:08:54 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -3660,8 +3561,38 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n    {\n        \"id\": 1,\n        \"sessionId\": 1,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-21\",\n        \"createDate\": \"2020-04-22T10:45:15\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    },\n    {\n        \"id\": 3,\n        \"sessionId\": 2,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-20\",\n        \"createDate\": \"2020-04-19T19:23:32\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    }\n]"
+							"body": "[]"
+						}
+					]
+				},
+				{
+					"name": "Get Appoitnments By Patient ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
 						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{client_base_url}}/appointments/patients/1",
+							"host": [
+								"{{client_base_url}}"
+							],
+							"path": [
+								"appointments",
+								"patients",
+								"1"
+							]
+						}
+					},
+					"response": [
 						{
 							"name": "Get Appoitnments By Patient ID where patient not appointed yet",
 							"originalRequest": {
@@ -3730,6 +3661,75 @@
 							],
 							"cookie": [],
 							"body": "[]"
+						},
+						{
+							"name": "Get Appoitnments By Patient ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{client_base_url}}/appointments/patients/1",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"appointments",
+										"patients",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 19 Apr 2020 14:09:24 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"sessionId\": 1,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-21\",\n        \"createDate\": \"2020-04-22T10:45:15\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    },\n    {\n        \"id\": 3,\n        \"sessionId\": 2,\n        \"patientId\": 1,\n        \"appointmentDate\": \"2020-04-20\",\n        \"createDate\": \"2020-04-19T19:23:32\",\n        \"status\": {\n            \"id\": 1,\n            \"name\": \"PENDING\"\n        }\n    }\n]"
 						}
 					]
 				}
@@ -3885,83 +3885,6 @@
 					},
 					"response": [
 						{
-							"name": "Init Payment - Trying make payment for already paid appoinment",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"appointmentId\" : {{appointment_id}}\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{client_base_url}}/payments/init",
-									"host": [
-										"{{client_base_url}}"
-									],
-									"path": [
-										"payments",
-										"init"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Thu, 16 Apr 2020 14:47:46 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "X-XSS-Protection",
-									"value": "1; mode=block"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache, no-store, max-age=0, must-revalidate"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "0"
-								},
-								{
-									"key": "X-Frame-Options",
-									"value": "DENY"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"hasError\": true,\n    \"error\": \"No pending appointment available\",\n    \"body\": null\n}"
-						},
-						{
 							"name": "Init Payment",
 							"originalRequest": {
 								"method": "POST",
@@ -4037,6 +3960,83 @@
 							],
 							"cookie": [],
 							"body": "{\r\n    \"hasError\": false,\r\n    \"error\": null,\r\n    \"body\": {\r\n        \"clientSecret\": \"pi_1GZbyqGpCPBiNXLXhQadM2Hb_secret_VkC23GCD44eZCFsEJEV3JyQAl\"\r\n    }\r\n}"
+						},
+						{
+							"name": "Init Payment - Trying make payment for already paid appoinment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"appointmentId\" : {{appointment_id}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{client_base_url}}/payments/init",
+									"host": [
+										"{{client_base_url}}"
+									],
+									"path": [
+										"payments",
+										"init"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 16 Apr 2020 14:47:46 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"hasError\": true,\n    \"error\": \"No pending appointment available\",\n    \"body\": null\n}"
 						}
 					]
 				},
