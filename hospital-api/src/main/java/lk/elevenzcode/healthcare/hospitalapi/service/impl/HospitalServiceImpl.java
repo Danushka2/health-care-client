@@ -3,16 +3,16 @@ package lk.elevenzcode.healthcare.hospitalapi.service.impl;
 import lk.elevenzcode.healthcare.commons.enums.UserType;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.service.impl.GenericServiceImpl;
+import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.hospitalapi.domain.Hospital;
 import lk.elevenzcode.healthcare.hospitalapi.repository.HospitalRepository;
 import lk.elevenzcode.healthcare.hospitalapi.service.HospitalService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.AuthIntegrationService;
 import lk.elevenzcode.healthcare.hospitalapi.service.integration.dto.UserRegDto;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
 import javax.annotation.PostConstruct;
 
 
@@ -28,12 +28,12 @@ public class HospitalServiceImpl extends GenericServiceImpl<Hospital> implements
   void init() {
     init(hospitalRepository);
   }
-  
+
   public void createHospital(Hospital hospital) {
     hospitalRepository.save(hospital);
   }
 
-  public void deleteHospital(int id){
+  public void deleteHospital(int id) {
     hospitalRepository.deleteById(id);
   }
 
@@ -44,52 +44,14 @@ public class HospitalServiceImpl extends GenericServiceImpl<Hospital> implements
   @Override
   public Integer registerUser(String username, String Password) throws ServiceException {
     //create user account
-    final Integer userId = authIntegrationService.registerUser(new UserRegDto(username, Password,
-        UserType.HOSPITAL_ADMIN));
-    return userId;
+    final ServiceResponse<Integer> userRegisterResponse =
+        authIntegrationService.registerUser(new UserRegDto(username, Password,
+            UserType.HOSPITAL_ADMIN));
+    if (!userRegisterResponse.getHasError() || StringUtils.isEmpty(userRegisterResponse.getError())) {
+      return userRegisterResponse.getBody();
+    } else {
+      throw new ServiceException(ServiceException.PROCESSING_FAILURE,
+          userRegisterResponse.getError());
+    }
   }
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // @Override
-  // public Hospital get(Integer id) throws ServiceException {
-  //   if (id == 1) {
-  //     return new Hospital(1, "Lanka Hospital");
-  //   } else {
-  //     throw new ServiceException(ServiceException.VALIDATION_FAILURE,
-  //         "label.hospital.err.invalid.id");
-  //   }
-  // }
-
-  // @Override
-  // public List<Hospital> getAll() throws ServiceException {
-  //   return Arrays.asList(new Hospital(1, "Lanka Hospital"),
-  //       new Hospital(2, "Nawaloka Hospital"));
-  // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //================================================================================================
 }

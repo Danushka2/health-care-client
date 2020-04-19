@@ -57,10 +57,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.anonymous().disable()
-        .authorizeRequests()
+    http.authorizeRequests()
+        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).permitAll()
         .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/heartbeat").hasRole(ROLE_PT)
-        .antMatchers(HttpMethod.POST, API_BASE_PATTERN).hasAnyRole(ROLE_REG_PT, ROLE_CLIENT)
         .antMatchers(HttpMethod.GET, API_BASE_PATTERN).hasAnyRole(ROLE_GET_ALL_PT, ROLE_CLIENT)
         .antMatchers(HttpMethod.GET, API_BASE_PATTERN + "/{id}").hasAnyRole(ROLE_GET_PT,
         ROLE_CLIENT)

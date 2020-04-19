@@ -63,15 +63,19 @@ public class PaymentRestService extends BaseRestService {
   @Path("/init")
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response initPayment(PaymentInitReq req) {
-    ServiceResponse<PaymentInitResp> serviceResponse = new ServiceResponse<>();
+    final ServiceResponse<PaymentInitResp> serviceResponse = new ServiceResponse<>();
     try {
+      //validate request
       if (req != null && req.getAppointmentId() > 0) {
         final AppointmentInfo appointmentInfo = appointmentIntegrationService.getByApptId(req
             .getAppointmentId());
+        //validate appointment & it's status
         if (appointmentInfo != null && appointmentInfo.getStatus() == AppointmentInfo.Status.PENDING
             .getId()) {
+          //calculate appointment fee
           final BigDecimal appointmentFee = appointmentInfo.getSession().getDocFee()
               .add(appointmentInfo.getSession().getRoom().getRoomFee());
+          //generate client secret
           serviceResponse.setBody(new PaymentInitResp(stripeIntegrationService
               .initPayment(ConversionUtil.getMoneyInCents(appointmentFee)).getClientSecret()));
         } else {
@@ -83,30 +87,22 @@ public class PaymentRestService extends BaseRestService {
       }
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
-        serviceResponse.setError(getMessage(e.getMessage()));
-      } else {
-        serviceResponse.setError(e.getMessage());
-      }
+      setError(e, serviceResponse);
     }
-    return RESTfulUtil.getOk(serviceResponse);
+    return RESTfulUtil.getCreated(serviceResponse);
   }
 
   @PUT
   @Path("/complete")
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response comletePayment(PaymentCompleteReq req) {
-    ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
+    final ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
     try {
       serviceResponse.setBody(paymentService.save(req.getAppointmentId(),
           req.getPaymentIntentId()));
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
-        serviceResponse.setError(getMessage(e.getMessage()));
-      } else {
-        serviceResponse.setError(e.getMessage());
-      }
+      setError(e, serviceResponse);
     }
     return RESTfulUtil.getOk(serviceResponse);
   }
@@ -115,31 +111,29 @@ public class PaymentRestService extends BaseRestService {
   @Path("/appointments/{apptId}")
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response getAppointmentId(@PathParam("apptId") int apptId) {
-    Response response;
+    final ServiceResponse<PaymentInfoResp> serviceResponse = new ServiceResponse<>();
     try {
       final Payment payment = paymentService.getByAppointmentId(apptId);
+      //validate whether the payment exist for the appointment
       if (payment != null) {
-        response = RESTfulUtil.getOk(new PaymentInfoResp(payment.getId(),
+        serviceResponse.setBody(new PaymentInfoResp(payment.getId(),
             payment.getReference(), payment.getAmount(), payment.getPaidOn(),
             payment.getStatus().getName()));
       } else {
-        response = RESTfulUtil.getNotFound();
+        throw new ServiceException(ServiceException.VALIDATION_FAILURE,
+            "label.payment.err.not.found");
       }
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
-        response = RESTfulUtil.getNotFound();
-      } else {
-        response = RESTfulUtil.getInternalServerError();
-      }
+      setError(e, serviceResponse);
     }
-    return response;
+    return RESTfulUtil.getOk(serviceResponse);
   }
 
   @GET
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response getAll() {
-    Response response;
+    final ServiceResponse<List<PaymentInfoResp>> serviceResponse = new ServiceResponse<>();
     try {
       final List<PaymentInfoResp> list = new ArrayList<>();
       for (Payment payment : paymentService.getAll()) {
@@ -147,12 +141,12 @@ public class PaymentRestService extends BaseRestService {
             payment.getReference(), payment.getAmount(), payment.getPaidOn(),
             payment.getStatus().getName()));
       }
-      response = RESTfulUtil.getOk(list);
+      serviceResponse.setBody(list);
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      response = RESTfulUtil.getInternalServerError();
+      setError(e, serviceResponse);
     }
-    return response;
+    return RESTfulUtil.getOk(serviceResponse);
   }
 
   @DELETE
@@ -160,62 +154,50 @@ public class PaymentRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response refundPaymentByAppointment(@PathParam("apptId") int apptId,
                                              PaymentRefundReq refundReq) {
-    Response response;
+    final ServiceResponse<Void> serviceResponse = new ServiceResponse<>();
     try {
       paymentService.refundByAppt(apptId, refundReq.getReason());
-      response = RESTfulUtil.getOk();
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
-        response = RESTfulUtil.getNotFound();
-      } else {
-        response = RESTfulUtil.getInternalServerError();
-      }
+      setError(e, serviceResponse);
     }
-    return response;
+    return RESTfulUtil.getOk(serviceResponse);
   }
 
   @DELETE
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response refundPayment(@PathParam("id") int id, PaymentRefundReq refundReq) {
-    Response response;
+    final ServiceResponse<Void> serviceResponse = new ServiceResponse<>();
     try {
       paymentService.refund(id, refundReq.getReason());
-      response = RESTfulUtil.getOk();
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
-        response = RESTfulUtil.getNotFound();
-      } else {
-        response = RESTfulUtil.getInternalServerError();
-      }
+      setError(e, serviceResponse);
     }
-    return response;
+    return RESTfulUtil.getOk(serviceResponse);
   }
 
   @GET
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response getById(@PathParam("id") int id) {
-    Response response;
+    final ServiceResponse<PaymentInfoResp> serviceResponse = new ServiceResponse<>();
     try {
       final Payment payment = paymentService.get(id);
+      //validate whether the payment exist for given id
       if (payment != null) {
-        response = RESTfulUtil.getOk(new PaymentInfoResp(payment.getId(),
+        serviceResponse.setBody(new PaymentInfoResp(payment.getId(),
             payment.getReference(), payment.getAmount(), payment.getPaidOn(),
             payment.getStatus().getName()));
       } else {
-        response = RESTfulUtil.getNotFound();
+        throw new ServiceException(ServiceException.VALIDATION_FAILURE,
+            "label.payment.err.not.found");
       }
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      if (e.getCode() == ServiceException.VALIDATION_FAILURE) {
-        response = RESTfulUtil.getNotFound();
-      } else {
-        response = RESTfulUtil.getInternalServerError();
-      }
+      setError(e, serviceResponse);
     }
-    return response;
+    return RESTfulUtil.getOk(serviceResponse);
   }
 }

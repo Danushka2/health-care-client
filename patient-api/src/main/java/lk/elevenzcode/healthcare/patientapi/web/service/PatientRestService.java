@@ -52,7 +52,8 @@ public class PatientRestService extends BaseRestService {
   @Produces(value = MediaType.TEXT_PLAIN)
   public String heartbeat() {
     final StringBuffer heartbeatMsg = new StringBuffer("Patient API is online");
-    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService.getByPtId(1)*/;
+    final List<AppointmentInfo> appointments = new ArrayList<>()/*appointmentIntegrationService
+    .getByPtId(1)*/;
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("appointments : {}", appointments);
     }
@@ -66,35 +67,30 @@ public class PatientRestService extends BaseRestService {
   }
 
 
-
   //create new patient
   @POST
   @Produces(value = MediaType.APPLICATION_JSON)
   @Consumes(value = MediaType.APPLICATION_JSON)
   public Response registerPatient(PatientRegisterDto registerDto) {
-    Response response;
+    final ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
     try {
-      final ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
       serviceResponse.setBody(patientService.register(registerDto));
-      response = RESTfulUtil.getCreated(serviceResponse);
+      return RESTfulUtil.getCreated(serviceResponse);
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      response = RESTfulUtil.getInternalServerError();
+      setError(e, serviceResponse);
     }
-    return response;
+    return RESTfulUtil.getOk(serviceResponse);
   }
 
 
-
-
-//give all patient information
+  //give all patient information
   @GET
   @Path("/read")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getPatient() throws ServiceException {
     return RESTfulUtil.getOk(patientService.findAll());
   }
-
 
 
   // return information by given id
@@ -117,9 +113,7 @@ public class PatientRestService extends BaseRestService {
   }
 
 
-
-
-//update patient details for given id
+  //update patient details for given id
   @PUT
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)
@@ -128,27 +122,27 @@ public class PatientRestService extends BaseRestService {
     Response response;
     try {
       if (StringUtils.isNotEmpty(updateDto.getEmail()) || StringUtils.isNotEmpty(updateDto
-          .getPhoneNumber()) || StringUtils.isNotEmpty(updateDto.getGender())|| updateDto.getAge() != 0 || (updateDto.getStatus() != null && (updateDto.getStatus()
+          .getPhoneNumber()) || StringUtils.isNotEmpty(updateDto.getGender()) || updateDto.getAge() != 0 || (updateDto.getStatus() != null && (updateDto.getStatus()
           == PatientStatus.STATUS_INACTIVE || updateDto.getStatus() == PatientStatus.STATUS_ACTIVE
           || updateDto.getStatus() == PatientStatus.STATUS_DELETED))) {
         final Patient patient = patientService.get(id);
 
-       if (patient != null) {
+        if (patient != null) {
 
 
-          if (StringUtils.isNotEmpty(updateDto.getEmail())){
+          if (StringUtils.isNotEmpty(updateDto.getEmail())) {
             patient.setEmail(updateDto.getEmail());
           }
-          if (StringUtils.isNotEmpty(updateDto.getPhoneNumber())){
+          if (StringUtils.isNotEmpty(updateDto.getPhoneNumber())) {
             patient.setPhoneNumber(updateDto.getPhoneNumber());
           }
-          if(StringUtils.isNotEmpty(updateDto.getName())){
+          if (StringUtils.isNotEmpty(updateDto.getName())) {
             patient.setName(updateDto.getName());
           }
-          if (StringUtils.isNotEmpty(updateDto.getGender())){
+          if (StringUtils.isNotEmpty(updateDto.getGender())) {
             patient.setGender(updateDto.getGender());
           }
-          if(updateDto.getAge() != 0){
+          if (updateDto.getAge() != 0) {
             patient.setAge(updateDto.getAge());
           }
 
@@ -172,7 +166,7 @@ public class PatientRestService extends BaseRestService {
   }
 
 
-//delete patient by ID
+  //delete patient by ID
   @DELETE
   @Path("/{id}")
   @Produces(value = MediaType.APPLICATION_JSON)

@@ -8,7 +8,7 @@ public class ServiceResponse<T> {
   private String error;
   private T body;
 
-  public boolean isHasError() {
+  public boolean getHasError() {
     return hasError;
   }
 

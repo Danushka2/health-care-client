@@ -3,6 +3,7 @@ package lk.elevenzcode.healthcare.doctorapi.service.integration.impl;
 import lk.elevenzcode.healthcare.commons.enums.UserType;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.service.integration.BaseIntegrationService;
+import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.AuthIntegrationService;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.UserInfo;
 import lk.elevenzcode.healthcare.doctorapi.service.integration.dto.UserRegDto;
@@ -43,10 +44,10 @@ public class AuthIntegrationServiceImpl extends BaseIntegrationService implement
   }
 
   @Override
-  public Integer registerUser(UserRegDto userRegDto) throws ServiceException {
+  public ServiceResponse<Integer> registerUser(UserRegDto userRegDto) throws ServiceException {
     try {
       userRegDto.setUserType(UserType.DOCTOR);
-      return oAuth2RestTemplate.postForEntity(userRegUrl, userRegDto, Integer.class).getBody();
+      return oAuth2RestTemplate.postForEntity(userRegUrl, userRegDto, ServiceResponse.class).getBody();
     } catch (RestClientException e) {
       LOGGER.error(e.getMessage(), e);
       throw new ServiceException(ServiceException.PROCESSING_FAILURE,

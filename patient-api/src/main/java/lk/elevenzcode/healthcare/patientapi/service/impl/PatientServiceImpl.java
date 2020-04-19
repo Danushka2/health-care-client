@@ -4,6 +4,7 @@ import lk.elevenzcode.healthcare.commons.enums.UserType;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.service.impl.GenericServiceImpl;
 import lk.elevenzcode.healthcare.commons.util.Constant;
+import lk.elevenzcode.healthcare.commons.web.service.dto.ServiceResponse;
 import lk.elevenzcode.healthcare.patientapi.domain.Patient;
 import lk.elevenzcode.healthcare.patientapi.domain.PatientStatus;
 import lk.elevenzcode.healthcare.patientapi.repository.PatientRepository;
@@ -11,6 +12,7 @@ import lk.elevenzcode.healthcare.patientapi.service.PatientService;
 import lk.elevenzcode.healthcare.patientapi.service.integration.AuthIntegrationService;
 import lk.elevenzcode.healthcare.patientapi.service.integration.dto.UserRegDto;
 import lk.elevenzcode.healthcare.patientapi.web.dto.PatientRegisterDto;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -62,20 +64,25 @@ public class PatientServiceImpl extends GenericServiceImpl<Patient> implements P
       rollbackFor = ServiceException.class)
   public int register(PatientRegisterDto registerDto) throws ServiceException {
     //create user account
-    final Integer userId = authIntegrationService.registerUser(new UserRegDto(registerDto
-        .getUser_name(), registerDto.getPassword(), UserType.PATIENT));
+    final ServiceResponse<Integer> userRegisterResponse =
+        authIntegrationService.registerUser(new UserRegDto(registerDto
+            .getUser_name(), registerDto.getPassword(), UserType.PATIENT));
+    if (!userRegisterResponse.getHasError() || StringUtils.isEmpty(userRegisterResponse.getError())) {
+      final Patient patient = new Patient();
+      patient.setName(registerDto.getName());
+      patient.setEmail(registerDto.getEmail());
+      patient.setPhoneNumber(registerDto.getPhoneNo());
+      patient.setAge(registerDto.getAge());
+      patient.setGender(registerDto.getGender());
+      patient.setStatus(new PatientStatus(PatientStatus.STATUS_ACTIVE));
+      patient.setUser_id(userRegisterResponse.getBody());
+      insert(patient);
 
-    final Patient patient = new Patient();
-    patient.setName(registerDto.getName());
-    patient.setEmail(registerDto.getEmail());
-    patient.setPhoneNumber(registerDto.getPhoneNo());
-    patient.setAge(registerDto.getAge());
-    patient.setGender(registerDto.getGender());
-    patient.setStatus(new PatientStatus(PatientStatus.STATUS_ACTIVE));
-    patient.setUser_id(userId);
-    insert(patient);
-
-    return patient.getId();
+      return patient.getId();
+    } else {
+      throw new ServiceException(ServiceException.PROCESSING_FAILURE,
+          userRegisterResponse.getError());
+    }
   }
 
 

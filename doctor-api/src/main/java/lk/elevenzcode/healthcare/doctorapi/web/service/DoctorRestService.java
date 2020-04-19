@@ -117,16 +117,15 @@ public class DoctorRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   @Consumes(value = MediaType.APPLICATION_JSON)
   public Response registerPatient(DoctorRegistration registerDto) {
-    Response response;
+    final ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
     try {
-      final ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
       serviceResponse.setBody(doctorService.register(registerDto));
-      response = RESTfulUtil.getCreated(serviceResponse);
+      return RESTfulUtil.getCreated(serviceResponse);
     } catch (ServiceException e) {
       LOGGER.error(e.getMessage(), e);
-      response = RESTfulUtil.getInternalServerError();
+      setError(e, serviceResponse);
     }
-    return response;
+    return RESTfulUtil.getOk(serviceResponse);
   }
 
 
@@ -262,24 +261,6 @@ public class DoctorRestService extends BaseRestService {
     }
     return response;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   @GET
   @Path("/hospitals/{id}")
