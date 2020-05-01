@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="/header :: header_head"></head>
+<head>
+    <style>
+        .login-form {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.35rem;
+            -webkit-box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, .03);
+            box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, .03);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .login-form .healthcare-logo {
+            background-size: 100% 100%
+        }
+    </style>
+</head>
+<body>
+<div th:include="/header :: confirm_progress_dlg"></div>
+<form action="/oauth/token" class="login-form hover-shadow" enctype="multipart/form-data"
+      method="post">
+    <input name="grant_type" type="hidden" value="password">
+    <div class="healthcare-logo">
+    </div>
+    <div class="form-group">
+        <input autofocus class="form-control" id="username" name="username"
+               th:placeholder="#{app.login.field.username}" type="text" value="api">
+    </div>
+    <div class="form-group">
+        <input class="form-control" id="password" name="password"
+               th:placeholder="#{app.login.field.password}"
+               type="password" value="yCXneeTgfw2yYcu6">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-md btn-primary btn-block" th:text="#{app.login.button.sign.in}"
+                type="submit"></button>
+    </div>
+</form>
+<script>
+    $('form').submit(function (event) {
+        event.preventDefault();
+        ajaxPost(this, null, function (xhr) {
+            xhr.setRequestHeader('Authorization', BASIC_AUTH_TOKEN);
+        }, function (response, status, xhr) {
+            sessionStorage.setItem("access_token", response.access_token);
+            sessionStorage.setItem("refresh_token", response.refresh_token);
+            window.location.replace("/app/home");
+        });
+    });
+</script>
+</body>
+</html>

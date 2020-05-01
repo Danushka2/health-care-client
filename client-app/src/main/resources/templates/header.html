@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head th:fragment="header_head">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1.00, minimum-scale=1.00, maximum-scale=1.00, user-scalable=no"
+          name="viewport">
+    <!-- favicon -->
+    <link href="/img/favicon.png" rel="shortcut icon" type="image/x-icon">
+    <title th:text="#{app.title}"></title>
+    <!-- Bootstrap 4 -->
+    <link href="/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css" rel="stylesheet"/>
+    <!--Google Font-->
+    <link href="/font/googlefont/all.css?family=Poppins:200,300,400,600,700,800" rel="stylesheet"/>
+    <!-- FontAwesome Icons -->
+    <link href="/font/fontawesome/all.css" rel="stylesheet"/>
+    <!-- Bootstrap Table -->
+    <link href="/css/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+    <!-- Select Picker, full documentation here: http://silviomoreto.github .io/bootstrap-select -->
+    <link href="/css/select-picker/bootstrap-select.css" rel="stylesheet"/>
+    <!-- DateTime Picker, full documentation here: http://eonasdan.github.io/bootstrap-datetimepicker -->
+    <link href="/css/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+    <!-- InputMask CSS -->
+    <link href="/css/input-mask/inputmask.css" rel="stylesheet"/>
+    <!-- Parsley Validator CSS -->
+    <link href="/css/parsley-validator/parsley.css" rel="stylesheet"/>
+    <!-- Client CSS -->
+    <link href="/css/client.css" rel="stylesheet"/>
+
+    <!-- JQuery 3.4.0 -->
+    <script src="/webjars/jquery/3.4.0/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="/js/popper/popper.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Table -->
+    <script src="/js/bootstrap-table/bootstrap-table.min.js"></script>
+    <!-- Select Picker, full documentation here: http://silviomoreto.github .io/bootstrap-select -->
+    <script src="/js/select-picker/bootstrap-select.js"></script>
+    <!-- Moment JS, full documentation here: https://momentjs.com/docs/ -->
+    <script src="/js/moment/moment.min.js"></script>
+    <!-- DateTime Picker, full documentation here: http://eonasdan.github.io/bootstrap-datetimepicker -->
+    <script src="/js/datetime-picker/bootstrap-datetimepicker.min.js"></script>
+    <!-- Notifications Plugin -->
+    <script src="/js/bootstrap-notify/bootstrap-notify.js"></script>
+    <!-- InputMask JS -->
+    <script src="/js/input-mask/jquery.inputmask.min.js"></script>
+    <!-- Parsley Validator JS -->
+    <script src="/js/parsley-validator/parsley.min.js"></script>
+    <!-- Client JS -->
+    <script src="/js/client.js"></script>
+</head>
+<body>
+<div th:fragment="confirm_progress_dlg">
+    <div aria-hidden="true" class="modal fade" id="confirm" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-text"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-round btn-sm" type="submit">Yes</button>
+                    <button class="btn btn-danger btn-round btn-sm" data-dismiss="modal"
+                            type="button">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="true" class="modal fade" id="progress" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Processing. Please wait..</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div aria-valuemax="100"
+                             aria-valuemin="0"
+                             aria-valuenow="100"
+                             class="progress-bar progress-bar-striped progress-bar-animated"
+                             role="progressbar"
+                             style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="validate_token">
+    <script type="text/javascript">
+        const ROLE_HOSP = "ROLE_HOSP", ROLE_ADD_HOSP = "ROLE_ADD_HOSP",
+            ROLE_GET_ALL_HOSP = "ROLE_GET_ALL_HOSP", ROLE_GET_HOSP = "ROLE_GET_HOSP",
+            ROLE_UPDATE_HOSP = "ROLE_UPDATE_HOSP", ROLE_ADD_ROOM = "ROLE_ADD_ROOM",
+            ROLE_GET_ROOM = "ROLE_GET_ROOM", ROLE_UPDATE_ROOM = "ROLE_UPDATE_ROOM",
+            ROLE_DELETE_ROOM = "ROLE_DELETE_ROOM", ROLE_DOC = "ROLE_DOC",
+            ROLE_GET_DOC = "ROLE_GET_DOC", ROLE_REG_DOC = "ROLE_REG_DOC",
+            ROLE_GET_ALL_DOC = "ROLE_GET_ALL_DOC", ROLE_UPDATE_DOC = "ROLE_UPDATE_DOC",
+            ROLE_DELETE_DOC = "ROLE_DELETE_DOC", ROLE_PT = "ROLE_PT", ROLE_REG_PT = "ROLE_REG_PT",
+            ROLE_GET_ALL_PT = "ROLE_GET_ALL_PT", ROLE_GET_PT = "ROLE_GET_PT",
+            ROLE_UPDATE_PT = "ROLE_UPDATE_PT", ROLE_DELETE_PT = "ROLE_DELETE_PT",
+            ROLE_APPT = "ROLE_APPT", ROLE_GET_APPT = "ROLE_GET_APPT",
+            ROLE_GET_PT_APPT = "ROLE_GET_PT_APPT", ROLE_MAKE_APPT = "ROLE_MAKE_APPT",
+            ROLE_UPDATE_APPT = "ROLE_UPDATE_APPT", ROLE_CANCEL_APPT = "ROLE_CANCEL_APPT",
+            ROLE_PAY = "ROLE_PAY", ROLE_MAKE_PAY = "ROLE_MAKE_PAY",
+            ROLE_GET_ALL_PAY = "ROLE_GET_ALL_PAY", ROLE_GET_APPT_PAY = "ROLE_GET_APPT_PAY",
+            ROLE_REFUND_PAY = "ROLE_REFUND_PAY", ROLE_GET_PAY = "ROLE_GET_PAY";
+
+        const HOSP_PERMS = [ROLE_HOSP, ROLE_ADD_HOSP, ROLE_GET_ALL_HOSP, ROLE_GET_HOSP,
+            ROLE_UPDATE_HOSP, ROLE_ADD_ROOM, ROLE_GET_ROOM, ROLE_UPDATE_ROOM, ROLE_DELETE_ROOM];
+
+        const DOC_PERMS = [ROLE_DOC, ROLE_GET_DOC, ROLE_REG_DOC, ROLE_GET_ALL_DOC,
+            ROLE_UPDATE_DOC, ROLE_DELETE_DOC];
+
+        const PT_PERMS = [ROLE_PT, ROLE_REG_PT, ROLE_GET_ALL_PT, ROLE_GET_PT, ROLE_UPDATE_PT,
+            ROLE_DELETE_PT];
+
+        const APPT_PERMS = [ROLE_APPT, ROLE_GET_APPT, ROLE_GET_PT_APPT, ROLE_MAKE_APPT,
+            ROLE_UPDATE_APPT, ROLE_CANCEL_APPT];
+
+        const PAY_PERMS = [ROLE_PAY, ROLE_MAKE_PAY, ROLE_GET_ALL_PAY, ROLE_GET_APPT_PAY,
+            ROLE_REFUND_PAY, ROLE_GET_PAY];
+
+        var authorities = [], username;
+        var accessToken = sessionStorage.getItem('access_token');
+        $.ajaxSetup({
+            statusCode: {
+                401: function () {
+                    location.reload();
+                }
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+            }
+        });
+        if (accessToken) {
+            checkToken(accessToken);
+        } else {
+            console.log('no access token..');
+            redirectLogin();
+        }
+
+        function refresh(refreshToken) {
+            $.ajax({
+                url: '/oauth/token',
+                type: 'POST',
+                data: $.param({
+                    "grant_type": "refresh_token",
+                    "refresh_token": refreshToken
+                }),
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', BASIC_AUTH_TOKEN);
+                },
+                success: function (response, status, xhr) {
+                    sessionStorage.setItem("access_token", response.access_token);
+                    sessionStorage.setItem("refresh_token", response.refresh_token);
+                    checkToken(response.access_token);
+                },
+                cache: false,
+                contentType: 'application/x-www-form-urlencoded',
+                processData: false,
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('error while refreshing token..');
+                    redirectLogin();
+                }
+            });
+        }
+
+        function checkToken(accessToken) {
+            $.ajax({
+                url: '/oauth/check_token?token=' + accessToken,
+                type: 'POST',
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Basic Y2xpZW50OjVleXZMZjhUc1Q1ZEJGck0=');
+                },
+                success: function (response, status, xhr) {
+                    authorities = response.authorities;
+                    username = response.user_name;
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var refreshToken = sessionStorage.getItem('refresh_token');
+                    if (refreshToken) {
+                        refresh(refreshToken);
+                    } else {
+                        console.log('no refresh token..');
+                        redirectLogin();
+                    }
+                }
+            });
+        }
+
+        function redirectLogin() {
+            sessionStorage.clear();
+            authorities = [];
+            window.location.replace("/app/login");
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:include="/header :: header_head"></head>
+<body>
+<div th:include="/header :: confirm_progress_dlg"></div>
+<div th:replace="/header :: validate_token"></div>
+<div class="content">
+    <h2>Implement Doctor CRUD UIs Here</h2>
+</div>
+<div th:replace="/nav :: nav"></div>
+<script type="text/javascript">
+    $(function () {
+        $('#doctor-menu').addClass('active');
+        $('#doctor-menu').siblings().removeClass('active');
+    });
+</script>
+</body>
+</html>

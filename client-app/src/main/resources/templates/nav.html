@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<body th:fragment="nav">
+<div class="user-logout">
+    <div class="profile">
+    </div>
+    <ul class="dropdown">
+        <li class="user">></li>
+        <li><a id="logout"><span><i class="icon-envelope icon-large"></i></span><span
+                th:text="#{app.logout}"></span>
+        </a></li>
+    </ul>
+</div>
+<div class="navbar"></div>
+<script>
+    const LBL_HOSP = '[[#{app.nav.hospital}]]', LBL_DOC = '[[#{app.nav.doctor}]]',
+        LBL_PT = '[[#{app.nav.patient}]]', LBL_APPT = '[[#{app.nav.appointment}]]',
+        LBL_PAY = '[[#{app.nav.payment}]]';
+
+    function dropDown(el) {
+        this.dd = el;
+        this.initEvents();
+    }
+
+    dropDown.prototype = {
+        initEvents: function () {
+            var obj = this;
+            obj.dd.on('click', function (event) {
+                $(this).toggleClass('active');
+                event.stopPropagation();
+            });
+        }
+    };
+
+    $('#logout').on('click', function () {
+        redirectLogin();
+    });
+
+    $(function () {
+        new dropDown($('.profile'));
+        $(document).click(function () {
+            $('.profile').removeClass('active');
+        });
+
+        if (containsAny(authorities, HOSP_PERMS)) {
+            $('.navbar').append('<a id="hospital-menu" href="/app/hospitals" data-toggle="tooltip" '
+                + 'data-placement="top" title="' + LBL_HOSP + '"><i class="far fa-hospital"></i></a>');
+        }
+        if (containsAny(authorities, DOC_PERMS)) {
+            $('.navbar').append('<a id="doctor-menu" href="/app/doctors" data-toggle="tooltip" '
+                + 'data-placement="top" title="' + LBL_DOC + '"><i class="far fa-user-md"></i></a>');
+        }
+        if (containsAny(authorities, PT_PERMS)) {
+            $('.navbar').append('<a id="patient-menu" href="/app/patients" data-toggle="tooltip" '
+                + 'data-placement="top" title="' + LBL_PT + '"><i class="far fa-user-injured"></i>'
+                + '</a>');
+        }
+        if (containsAny(authorities, APPT_PERMS)) {
+            $('.navbar').append('<a id="appointment-menu" href="/app/appointments" data-toggle="tooltip" '
+                + 'data-placement="top" title="' + LBL_APPT + '"><i class="far fa-calendar-check">'
+                + '</i></a>');
+        }
+        if (containsAny(authorities, PAY_PERMS)) {
+            $('.navbar').append('<a id="payment-menu" href="/app/payments" data-toggle="tooltip" '
+                + 'data-placement="top" title="' + LBL_PAY + '"><i class="far fa-receipt"></i>'
+                + '</a>');
+        }
+        $('.navbar a[data-toggle="tooltip"]').tooltip();
+        $('.dropdown .user').html(username);
+    });
+</script>
+</body>
+</html>

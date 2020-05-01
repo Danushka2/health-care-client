@@ -41,7 +41,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Override
   public void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-        .antMatchers("/oauth/**", "/payments/js/**", "/payments/css/**", "/payments/html/**")
+        .antMatchers("/", "/app/**", "/webjars/**", "/js/**", "/css/**", "/font/**",
+            "/favicon.ico", "/img/**", "/oauth/**", "/payments/js/**", "/payments/css/**",
+            "/payments/html/**")
         .permitAll()
         .antMatchers(HttpMethod.POST, "/patients")
         .permitAll()
