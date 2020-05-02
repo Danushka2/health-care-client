@@ -4,6 +4,11 @@
 <body>
 <div th:include="/header :: confirm_progress_dlg"></div>
 <div th:replace="/header :: validate_token"></div>
+<script type="text/javascript">
+    if (!containsAny(authorities, APPT_PERMS)) {
+        redirectHome();
+    }
+</script>
 <div class="content">
     <h2>Implement Appointment CRUD UIs Here</h2>
 </div>
