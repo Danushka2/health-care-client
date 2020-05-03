@@ -1,6 +1,7 @@
 package lk.elevenzcode.healthcare.paymentapi.service.impl;
 
 import com.stripe.model.PaymentIntent;
+import lk.elevenzcode.healthcare.commons.dto.ResultAdditionalData;
 import lk.elevenzcode.healthcare.commons.exception.ServiceException;
 import lk.elevenzcode.healthcare.commons.service.impl.GenericServiceImpl;
 import lk.elevenzcode.healthcare.commons.util.Constant;
@@ -22,11 +23,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 
@@ -65,6 +71,9 @@ public class PaymentServiceImpl extends GenericServiceImpl<Payment> implements P
         //refund the payment by Stripe
         final String refundRef = stripeIntegrationService.refundPayment(payment
             .getStripeIntentId());
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("Payment {} refunded..", payment.getStripeIntentId());
+        }
         //make payment as refunded
         payment.setStatus(new PaymentStatus(PaymentStatus.STATUS_REFUND));
         update(payment);
@@ -119,14 +128,15 @@ public class PaymentServiceImpl extends GenericServiceImpl<Payment> implements P
   @Transactional(value = Constant.TRANSACTION_MANAGER, propagation = Propagation.REQUIRED,
       rollbackFor = ServiceException.class)
   public int save(int apptId, String paymentIntentId) throws ServiceException {
-    final AppointmentInfo appointmentInfo = appointmentIntegrationService.getByApptId(apptId);
-    //validate appoinment is exist
-    if (appointmentInfo != null) {
-      //fetch & validate whether payment success or not by integrating with Stripe
-      final PaymentIntent paymentIntent = stripeIntegrationService.getById(paymentIntentId);
-      if (paymentIntent != null && StringUtils.equals(INTENT_STATUS_SUCCEEDED,
-          paymentIntent.getStatus())) {
-        try {
+    try {
+      final AppointmentInfo appointmentInfo = appointmentIntegrationService.getByApptId(apptId);
+      //validate appoinment is exist
+      if (appointmentInfo != null) {
+        //fetch & validate whether payment success or not by integrating with Stripe
+        final PaymentIntent paymentIntent = stripeIntegrationService.getById(paymentIntentId);
+        if (paymentIntent != null && StringUtils.equals(INTENT_STATUS_SUCCEEDED,
+            paymentIntent.getStatus())) {
+
           //save payment details
           final Payment payment = new Payment();
           payment.setAppointmentId(apptId);
@@ -144,17 +154,18 @@ public class PaymentServiceImpl extends GenericServiceImpl<Payment> implements P
           //send acknowlegement email to the patient
           sendAcknowledgementEmail(payment, appointmentInfo);
           return payment.getId();
-        } catch (ServiceException e) {
-          //refund payment if occurs any error when saving or sending email
-          stripeIntegrationService.refundPayment(paymentIntentId);
-          throw e;
+        } else {
+          throw new ServiceException(ServiceException.VALIDATION_FAILURE,
+              "label.payment.err.failed");
         }
       } else {
-        throw new ServiceException(ServiceException.VALIDATION_FAILURE, "label.payment.err.failed");
+        throw new ServiceException(ServiceException.VALIDATION_FAILURE,
+            "label.payment.err.appointment.not.available");
       }
-    } else {
-      throw new ServiceException(ServiceException.VALIDATION_FAILURE,
-          "label.payment.err.appointment.not.available");
+    } catch (ServiceException e) {
+      //refund payment if occurs any error while saving or sending email
+      stripeIntegrationService.refundPayment(paymentIntentId);
+      throw e;
     }
   }
 
@@ -169,6 +180,65 @@ public class PaymentServiceImpl extends GenericServiceImpl<Payment> implements P
   @Transactional(value = Constant.TRANSACTION_MANAGER, propagation = Propagation.REQUIRED,
       rollbackFor = ServiceException.class)
   public void refund(int id, String reason) throws ServiceException {
-    refund(get(id), reason);
+    final Payment payment = get(id);
+    refund(payment, reason);
+
+    //as of the payment refund, update the appointment status to CANCELED
+    appointmentIntegrationService.updateStatus(payment.getAppointmentId(),
+        new AppointmentUpdateReq(AppointmentInfo.Status.CANCELED.getId()));
+  }
+
+  @Override
+  public List<Payment> getList(Integer offset, Integer limit, String sort, String order,
+                               ResultAdditionalData additionalData) throws ServiceException {
+    Pageable pageable = PageRequest.of(offset, limit, Sort.by(Sort.Direction.fromString(order),
+        sort));
+    try {
+      additionalData.setCount(paymentRepository.count());
+      return paymentRepository.findAll(pageable).toList();
+    } catch (Exception e) {
+      LOGGER.error(e.getMessage(), e);
+      throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());
+    }
+  }
+
+  @Override
+  public void update(int id, String paymentIntentId) throws ServiceException {
+    final Payment payment = get(id);
+    try {
+      if (payment != null) {
+        //fetch & validate whether payment success or not by integrating with Stripe
+        final PaymentIntent paymentIntent = stripeIntegrationService.getById(paymentIntentId);
+        if (paymentIntent != null && StringUtils.equals(INTENT_STATUS_SUCCEEDED,
+            paymentIntent.getStatus())) {
+          //refund existing payment
+          stripeIntegrationService.refundPayment(payment.getStripeIntentId());
+          if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Payment {} refunded..", payment.getStripeIntentId());
+          }
+          //update payment fields
+          payment.setAmount(ConversionUtil.parseMoney(paymentIntent.getAmount()));
+          payment.setStripeIntentId(paymentIntentId);
+          payment.setPaidOn(LocalDateTime.now());
+          update(payment);
+
+          final AppointmentInfo appointmentInfo = appointmentIntegrationService.getByApptId(payment
+              .getAppointmentId());
+
+          //send acknowlegement email to the patient
+          sendAcknowledgementEmail(payment, appointmentInfo);
+        } else {
+          throw new ServiceException(ServiceException.VALIDATION_FAILURE,
+              "label.payment.err.failed");
+        }
+      } else {
+        throw new ServiceException(ServiceException.VALIDATION_FAILURE,
+            "label.payment.err.not.found");
+      }
+    } catch (ServiceException e) {
+      //refund payment if occurs any error while saving or sending email
+      stripeIntegrationService.refundPayment(paymentIntentId);
+      throw e;
+    }
   }
 }

@@ -97,6 +97,10 @@
     display: none
 }
 
+html {
+    height: 100%;
+}
+
 body {
     background-color: #A6FFCB;
     background: linear-gradient(320deg, #12D8FA 0%, #A6FFCB 100%);
@@ -1240,10 +1244,6 @@ a:focus, a:active {
 }
 
 .bootstrap-table .fixed-table-container {
-    height: 82% !important;
-}
-
-.bootstrap-table .fixed-table-container {
     box-shadow: 0px 0px 13px 0px rgba(82, 63, 105, 0.05);
     background-color: var(--white);
 }
@@ -1359,4 +1359,31 @@ a.text-success:focus, a.text-success:hover {
 
 .popover-header {
     text-align: center;
+}
+
+.error {
+    margin-top: 5px;
+    color: var(--danger);
+}
+
+#progress, #confirm {
+    z-index: 1051;
+}
+
+.parsley-errors-list {
+    font-size: 14px !important;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .th-inner {
+    padding-bottom: 9px !important;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-header .table {
+    margin-bottom: unset !important;
+}
+
+.refund-msg {
+    color: var(--gray);
+    margin-bottom: 10px;
+    margin-top: 10px;
 }

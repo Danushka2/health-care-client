@@ -1,0 +1,72 @@
+/**
+* Created by හShaන් සNදීප on 5/2/2020 3:20 PM
+*/
+#modifyPaymentModal .pay-detail .reference {
+    width: 50%;
+    float: left;
+}
+
+#modifyPaymentModal .pay-detail .paid-on {
+    width: 50%;
+    float: right;
+}
+
+form {
+    margin-bottom: unset !important;
+}
+
+.pay-detail {
+    display: inline-block;
+    width: -webkit-fill-available;
+}
+
+@media (min-width: 576px) {
+    .modal-400px {
+        max-width: 400px
+    }
+}
+
+.payment-actions {
+    width: fit-content;
+    display: inline-block;
+    margin-top: 5px;
+    position: absolute;
+}
+
+tr.row-refund {
+    background-color: #f5f5f5;
+}
+
+tr.row-refund td:first-child {
+    border-left: 5px solid var(--danger);
+}
+
+tr.row-refund .amount {
+    color: var(--danger);
+}
+
+.table tbody tr.row-refund:hover {
+    background-color: #f5f5f5 !important;
+}
+
+.appt-detail {
+    height: 50px;
+}
+
+#makePaymentModal .appt-detail {
+    display: none;
+}
+
+.appt-detail .left {
+    width: 50%;
+    float: left;
+}
+
+.appt-detail .right {
+    width: 50%;
+    float: right;
+}
+
+.card-element {
+    margin-top: 10px;
+}

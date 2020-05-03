@@ -1,11 +1,11 @@
 package lk.elevenzcode.healthcare.paymentapi.web.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by හShaන් සNදීප on 4/16/2020 3:07 PM
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PaymentInitReq {
   private int appointmentId;
 

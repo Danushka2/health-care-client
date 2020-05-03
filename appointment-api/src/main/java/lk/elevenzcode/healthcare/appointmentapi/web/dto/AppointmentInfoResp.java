@@ -1,6 +1,9 @@
 package lk.elevenzcode.healthcare.appointmentapi.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
+import lk.elevenzcode.healthcare.appointmentapi.service.integration.DoctorIntegrationService;
+import lk.elevenzcode.healthcare.appointmentapi.service.integration.PatientIntegrationService;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.dto.DoctorSessionInfo;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.dto.PatientInfo;
 
@@ -15,6 +18,19 @@ public class AppointmentInfoResp {
   private LocalDate appointmentDate;
   private LocalDateTime createDate;
   private int status;
+
+  public static AppointmentInfoResp parse(Appointment appointment,
+                                          PatientIntegrationService patientIntegrationService,
+                                          DoctorIntegrationService doctorIntegService) {
+    final AppointmentInfoResp appointmentInfoResp = new AppointmentInfoResp();
+    appointmentInfoResp.setId(appointment.getId());
+    appointmentInfoResp.setPatient(patientIntegrationService.getById(appointment.getPatientId()));
+    appointmentInfoResp.setSession(doctorIntegService.getSessionInfo(appointment.getSessionId()));
+    appointmentInfoResp.setAppointmentDate(appointment.getAppointmentDate());
+    appointmentInfoResp.setCreateDate(appointment.getCreateDate());
+    appointmentInfoResp.setStatus(appointment.getStatus().getId());
+    return appointmentInfoResp;
+  }
 
   public int getId() {
     return id;

@@ -30,9 +30,7 @@ function showProgress() {
 }
 
 function hideProgress(e) {
-    setTimeout(function () {
-        $('#progress').modal('hide');
-    }, 465);
+    $('#progress').modal('hide');
 }
 
 function showConfirm(title, text, callbackFn, data) {
@@ -86,8 +84,46 @@ function ajaxDelete(url, onSubmit, success) {
     });
 }
 
+function ajaxJson(url, type, json, success, onSubmit) {
+    $.ajax({
+        url: url,
+        type: type ? type : 'POST',
+        data: JSON.stringify(json),
+        beforeSend: function (xhr) {
+            if (onSubmit) {
+                onSubmit(xhr);
+            }
+        },
+        success: function (response, status, xhr) {
+            commonResponseHandler(response, status, xhr, success);
+        },
+        cache: false,
+        contentType: 'application/json',
+        processData: false,
+        error: commonErrorHandler
+    });
+}
+
+function ajaxFormJson($form, success) {
+    $form = $($form);
+    $.ajax({
+        url: $form.attr('action'),
+        type: $form.attr('method'),
+        data: JSON.stringify($form.serializeJSON()),
+        beforeSend: function (xhr) {
+            showProgress();
+        },
+        success: function (response, status, xhr) {
+            commonResponseHandler(response, status, xhr, success);
+        },
+        cache: false,
+        contentType: 'application/json',
+        processData: false,
+        error: commonErrorHandler
+    });
+}
+
 function ajaxPost($form, success) {
-    console.log('form 1 - ', $form);
     ajaxPost($form, null, null, success)
 }
 
@@ -139,9 +175,9 @@ function ajaxPost($form, formData, onSubmit, success) {
 }
 
 function commonErrorHandler(jqXHR, textStatus, errorThrown) {
+    hideProgress();
     showNotification('danger', "Problem with server call.<br>Please try again.<br>Technical" +
         " details: " + jqXHR.status + ':' + jqXHR.statusText);
-    hideProgress();
 }
 
 function commonResponseHandler(response, status, xhr, callback) {
@@ -149,7 +185,7 @@ function commonResponseHandler(response, status, xhr, callback) {
     if (response && 'hasError' in response) {
         if (response.hasError) {
             hideProgress();
-            showNotification('warning', response.errors.join("\n"));
+            showNotification('warning', response.error);
             return;
         }
     }
@@ -243,3 +279,7 @@ window.Parsley
             return new RegExp(re).test(value);
         }
     });
+
+function formatCurrency(val) {
+    return Number(val).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1,');
+}

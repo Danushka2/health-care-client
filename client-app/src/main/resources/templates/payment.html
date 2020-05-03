@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head th:include="/header :: header_head"></head>
+<head>
+    <!-- Payment CSS -->
+    <link href="/css/payment.css" rel="stylesheet"/>
+</head>
 <body>
 <div th:include="/header :: confirm_progress_dlg"></div>
 <div th:replace="/header :: validate_token"></div>
@@ -10,14 +14,284 @@
     }
 </script>
 <div class="content">
-    <h2>Will Implement Payment CRUD UIs Here</h2>
+    <div class="payment-actions">
+        <button class="btn btn-sm btn-primary btn-round" data-backdrop="static"
+                data-target="#makePaymentModal"
+                data-toggle="modal" type="button">
+            <i class="fad fa-dollar-sign"></i>
+            <span th:text="#{app.payment.btn.make.payment}"></span>
+        </button>
+    </div>
+    <table data-buttons-class="primary btn-lg"
+           data-id-field="id"
+           data-minimum-count-columns="2"
+           data-page-list="[10, 15, 25, 50, all]"
+           data-page-size="15"
+           data-pagination="true"
+           data-row-style="rowFormatter"
+           data-search="true"
+           data-show-footer="true"
+           data-show-search-button="true"
+           data-show-search-clear-button="true"
+           data-side-pagination="server"
+           data-sort-name="paidOn"
+           data-sort-order="desc"
+           data-toolbar="#toolbar"
+           data-unique-id="id"
+           data-url="/payments"
+           id="payment-tbl">
+    </table>
+    <div aria-hidden="true" class="modal fade" id="makePaymentModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="#{app.payment.modal.title.make.payment}"></h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="/payments/init" data-parsley-validate="" method="POST" novalidate="">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="appointments"
+                                   th:text="#{app.payment.modal.field.appointment}"></label>
+                            <select class="selectpicker form-control" data-hide-disabled="true"
+                                    data-live-search="true"
+                                    data-parsley-error-message="Appointment is required"
+                                    data-parsley-errors-container="#appointment-error-container"
+                                    data-parsley-required
+                                    data-parsley-trigger="change focusin focusout input"
+                                    id="appointments"
+                                    name="appointmentId"
+                                    title="">
+                                <option disabled selected
+                                        th:text="#{app.payment.modal.select.appointment}">
+                                </option>
+                            </select>
+                            <div id="appointment-error-container"></div>
+                        </div>
+                        <div class="appt-detail">
+                            <div class="left hospital">
+                                <div class="font-weight-bold"
+                                     th:text="#{app.payment.modal.field.hospital}"></div>
+                                <div class="val">.....</div>
+                            </div>
+                            <div class="right doctor">
+                                <div class="font-weight-bold text-right"
+                                     th:text="#{app.payment.modal.field.doctor}"></div>
+                                <div class="val text-right">.....</div>
+                            </div>
+                        </div>
+                        <div class="appt-detail">
+                            <div class="left patient">
+                                <div class="font-weight-bold"
+                                     th:text="#{app.payment.modal.field.patient}"></div>
+                                <div class="val">.....</div>
+                            </div>
+                            <div class="right roomNo">
+                                <div class="font-weight-bold text-right"
+                                     th:text="#{app.payment.modal.field.room.no}"></div>
+                                <div class="val text-right">.....</div>
+                            </div>
+                        </div>
+                        <div class="appt-detail">
+                            <div class="left date">
+                                <div class="font-weight-bold"
+                                     th:text="#{app.payment.modal.field.appt.date}"></div>
+                                <div class="val">.....</div>
+                            </div>
+                            <div class="right fee">
+                                <div class="font-weight-bold text-right"
+                                     th:text="#{app.payment.modal.field.fee}"></div>
+                                <div class="val text-right">.....</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="card-element">
+                                <!-- Elements will create input elements here -->
+                            </div>
+                            <!-- put the error messages in this element -->
+                            <div class="error card-errors" role="alert"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success btn-round btn-sm" id="proceed"
+                                th:text="#{app.common.lbl.proceed}"
+                                type="submit">
+                        </button>
+                        <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal"
+                                th:text="#{app.common.lbl.cancel}" type="reset">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="true" class="modal fade" id="modifyPaymentModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-400px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="#{app.payment.modal.title.modify.payment}">
+                    </h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/payments/{id}/modify/init" data-parsley-validate="" method="PUT"
+                      novalidate="">
+                    <input name="id" type="hidden">
+                    <div class="modal-body">
+                        <div class="pay-detail">
+                            <div class="reference">
+                                <div class="font-weight-bold"
+                                     th:text="#{app.payment.modal.field.reference}"></div>
+                                <div class="ref">.....</div>
+                            </div>
+                            <div class="paid-on">
+                                <div class="font-weight-bold text-right"
+                                     th:text="#{app.payment.modal.field.paid.on}"></div>
+                                <div class="payon text-right">.....</div>
+                            </div>
+                        </div>
+                        <div class="appt-detail">
+                            <div class="left hospital">
+                                <div class="font-weight-bold"
+                                     th:text="#{app.payment.modal.field.hospital}"></div>
+                                <div class="val">.....</div>
+                            </div>
+                            <div class="right doctor">
+                                <div class="font-weight-bold text-right"
+                                     th:text="#{app.payment.modal.field.doctor}"></div>
+                                <div class="val text-right">.....</div>
+                            </div>
+                        </div>
+                        <div class="appt-detail">
+                            <div class="left patient">
+                                <div class="font-weight-bold"
+                                     th:text="#{app.payment.modal.field.patient}"></div>
+                                <div class="val">.....</div>
+                            </div>
+                            <div class="right roomNo">
+                                <div class="font-weight-bold text-right"
+                                     th:text="#{app.payment.modal.field.room.no}"></div>
+                                <div class="val text-right">.....</div>
+                            </div>
+                        </div>
+                        <div class="appt-detail">
+                            <div class="left date">
+                                <div class="font-weight-bold"
+                                     th:text="#{app.payment.modal.field.appt.date}"></div>
+                                <div class="val">.....</div>
+                            </div>
+                            <div class="right fee">
+                                <div class="font-weight-bold text-right"
+                                     th:text="#{app.payment.modal.field.fee}"></div>
+                                <div class="val text-right mandatory-warn">.....</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="fee"
+                                   th:text="#{app.payment.modal.field.fee}"></label>
+                            <input name="fee" type="hidden">
+                            <input class="form-control inputmask text-right" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2,
+                        'digitsOptional': false, 'prefix': 'Rs ', 'placeholder': '0'"
+                                   data-parsley-pattern="/(?=.*\d)^Rs?\s(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/"
+                                   data-parsley-pattern-message="Invalid Fee"
+                                   data-parsley-required
+                                   data-parsley-required-message="Fee is required"
+                                   data-parsley-trigger="change keypress keydown keyup focusin focusout input"
+                                   id="fee"
+                                   type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="card-element">
+                                <!-- Elements will create input elements here -->
+                            </div>
+                            <!-- put the error messages in this element -->
+                            <div class="error card-errors" role="alert"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-round btn-sm" id="modify"
+                                th:text="#{app.common.lbl.modify}"
+                                type="submit">
+                        </button>
+                        <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal"
+                                th:text="#{app.common.lbl.cancel}" type="reset">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="true" class="modal fade" id="refundPaymentModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="#{app.payment.modal.title.refund}"></h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/payments/{id}" method="DELETE">
+                    <div class="modal-body">
+                        <span th:text="#{app.payment.refund.conf}"></span>
+                        <div class="refund-msg" th:text="#{app.payment.modal.field.reason}"></div>
+                        <div class="form-group">
+                            <input class="form-control" data-parsley-length="[5, 100]"
+                                   data-parsley-required
+                                   data-parsley-required-message="Reason is required"
+                                   data-parsley-trigger="change focusin focusout input"
+                                   name="reason"
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger btn-round btn-sm" id="confirm"
+                                th:text="#{app.payment.refund.conf.action.yes}"
+                                type="submit">
+                        </button>
+                        <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal"
+                                th:text="#{app.common.lbl.cancel}" type="reset">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:replace="/nav :: nav"></div>
+<script src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript">
-    $(function () {
-        $('#payment-menu').addClass('active');
-        $('#payment-menu').siblings().removeClass('active');
-    });
+    const COL_REF = '[[#{app.payment.list.col.reference}]]',
+        COL_APPT_D = '[[#{app.payment.list.col.appointment.date}]]',
+        COL_APPT_T = '[[#{app.payment.list.col.appointment.time}]]',
+        COL_PT = '[[#{app.payment.list.col.patient}]]', COL_FEE = '[[#{app.payment.list.col.fee}]]',
+        COL_PAID_ON = '[[#{app.payment.list.col.paid.on}]]',
+        COL_STATUS = '[[#{app.common.lbl.status}]]',
+        COL_ACTIONS = '[[#{app.common.lbl.actions}]]',
+        COL_TOT = '[[#{app.payment.list.col.total}]]';
+
+    const APPT_STATUS_PENDING =
+            '[[${T(lk.elevenzcode.healthcare.clientapp.util.Constant).APPT_STATUS_PENDING}]]',
+        PAY_STATUS_REFUND =
+            '[[${T(lk.elevenzcode.healthcare.clientapp.util.Constant).PAY_STATUS_REFUND}]]';
+
+    const ERR_INVALID_CARD = '[[#{app.payment.err.invalid.card.details}]]',
+        ERR_NO_PENDING_APPT = '[[#{app.payment.err.no.pending.appointment}]]';
+
+    const LBL_PAY_SUCCESS = '[[#{app.payment.success}]]', LBL_REFUND_INFO =
+            '[[#{app.payment.refund.info}]]', LBL_MODIFY = '[[#{app.common.lbl.modify}]]',
+        LBL_REFUND_ON = '[[#{app.payment.refund.field.refund.on}]]', LBL_REASON =
+            '[[#{app.payment.refund.field.reason}]]', LBL_REFUND = '[[#{app.payment.refund}]]',
+        LBL_PAY_UPDATED = '[[#{app.payment.update.success}]]',
+        LBL_PAY_REFUNDED = '[[#{app.payment.refund.success}]]';
 </script>
+<!-- Payment JS -->
+<script src="/js/payment.js"></script>
 </body>
 </html>

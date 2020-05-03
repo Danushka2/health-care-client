@@ -1,14 +1,19 @@
 package lk.elevenzcode.healthcare.paymentapi.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lk.elevenzcode.healthcare.paymentapi.service.integration.dto.AppointmentInfo;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
  * Created by හShaන් සNදීප on 4/16/2020 5:41 PM
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PaymentInfoResp {
   private int id;
   private String reference;
+  private AppointmentInfo appointmentInfo;
   private BigDecimal fee;
   private LocalDateTime paidOn;
   private String status;
@@ -20,6 +25,16 @@ public class PaymentInfoResp {
                          String status) {
     this.id = id;
     this.reference = reference;
+    this.fee = fee;
+    this.paidOn = paidOn;
+    this.status = status;
+  }
+
+  public PaymentInfoResp(int id, String reference, AppointmentInfo appointmentInfo,
+                         BigDecimal fee, LocalDateTime paidOn, String status) {
+    this.id = id;
+    this.reference = reference;
+    this.appointmentInfo = appointmentInfo;
     this.fee = fee;
     this.paidOn = paidOn;
     this.status = status;
@@ -39,6 +54,14 @@ public class PaymentInfoResp {
 
   public void setReference(String reference) {
     this.reference = reference;
+  }
+
+  public AppointmentInfo getAppointmentInfo() {
+    return appointmentInfo;
+  }
+
+  public void setAppointmentInfo(AppointmentInfo appointmentInfo) {
+    this.appointmentInfo = appointmentInfo;
   }
 
   public BigDecimal getFee() {

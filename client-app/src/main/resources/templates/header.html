@@ -47,6 +47,8 @@
     <script src="/js/input-mask/jquery.inputmask.min.js"></script>
     <!-- Parsley Validator JS -->
     <script src="/js/parsley-validator/parsley.min.js"></script>
+    <!-- Form to JSON Serializer JS -->
+    <script src="/js/json-serializer/jquery.serializejson.js"></script>
     <!-- Client JS -->
     <script src="/js/client.js"></script>
 </head>
@@ -133,9 +135,7 @@
                     location.reload();
                 }
             },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-            }
+            headers: {'Authorization': 'Bearer ' + accessToken}
         });
         if (accessToken) {
             checkToken(accessToken);
