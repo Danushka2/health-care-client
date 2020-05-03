@@ -10,14 +10,138 @@
     }
 </script>
 <div class="content">
-    <h2>Implement Hospital CRUD UIs Here</h2>
+
+
+    <button class="btn btn-primary btn-round btn-sm" data-backdrop="static" data-target="#create-form" data-toggle="modal" type="button">
+    + Add Hospital
+    </button>
+    
+    <table data-click-to-select="true"
+               data-detail-formatter="detailFormatter"
+               data-detail-view="true"
+               data-id-field="id"
+               data-minimum-count-columns="2"
+               data-page-list="[10, 25, 50, 100, all]"
+               data-pagination="true"
+               data-search="true"
+               data-show-columns="true"
+               data-show-export="true"
+               data-show-footer="true"
+               data-show-fullscreen="true"
+               data-show-pagination-switch="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-toolbar="#toolbar"
+               id="hospital-table">
+    </table>
+
+
+
+
+    <div aria-hidden="true" class="modal fade" id="create-form" role="dialog" tabindex="-1">
+       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+           <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Hospital Details</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="/hospital" data-parsley-validate="" method="POST" novalidate="">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="h-name" class="col-sm-3 col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="h-name" name="h-name" placeholder="Army Hospital">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="h-email" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" id="h-email" name="h-email" placeholder="hospital@gmail.com">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="h-address" class="col-sm-2 col-form-label">Address</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="h-address" name="h-address" placeholder="Hospital Address">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="h-fax" class="col-sm-3 col-form-label">Fax</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="h-name" name="h-fax" placeholder="0112233445">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="h-telephone" class="col-sm-3 col-form-label">Telephone</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="h-telephone" name="h-telephone" placeholder="0112233445">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <div class="custom-control custom-radio">
+                                <input checked class="custom-control-input" id="customRadio1"
+                                       name="customRadio"
+                                       type="radio">
+                                <label class="custom-control-label"
+                                       for="customRadio1">Private</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="custom-control custom-radio">
+                                <input class="custom-control-input" id="customRadio2" name="customRadio"
+                                       type="radio">
+                                <label class="custom-control-label"
+                                       for="customRadio2">Government</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="h-admin" class="col-sm-3 col-form-label">Admin</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="h-admin" name="h-admin" placeholder="Hospital Admin">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="h-pass" class="col-sm-3 col-form-label">Admin Password</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" id="h-pass" name="h-pass" placeholder="Admin Password">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-round btn-sm" id="proceed" type="submit">Save</button>
+                    <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal" type="reset">Cancel</button>
+                </div>
+            </form>
+           </div>
+       </div>
+   </div>
+
 </div>
 <div th:replace="/nav :: nav"></div>
-<script type="text/javascript">
-    $(function () {
-        $('#hospital-menu').addClass('active');
-        $('#hospital-menu').siblings().removeClass('active');
-    });
-</script>
+<!-- external javascript -->
+<script src="/js/hospital.js"></script>
 </body>
 </html>
