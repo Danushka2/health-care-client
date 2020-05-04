@@ -12,32 +12,32 @@ function initTable() {
         height: '900',
         columns: [{
             title: 'ID',
-            field: 'reference',
+            field: 'id',
             align: 'center',
             valign: 'middle'
         }, {
             title: 'NAME',
-            field: 'appointmentInfo.appointmentDate',
+            field: 'hospitalName',
             align: 'center',
             valign: 'middle'
         }, {
             title: 'EMAIL',
-            field: 'appointmentInfo.session.from',
+            field: 'hospitalEmail',
             align: 'center',
             valign: 'middle'
         }, {
             title: 'ADDRESS',
-            field: 'appointmentInfo.patient.name',
+            field: 'hospitalAddress',
             align: 'center',
             valign: 'middle'
         }, {
             title: 'TYPE',
-            field: 'fee',
+            field: 'hospitalType',
             align: 'center',
             class: 'fee'
         }, {
             title: 'TELEPHONE',
-            field: 'paidOn',
+            field: 'hospitalTell',
             align: 'center',
             sortable: true
         }],
