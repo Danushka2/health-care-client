@@ -65,11 +65,15 @@ h6 {
 									</div>
 									<h6>Select Time Period</h6>
 									<div class="dropdown">
-										<select class="form-control" id="doctors">
+										<select class="form-control" id="sessions">
 										</select>
 									</div>
 									<h6>Select Date</h6>
-									<input class="form-control" type="date">
+									<input class="form-control" type="date" id="date">
+									<h6>Patient Id</h6>
+									<div class="dropdown">
+										<input type="number" min="0" id="insert_pid" class="form-control">
+									</div>
 									<button class="btn btn-primary" type="button"
 										style="width: 100%; margin-top: 19px;" id="make_appointment">Make
 										Appointment</button>
