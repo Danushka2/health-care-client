@@ -223,7 +223,6 @@ $(document)
 					});
 
 					$('#find_appointment_by_id').click(function() {
-						hideModal('#appByIdModal');
 						loadAppointmentsById();
 					});
 
@@ -245,6 +244,9 @@ $(document)
 									status = 'CANCELED';
 									break;
 								}
+								var line;
+								if(response.status == 3){ line = '</td></tr>'}
+								else{line = '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>'}
 								var opt = '<tr><td>'
 										+ response.id
 										+ '</td><td>'
@@ -263,7 +265,7 @@ $(document)
 										+ status
 										+ '</td><td>'
 										+ '<button class="btn btn-danger btn-sm">Update</button></td><td>'
-										+ '<button class="btn btn-danger btn-sm">Delete</button></td></tr>';
+										+ line;
 								$('#appointment_tb tbody').append(opt);
 							}
 						});
@@ -293,6 +295,9 @@ $(document)
 							$.each(response_a, function(index, value){
 								getSession(function(response_s){
 									getPatient(function(response_p){
+										var line;
+										if(value.status.id == 3){ line = '</td></tr>'}
+										else{line = '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>'}
 										var opt = '<tr><td>'
 											+ value.id
 											+ '</td><td>'
@@ -311,7 +316,7 @@ $(document)
 											+ value.status.name
 											+ '</td><td>'
 											+ '<button class="btn btn-danger btn-sm">Update</button></td><td>'
-											+ '<button class="btn btn-danger btn-sm">Delete</button></td></tr>';
+											+ line;
 										$('#appointment_tb tbody').append(opt);
 									},value.patientId);
 								},value.sessionId);
@@ -360,7 +365,9 @@ $(document)
 									status = 'CANCELED';
 									break;
 								}
-								
+								var line;
+								if(value.status == 3){ line = '</td></tr>'}
+								else{line = '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>'}
 								var opt = '<tr><td><input type="hidden" value = "'+value.id+'" id="id">'
 									+ value.id
 									+ '</td><td>'
@@ -379,7 +386,7 @@ $(document)
 									+ status
 									+ '</td><td>'
 									+ '<button class="btn btn-danger btn-sm" id="update_appointment_btn">Update</button></td><td>'
-									+ '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>';
+									+ line;
 								$('#appointment_tb tbody').append(opt);
 							});
 						});
