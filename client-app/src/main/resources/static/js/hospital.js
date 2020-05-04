@@ -1,4 +1,5 @@
 var HOSPITAL_DELETE_URL = '/hospitals/{id}';
+var HOSPITAL_UPDATE_URL = '/hospitals/{id}';
 var $table = $('#hospital-table');
 var selections = [];
 
@@ -61,7 +62,7 @@ function initTable() {
 function actionFormatter(value, row, index) {
     var actions = '';
     
-        actions += '<button class="btn btn-link link-primary edit" data-toggle="modal" data-target="#modifyPaymentModal" '
+        actions += '<button class="btn btn-link link-primary edit" data-toggle="modal" data-target="#update-form" '
             + 'data-backdrop="static" data-id="' + row.id + '" title="' + "Edit" + '">'
             + '<i class="fad fa-edit"></i></button>'
             + '<button class="btn btn-link link-danger refund" data-toggle="modal" data-target="#delete-form" '
@@ -104,3 +105,36 @@ $('#delete-form form').on('submit', function (e) {
     });
 });
 
+$('#update-form').on('show.bs.modal', function (e) {
+    $(this).find('form:first').parsley().reset();
+    var $invoker = $(e.relatedTarget);
+    var id = $invoker.data('id');
+    $('#update-form form').attr('action', HOSPITAL_UPDATE_URL.replace('{id}', id));
+    ajaxGet('/hospitals/' + id, false, false, function (response) {
+        $('#update-form input[name="id"]').val(response.id);
+        $('#update-form input[name="name"]').val(response.hospitalName);
+        $('#update-form input[name="address"]').val(response.hospitalAddress);
+        $('#update-form input[name="email"]').val(response.hospitalEmail);
+        $('#update-form input[name="fax"]').val(response.hospitalFax);
+        $('#update-form input[name="tel"]').val(response.hospitalTell);
+        $('#update-form input[name="type"]').val(response.hospitalType);
+        $('#update-form input[name="status"]').val(response.hospitalStatus);
+    });
+}).on('hidden.bs.modal', function (e) {
+    $('#modifyPaymentModal input[name="id"]').val('');
+   
+    $('#update-form form').attr('action', HOSPITAL_UPDATE_URL);
+});
+
+$('#update-form form').on('submit', function (e) {
+    e.preventDefault();
+    var $form = $(this);
+    if ($form.parsley().validate()) {
+        ajaxFormJson($form, function (response) {
+            hideProgress();
+            $('#update-form').modal('hide');
+            showNotification('success', 'Successfully Updated!');
+            $table.bootstrapTable('refresh');
+        });
+    }
+});

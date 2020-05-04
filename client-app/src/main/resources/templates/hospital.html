@@ -178,6 +178,109 @@
         </div>
     </div>
 
+    <div aria-hidden="true" class="modal fade" id="update-form" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title">Update Hospital Details</h5>
+                 <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+ 
+             <form action="/hospitals/{id}" data-parsley-validate="" method="PUT" novalidate="">
+                 <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="h-id" class="col-sm-3 col-form-label">ID</label>
+                                <div class="col-sm-9">
+                                    <input type="text" disabled class="form-control" id="h-id" name="id">
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="form-group row">
+                         <div class="col-md-6">
+                             <div class="row">
+                                 <label for="h-name" class="col-sm-3 col-form-label">Name</label>
+                                 <div class="col-sm-9">
+                                     <input type="text" class="form-control" id="name" name="name">
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-md-6">
+                             <div class="row">
+                                 <label for="h-email" class="col-sm-3 col-form-label">Email</label>
+                                 <div class="col-sm-9">
+                                     <input type="email" class="form-control" id="email" name="email">
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="form-group row">
+                         <label for="h-address" class="col-sm-2 col-form-label">Address</label>
+                         <div class="col-sm-10">
+                           <input type="text" class="form-control" id="address" name="address">
+                         </div>
+                     </div>
+                     <div class="form-group row">
+                         <div class="col-md-6">
+                             <div class="row">
+                                 <label for="h-fax" class="col-sm-3 col-form-label">Fax</label>
+                                 <div class="col-sm-9">
+                                     <input type="text" class="form-control" id="fax" name="fax">
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-md-6">
+                             <div class="row">
+                                 <label for="h-telephone" class="col-sm-3 col-form-label">Telephone</label>
+                                 <div class="col-sm-9">
+                                     <input type="text" class="form-control" id="h-tel" name="tel">
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="form-group col-md-4">
+                             <div class="custom-control custom-radio">
+                                 <input checked class="custom-control-input" id="customRadio1"
+                                        name="type"
+                                        type="radio">
+                                 <label class="custom-control-label"
+                                        for="customRadio1">Private</label>
+                             </div>
+                         </div>
+                         <div class="form-group col-md-4">
+                             <div class="custom-control custom-radio">
+                                 <input class="custom-control-input" id="customRadio2" name="type"
+                                        type="radio">
+                                 <label class="custom-control-label"
+                                        for="customRadio2">Government</label>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="form-group row">
+                         <div class="col-md-6">
+                             <div class="row">
+                                 <label for="h-status" class="col-sm-3 col-form-label">Status</label>
+                                 <div class="col-sm-9">
+                                     <input type="text" class="form-control" id="status" name="status">
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button class="btn btn-success btn-round btn-sm" id="proceed" type="submit">Update</button>
+                     <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal" type="reset">Cancel</button>
+                 </div>
+             </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 <div th:replace="/nav :: nav"></div>
 <script type="text/javascript">
