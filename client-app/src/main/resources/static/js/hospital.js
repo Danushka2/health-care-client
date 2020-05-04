@@ -121,8 +121,14 @@ $('#update-form').on('show.bs.modal', function (e) {
         $('#update-form input[name="status"]').val(response.hospitalStatus);
     });
 }).on('hidden.bs.modal', function (e) {
-    $('#modifyPaymentModal input[name="id"]').val('');
-   
+    $('#update-form input[name="id"]').val('');
+    $('#update-form input[name="name"]').val('');
+    $('#update-form input[name="address"]').val('');
+    $('#update-form input[name="email"]').val('');
+    $('#update-form input[name="fax"]').val('');
+    $('#update-form input[name="tel"]').val('');
+    $('#update-form input[name="type"]').val('');
+    $('#update-form input[name="status"]').val('');
     $('#update-form form').attr('action', HOSPITAL_UPDATE_URL);
 });
 

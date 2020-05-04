@@ -56,7 +56,7 @@
                             <div class="row">
                                 <label for="h-name" class="col-sm-3 col-form-label">Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Army Hospital">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Hospital Name">
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                             <div class="row">
                                 <label for="h-email" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="hospital@gmail.com">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Hospital Email">
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                             <div class="row">
                                 <label for="h-fax" class="col-sm-3 col-form-label">Fax</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="fax" name="fax" placeholder="0112233445">
+                                    <input type="text" class="form-control" id="fax" name="fax" placeholder="Hospital Fax">
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                             <div class="row">
                                 <label for="h-telephone" class="col-sm-3 col-form-label">Telephone</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="h-tel" name="tel" placeholder="0112233445">
+                                    <input type="text" class="form-control" id="h-tel" name="tel" placeholder="Hospital Telephone">
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,8 @@
                         <div class="form-group col-md-4">
                             <div class="custom-control custom-radio">
                                 <input checked class="custom-control-input" id="customRadio1"
-                                       name="type"
+                                       name="type" 
+                                       value="Private" 
                                        type="radio">
                                 <label class="custom-control-label"
                                        for="customRadio1">Private</label>
@@ -105,7 +106,10 @@
                         </div>
                         <div class="form-group col-md-4">
                             <div class="custom-control custom-radio">
-                                <input class="custom-control-input" id="customRadio2" name="type"
+                                <input class="custom-control-input" 
+                                       id="customRadio2" 
+                                       name="type"
+                                       value="Government"
                                        type="radio">
                                 <label class="custom-control-label"
                                        for="customRadio2">Government</label>
@@ -135,7 +139,7 @@
                             <div class="row">
                                 <label for="h-status" class="col-sm-3 col-form-label">Status</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="status" name="status" placeholder="Available">
+                                    <input type="text" class="form-control" id="status" name="status" placeholder="Available / Unavailable">
                                 </div>
                             </div>
                         </div>
@@ -243,24 +247,28 @@
                          </div>
                      </div>
                      <div class="row">
-                         <div class="form-group col-md-4">
-                             <div class="custom-control custom-radio">
-                                 <input checked class="custom-control-input" id="customRadio1"
-                                        name="type"
-                                        type="radio">
-                                 <label class="custom-control-label"
-                                        for="customRadio1">Private</label>
-                             </div>
-                         </div>
-                         <div class="form-group col-md-4">
-                             <div class="custom-control custom-radio">
-                                 <input class="custom-control-input" id="customRadio2" name="type"
-                                        type="radio">
-                                 <label class="custom-control-label"
-                                        for="customRadio2">Government</label>
-                             </div>
-                         </div>
-                     </div>
+                        <div class="form-group col-md-4">
+                            <div class="custom-control custom-radio">
+                                <input checked class="custom-control-input" id="customRadio1"
+                                       name="type" 
+                                       value="Private" 
+                                       type="radio">
+                                <label class="custom-control-label"
+                                       for="customRadio1">Private</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="custom-control custom-radio">
+                                <input class="custom-control-input" 
+                                       id="customRadio2" 
+                                       name="type"
+                                       value="Government"
+                                       type="radio">
+                                <label class="custom-control-label"
+                                       for="customRadio2">Government</label>
+                            </div>
+                        </div>
+                    </div>
                      <div class="form-group row">
                          <div class="col-md-6">
                              <div class="row">
