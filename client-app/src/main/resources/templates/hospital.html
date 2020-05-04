@@ -150,8 +150,40 @@
        </div>
    </div>
 
+   <div aria-hidden="true" class="modal fade" id="delete-form" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Hospital</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="/hospitals/{id}" method="DELETE">
+                    <div class="modal-body">
+                        <div>Are you sure you want to delete?</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger btn-round btn-sm" id="confirm"
+                                type="submit">Yes
+                        </button>
+                        <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal"
+                                th:text="#{app.common.lbl.cancel}" type="reset">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 <div th:replace="/nav :: nav"></div>
+<script type="text/javascript">
+    const COL_STATUS = '[[#{app.common.lbl.status}]]',
+        COL_ACTIONS = '[[#{app.common.lbl.actions}]]';
+</script>
 <!-- external javascript -->
 <script src="/js/hospital.js"></script>
 </body>
