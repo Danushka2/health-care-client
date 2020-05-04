@@ -48,14 +48,14 @@
                 </button>
             </div>
 
-            <form action="/hospital" data-parsley-validate="" method="POST" novalidate="">
+            <form action="/hospitals" data-parsley-validate="" method="POST" novalidate="">
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="row">
                                 <label for="h-name" class="col-sm-3 col-form-label">Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="h-name" name="h-name" placeholder="Army Hospital">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Army Hospital">
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                             <div class="row">
                                 <label for="h-email" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="h-email" name="h-email" placeholder="hospital@gmail.com">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="hospital@gmail.com">
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                     <div class="form-group row">
                         <label for="h-address" class="col-sm-2 col-form-label">Address</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="h-address" name="h-address" placeholder="Hospital Address">
+                          <input type="text" class="form-control" id="address" name="address" placeholder="Hospital Address">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -79,7 +79,7 @@
                             <div class="row">
                                 <label for="h-fax" class="col-sm-3 col-form-label">Fax</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="h-name" name="h-fax" placeholder="0112233445">
+                                    <input type="text" class="form-control" id="fax" name="fax" placeholder="0112233445">
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                             <div class="row">
                                 <label for="h-telephone" class="col-sm-3 col-form-label">Telephone</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="h-telephone" name="h-telephone" placeholder="0112233445">
+                                    <input type="text" class="form-control" id="h-tel" name="tel" placeholder="0112233445">
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                         <div class="form-group col-md-4">
                             <div class="custom-control custom-radio">
                                 <input checked class="custom-control-input" id="customRadio1"
-                                       name="customRadio"
+                                       name="type"
                                        type="radio">
                                 <label class="custom-control-label"
                                        for="customRadio1">Private</label>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <div class="custom-control custom-radio">
-                                <input class="custom-control-input" id="customRadio2" name="customRadio"
+                                <input class="custom-control-input" id="customRadio2" name="type"
                                        type="radio">
                                 <label class="custom-control-label"
                                        for="customRadio2">Government</label>
@@ -116,7 +116,7 @@
                             <div class="row">
                                 <label for="h-admin" class="col-sm-3 col-form-label">Admin</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="h-admin" name="h-admin" placeholder="Hospital Admin">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Hospital Admin">
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,17 @@
                             <div class="row">
                                 <label for="h-pass" class="col-sm-3 col-form-label">Admin Password</label>
                                 <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="h-pass" name="h-pass" placeholder="Admin Password">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Admin Password">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label for="h-status" class="col-sm-3 col-form-label">Status</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="status" name="status" placeholder="Available">
                                 </div>
                             </div>
                         </div>

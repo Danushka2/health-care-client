@@ -51,3 +51,18 @@ function initTable() {
         });
     });
 }
+
+
+
+$('#create-form form').on('submit', function (e) {
+    e.preventDefault();
+    var $form = $(this);
+    if ($form.parsley().validate()) {
+        ajaxFormJson($form, function (response) {
+            hideProgress();
+            $('#create-form').modal('hide');
+            showNotification('success', 'Successfully Added!');
+            $table.bootstrapTable('refresh');
+        });
+    }
+});
