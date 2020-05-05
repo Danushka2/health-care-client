@@ -50,5 +50,7 @@ public class DefaultPasswordEncoderFactories {
             "fF5MvZFRrkm6qqCB"));
         System.out.println("payment-api - " + createDelegatingPasswordEncoder().encode(
             "r2VdbR2GCN3yMm66"));
+        System.out.println("client - " + createDelegatingPasswordEncoder().encode(
+            "k3PLhS7fnSZ64xyS"));
     }
 }

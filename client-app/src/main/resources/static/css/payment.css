@@ -70,3 +70,11 @@ tr.row-refund .amount {
 .card-element {
     margin-top: 10px;
 }
+
+.search-input {
+    width: 250px;
+}
+
+.right-align {
+    text-align: right;
+}
