@@ -57,7 +57,7 @@
                             <div class="row">
                                 <label for="h-name" class="col-sm-3 col-form-label">Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Hospital Name">
+                                    <input type="text" required class="form-control" id="name" name="name" placeholder="Hospital Name">
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                             <div class="row">
                                 <label for="h-email" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Hospital Email">
+                                    <input type="email" required class="form-control" id="email" name="email" placeholder="Hospital Email">
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                     <div class="form-group row">
                         <label for="h-address" class="col-sm-2 col-form-label">Address</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="address" name="address" placeholder="Hospital Address">
+                          <input type="text" required class="form-control" id="address" name="address" placeholder="Hospital Address">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -81,16 +81,30 @@
                             <div class="row">
                                 <label for="h-fax" class="col-sm-3 col-form-label">Fax</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="fax" name="fax" placeholder="Hospital Fax">
+                                    <input type="number" class="form-control" id="fax" name="fax" placeholder="Hospital Fax"
+                                            data-parsley-maxlength='10'
+                                            data-parsley-minlength-message="should be atleast 10 digits "
+                                            data-parsley-minlength='10'
+                                            data-parsley-maxlength-message="should not exceed 10 digits"
+                                            data-parsley-errors-container="#fax-error-container"
+                                            data-parsley-trigger="change keypress keydown keyup focusin focusout input">
                                 </div>
+                                <div class="col-sm-12" id="fax-error-container"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="row">
                                 <label for="h-telephone" class="col-sm-3 col-form-label">Telephone</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="h-tel" name="tel" placeholder="Hospital Telephone">
+                                    <input type="number" required class="form-control" id="h-tel" name="tel" placeholder="Hospital Telephone"
+                                            data-parsley-maxlength='10'
+                                            data-parsley-minlength-message="should be atleast 10 digits "
+                                            data-parsley-minlength='10'
+                                            data-parsley-maxlength-message="should not exceed 10 digits"
+                                            data-parsley-errors-container="#tell-error-container"
+                                            data-parsley-trigger="change keypress keydown keyup focusin focusout input">
                                 </div>
+                                <div class="col-sm-12" id="tel-error-container"></div>
                             </div>
                         </div>
                     </div>
@@ -122,7 +136,7 @@
                             <div class="row">
                                 <label for="h-admin" class="col-sm-3 col-form-label">Admin</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="username" name="username" placeholder="Hospital Admin">
+                                    <input type="text" required class="form-control" id="username" name="username" placeholder="Hospital Admin">
                                 </div>
                             </div>
                         </div>
@@ -130,8 +144,13 @@
                             <div class="row">
                                 <label for="h-pass" class="col-sm-3 col-form-label">Admin Password</label>
                                 <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="Admin Password">
+                                    <input type="password" required class="form-control" id="password" name="password" placeholder="Admin Password"
+                                            data-parsley-minlength='8'
+                                            data-parsley-minlength-message="There should be atleast 8 letters"
+                                            data-parsley-errors-container="#pw-error-container"
+                                            data-parsley-trigger="change keypress keydown keyup focusin focusout input">
                                 </div>
+                                <div class="col-sm-12" id="pw-error-container"></div>
                             </div>
                         </div>
                     </div>
@@ -213,7 +232,7 @@
                              <div class="row">
                                  <label for="h-name" class="col-sm-3 col-form-label">Name</label>
                                  <div class="col-sm-9">
-                                     <input type="text" class="form-control" id="name" name="name">
+                                     <input type="text" required class="form-control" id="name" name="name">
                                  </div>
                              </div>
                          </div>
@@ -221,7 +240,7 @@
                              <div class="row">
                                  <label for="h-email" class="col-sm-3 col-form-label">Email</label>
                                  <div class="col-sm-9">
-                                     <input type="email" class="form-control" id="email" name="email">
+                                     <input type="email" required class="form-control" id="email" name="email">
                                  </div>
                              </div>
                          </div>
@@ -229,7 +248,7 @@
                      <div class="form-group row">
                          <label for="h-address" class="col-sm-2 col-form-label">Address</label>
                          <div class="col-sm-10">
-                           <input type="text" class="form-control" id="address" name="address">
+                           <input type="text" required class="form-control" id="address" name="address">
                          </div>
                      </div>
                      <div class="form-group row">
@@ -237,16 +256,30 @@
                              <div class="row">
                                  <label for="h-fax" class="col-sm-3 col-form-label">Fax</label>
                                  <div class="col-sm-9">
-                                     <input type="text" class="form-control" id="fax" name="fax">
+                                     <input type="text" class="form-control" id="fax" name="fax"
+                                            data-parsley-maxlength='10'
+                                            data-parsley-minlength-message="should be atleast 10 digits "
+                                            data-parsley-minlength='10'
+                                            data-parsley-maxlength-message="should not exceed 10 digits"
+                                            data-parsley-errors-container="#updateFax-error-container"
+                                            data-parsley-trigger="change keypress keydown keyup focusin focusout input">
                                  </div>
+                                 <div class="col-sm-12" id="updateFax-error-container"></div>
                              </div>
                          </div>
                          <div class="col-md-6">
                              <div class="row">
                                  <label for="h-telephone" class="col-sm-3 col-form-label">Telephone</label>
                                  <div class="col-sm-9">
-                                     <input type="text" class="form-control" id="h-tel" name="tel">
+                                     <input type="text" class="form-control" id="h-tel" name="tel"
+                                            data-parsley-maxlength='10'
+                                            data-parsley-minlength-message="should be atleast 10 digits "
+                                            data-parsley-minlength='10'
+                                            data-parsley-maxlength-message="should not exceed 10 digits"
+                                            data-parsley-errors-container="#updateTel-error-container"
+                                            data-parsley-trigger="change keypress keydown keyup focusin focusout input">
                                  </div>
+                                 <div class="col-sm-12" id="updateTel-error-container"></div>
                              </div>
                          </div>
                      </div>

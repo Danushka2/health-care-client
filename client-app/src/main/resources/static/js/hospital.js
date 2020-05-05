@@ -72,6 +72,17 @@ function actionFormatter(value, row, index) {
     return actions;
 }
 
+$('#create-modal').on('show.bs.modal', function (e) {
+    $(this).find('form:first').parsley().reset();
+}).on('hidden.bs.modal', function (e) {
+    $('#h-create-form input[name="username"]').val('');
+    $('#h-create-form input[name="name"]').val('');
+    $('#h-create-form input[name="address"]').val('');
+    $('#h-create-form input[name="email"]').val('');
+    $('#h-create-form input[name="fax"]').val('');
+    $('#h-create-form input[name="tel"]').val('');
+    $('#h-create-form input[name="password"]').val('');
+});
 
 $('#h-create-form').on('submit', function (e) {
     e.preventDefault();
