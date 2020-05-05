@@ -10,14 +10,206 @@
     }
 </script>
 <div class="content">
-    <h2>Implement Doctor CRUD UIs Here</h2>
+
+
+    <div class="doctor-actions">
+        <button class="btn btn-sm btn-primary btn-round" data-backdrop="static"
+                data-target="#makeDoctorModal"
+                data-toggle="modal" type="button">
+
+            <span>Add Doctor</span>
+        </button>
+    </div>
+
+
+    <table data-buttons-class="primary btn-lg"
+           data-id-field="id"
+           data-minimum-count-columns="2"
+           data-page-list="[10, 15, 25, 50, all]"
+           data-page-size="15"
+           data-pagination="true"
+           data-row-style="rowFormatter"
+           data-search="true"
+           data-show-footer="true"
+           data-show-search-button="true"
+           data-show-search-clear-button="true"
+           data-side-pagination="server"
+           data-toolbar="#toolbar"
+           data-unique-id="id"
+           data-url="/doctors"
+           id="doctor-tbl">
+    </table>
+
+
+    <div aria-hidden="true" class="modal fade" id="makeDoctorModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Doctor</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="/doctors" data-parsley-validate="" method="POST" novalidate="">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <input class="form-control" id="specialization" name="specialization"
+                                   placeholder="Specialization"
+                                   type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" id="name" name="name" placeholder="Name"
+                                   type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" id="tel" name="tel" placeholder="Tel"
+                                   type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" id="email" name="email" placeholder="Email"
+                                   type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" id="status" name="status"
+                                   placeholder="Status"
+                                   type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" id="username" name="username"
+                                   placeholder="Username"
+                                   type="text">
+                        </div>
+
+
+                        <div class="form-group">
+                            <input class="form-control" id="password" name="password"
+                                   placeholder="Password"
+                                   type="password">
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success btn-round btn-sm" id="proceed"
+                                type="submit"> Add
+                        </button>
+                        <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal"
+                                th:text="#{app.common.lbl.cancel}" type="reset">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div aria-hidden="true" class="modal fade" id="DeleteDoctorModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Do you Want to Delete</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/doctors/{id}" method="DELETE">
+
+                    <div class="modal-footer">
+                        <button class="btn btn-danger btn-round btn-sm" id="confirm"
+                                type="submit"> Delete
+                        </button>
+                        <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal"
+                                th:text="#{app.common.lbl.cancel}" type="reset">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div aria-hidden="true" class="modal fade" id="UpdateDoctorModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-400px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Doctor
+                    </h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/doctors/{id}" data-parsley-validate="" method="PUT"
+                      novalidate="">
+                    <input name="ide" type="hidden">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <input class="form-control" id="specializationn" name="specializationn"
+                                   placeholder="Specialization"
+                                   type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" id="namee" name="namee"
+                                   placeholder="name"
+                                   type="text">
+                        </div>
+
+
+                        <div class="form-group">
+                            <input class="form-control" id="phonee" name="phonee"
+                                   placeholder="phone"
+                                   type="text">
+                        </div>
+
+
+                        <div class="form-group">
+                            <input class="form-control" id="emaill" name="emaill"
+                                   placeholder="email"
+                                   type="text">
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-round btn-sm" id="modify"
+                                th:text="#{app.common.lbl.modify}"
+                                type="submit">
+                        </button>
+                        <button class="btn btn-secondary btn-round btn-sm" data-dismiss="modal"
+                                th:text="#{app.common.lbl.cancel}" type="reset">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <div th:replace="/nav :: nav"></div>
 <script type="text/javascript">
-    $(function () {
-        $('#doctor-menu').addClass('active');
-        $('#doctor-menu').siblings().removeClass('active');
-    });
+
+
+    const
+        Update = 'Update', Delete = 'delete', Delete_success = 'delete success',
+        Update_Success = 'Update success';
+
 </script>
+
+<!-- Payment JS -->
+<script src="/js/doctor.js"></script>
+
+
 </body>
 </html>
