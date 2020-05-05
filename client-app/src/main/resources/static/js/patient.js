@@ -7,10 +7,11 @@ $(document).ready(function() {
         $("#PatientalertSuccess").hide();
     }
     $("#PatientalertError").hide();
+    $("#PatientbtnUpdate2").hide();
 
     function insertPatient(){
         var obj = {name: $('#PatientName').val(), email:$('#PatientEmail').val(), phoneNo:$('#PatientPno').val(),age:$('#PatientAge').val(), gender:$('input[name="PatientrdoGender"]:checked').val(), username:$('#PatientUserName').val(), password:$('#PatientPassword').val()};
-        alert(JSON.stringify(obj))
+        //alert(JSON.stringify(obj))
         jQuery.ajax({
             url: 'http://localhost:8080/patients',
             type: 'POST',
@@ -25,8 +26,35 @@ $(document).ready(function() {
         });
     }
 
+
+
+
+
+
+
+
+
+
     $('#PatientbtnSave').click(function(){
+
+        // Clear alerts---------------------
+        $("#PatientalertSuccess").text("");
+        $("#PatientalertSuccess").hide();
+        $("#PatientalertError").text("");
+        $("#PatientalertError").hide();
+
+        // Form validation-------------------
+        var status = validateItemForm();
+        if (status != true) {
+            $("#PatientalertError").text(status);
+            $("#PatientalertError").show();
+            return;
+        }
+
+
+        // If valid------------------------
         insertPatient();
+
     });
 
     function updatePatient(){
@@ -59,9 +87,20 @@ $(document).ready(function() {
         });
     }
     $('#PatientbtnUpdate').click(function(){
-       updatePatient();
+
+        $("#PatientbtnUpdate2").show();
+        $("#PatientbtnUpdate").hide();
+        $("#PatientbtnSave").hide();
     });
 
+    $("#PatientbtnUpdate2").click(function () {
+        updatePatient();
+        $("#PatientbtnUpdate").show();
+        $("#PatientbtnUpdate2").hide();
+        $("#PatientbtnSave").show();
+
+
+    });
     $('#PatientbtnDelete').click(function(){
         deletePatient();
     });
@@ -98,7 +137,7 @@ $(document).ready(function() {
 
 
 
-/*function validateItemForm()
+function validateItemForm()
 {
 
     if ($("#PatientName").val().trim() == "")
@@ -126,10 +165,6 @@ $(document).ready(function() {
     }
 
 
-
-
-
-
     if ($("#PatientAge").val().trim() == "")
     {
         return "Insert patient age.";
@@ -142,7 +177,7 @@ $(document).ready(function() {
     }*/
 
 
-   /* if ($('input[name="PatientrdoGender"]:checked').val().trim() == "")
+    if ($('input[name="PatientrdoGender"]:checked').val().trim() == "")
     {
         return "Insert patient gender.";
     }
@@ -154,55 +189,3 @@ $(document).ready(function() {
 
 
 
-//SAVE ============================================
-$(document).on("click", "#PatientbtnSave", function(event)
-{
-    // Clear alerts---------------------
-    $("#PatientalertSuccess").text("");
-    $("#PatientalertSuccess").hide();
-    $("#PatientalertError").text("");
-    $("#PatientalertError").hide();
-
-    // Form validation-------------------
-    var status = validateItemForm();
-    if (status != true) {
-        $("#PatientalertError").text(status);
-        $("#PatientalertError").show();
-        return;
-    }
-
-    // If valid------------------------
-    //var type = ($("#PatienthidItemIDSave").val() == "") ? "POST" : "PUT";
-
-    /*$.ajax(
-        {
-            url : "/patients",
-            type : type,
-            data : $("#formItem").serialize(),
-            dataType : "text",
-            complete : function(response, status)
-            {
-                onItemSaveComplete(response.responseText, status);
-            }
-        });*/
-
-
-   /* jQuery.ajax({
-        url : 'http://localhost:8080/patients/read',
-        type : 'GET',
-        timeout : 5000,
-        success : function(response, status) {
-            var arr = [];
-            $.each(response, function(index, value) {
-                var opt = '<option value = "' + value.id + '">'
-                    + value.hospitalName + '</option>';
-                arr.push(opt);
-            });
-            $('#allPatient').append(arr);
-
-        }
-    });
-
-});
-}
-*/
