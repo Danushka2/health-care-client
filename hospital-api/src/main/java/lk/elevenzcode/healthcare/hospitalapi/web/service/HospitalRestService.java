@@ -18,6 +18,7 @@ import lk.elevenzcode.healthcare.hospitalapi.web.util.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -122,9 +123,14 @@ public class HospitalRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response deleteById(@PathParam("id") int id) {
     Response response;
+    JSONObject json = new JSONObject();
     try {
       hospitalService.deleteHospital(id);
-      response = RESTfulUtil.getOk("deleted");
+
+      json.put("hasError", false);
+      json.put("body", "deleted");
+
+      response = RESTfulUtil.getOk(json.toString());
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getNotFound();
@@ -138,13 +144,18 @@ public class HospitalRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response updateHospital(@PathParam("id") int id, HospitalInfoResp hospitalDto) {
     Response response;
+    JSONObject json = new JSONObject();
     try {
       Hospital hospital = new Hospital(id, hospitalDto.getName(),
           hospitalDto.getAddress(), hospitalDto.getEmail(), hospitalDto.getType(),
           hospitalDto.getFax(),
           hospitalDto.getTel(), hospitalDto.getStatus(), null);
       hospitalService.update(hospital);
-      response = RESTfulUtil.getOk("updated" + hospital.getId());
+
+      json.put("hasError", false);
+      json.put("body", "updated");
+
+      response = RESTfulUtil.getOk(json.toString());
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       response = RESTfulUtil.getNotFound();
