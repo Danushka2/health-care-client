@@ -149,7 +149,8 @@ public class PaymentRestService extends BaseRestService {
     final ResultAdditionalData additionalData = new ResultAdditionalData();
     try {
       final List<PaymentInfoResp> list = new ArrayList<>();
-      for (Payment payment : paymentService.getList(offset, limit, sort, order, additionalData)) {
+      for (Payment payment : paymentService.getList(offset, limit, sort, order, additionalData,
+          search)) {
         list.add(new PaymentInfoResp(payment.getId(), payment.getReference(),
             appointmentIntegrationService.getByApptId(payment.getAppointmentId()),
             payment.getAmount(), payment.getPaidOn(), payment.getStatus().getName()));

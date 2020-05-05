@@ -30,7 +30,9 @@ function showProgress() {
 }
 
 function hideProgress(e) {
-    $('#progress').modal('hide');
+    setTimeout(function () {
+        $('#progress').modal('hide');
+    }, 465);
 }
 
 function showConfirm(title, text, callbackFn, data) {

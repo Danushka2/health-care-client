@@ -20,9 +20,9 @@
     --gray-dark: #343a40;
 
 
-    --primary-light: rgba(139, 144, 236, .3);
-    --primary: #8b90ec;
-    --primary-dark: #5D63D2;
+    --primary-light: #8EE4AF;
+    --primary: #5CDB95;
+    --primary-dark: #379683;
 
     --secondary-light: #eff2f7;
     --secondary: #545b62;
@@ -166,7 +166,7 @@ body {
 
 .navbar a.active {
     color: white;
-    background: linear-gradient(45deg, #1FA2FF 0%, #12D8FA 100%, #A6FFCB 100%);
+    background: linear-gradient(45deg, #A6FFCB 0%, #12D8FA 100%, #1FA2FF 100%);
 }
 
 .navbar a:last-child {
@@ -797,7 +797,7 @@ body {
     color: #fff;
     background-color: var(--primary);
     border-color: var(--primary);
-    box-shadow: 0 2px 6px 0 rgba(139, 144, 236, .5);
+    box-shadow: 0 2px 6px 0 var(--primary-light);
 }
 
 .btn-primary:hover {
@@ -807,8 +807,10 @@ body {
 }
 
 .btn-primary.focus, .btn-primary:focus {
-    -webkit-box-shadow: 0 0 0 0 rgba(139, 144, 236, .5);
-    box-shadow: 0 0 0 0 rgba(139, 144, 236, .5)
+    -webkit-box-shadow: 0 0 0 0 var(--primary-light) !important;
+    background-color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 2px 6px 0 var(--primary-light);
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
@@ -824,8 +826,8 @@ body {
 }
 
 .btn-success:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus {
-    -webkit-box-shadow: 0 0 0 0 rgba(139, 144, 236, .5);
-    box-shadow: 0 0 0 0 rgba(139, 144, 236, .5)
+    -webkit-box-shadow: 0 0 0 0 var(--primary-light);
+    box-shadow: 0 0 0 0 var(--primary-light)
 }
 
 .btn-success {

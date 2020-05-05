@@ -190,12 +190,21 @@ public class PaymentServiceImpl extends GenericServiceImpl<Payment> implements P
 
   @Override
   public List<Payment> getList(Integer offset, Integer limit, String sort, String order,
-                               ResultAdditionalData additionalData) throws ServiceException {
+                               ResultAdditionalData additionalData, String searchCriteria) throws ServiceException {
     Pageable pageable = PageRequest.of(offset, limit, Sort.by(Sort.Direction.fromString(order),
         sort));
     try {
-      additionalData.setCount(paymentRepository.count());
-      return paymentRepository.findAll(pageable).toList();
+      if (StringUtils.isNotEmpty(searchCriteria)) {
+        additionalData.setCount(paymentRepository
+            .countAllByStatus_NameContainingIgnoreCaseOrReferenceContainingIgnoreCase(searchCriteria,
+                searchCriteria));
+        return paymentRepository
+            .getAllByStatus_NameContainingIgnoreCaseOrReferenceContainingIgnoreCase(searchCriteria,
+                searchCriteria, pageable);
+      } else {
+        additionalData.setCount(paymentRepository.count());
+        return paymentRepository.findAll(pageable).toList();
+      }
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       throw new ServiceException(ServiceException.PROCESSING_FAILURE, e.getMessage(), e.getCause());

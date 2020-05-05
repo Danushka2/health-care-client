@@ -132,6 +132,9 @@ function initTable() {
             formatter: actionFormatter
         }],
         classes: 'table',
+        formatSearch: function () {
+            return LBL_SEARCH_BOX_PLACEHOLDER
+        }
     });
 
     $table.on('load-success.bs.table', function (data) {
