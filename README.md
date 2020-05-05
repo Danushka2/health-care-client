@@ -1,32 +1,41 @@
-# HealthCare APIs
+# HealthCare APIs + Client
 
 **Steps to Get Started**
-1. Configure Intellij with Java 8
-2. Import `settings.zip` | File > Import Settings
-3. Update `jdbc.urls` for all APIs @ parent `pom.xml`
+1. Configure IDE with `Java 8`
+2. Import as `Maven` Project
+3. Update `jdbc.urls` for all APIs @ parent `pom.xml` (Not mandatory if mysql listen on `3306`)
 4. Execute `script/init-db.sql`
 5. Clean & Install `Health Care(root)` project
 6. Start Servers
 7. Update `api.jdbc.hibernate.ddl.auto` to `none` after first start @ parent `pom.xml`
-8. Import `Postman collection & environment` files to test APIs
-9. Have a happy testing.
+8. Done
 
-**OAuth2 Credentials**
+**Client URL :** http://localhost:8080
+
+**Login Credentials**
 
 *Username:* client
 
-*Password:* 5eyvLf8TsT5dBFrM
+*Password:* k3PLhS7fnSZ64xyS
 
-**Client Credentials**
+**Navigation**
 
-*Hospital API:* hospital-api | C7cXRgDBqRkd8C8Z
+`Hospital` - Alwis P. L. D. N (IT18052466)
 
-*Doctor API:* doctor-api | ZbyX7hscN9d4FFK2
+![Hospital Nav](https://img.techpowerup.org/200505/1-hospital-nav.png)
 
-*Patient API:* patient-api | 7KYEzQdxv8mhANYr
+`Doctor` - K. P. Aravinda (IT18128796)
 
-*Appointment API:* appointment-api | Npm3qFQhX4mqvTFj
+![Doctor Nav](https://img.techpowerup.org/200505/2-doctor-nav.png)
 
-*Payment API:* payment-api | qENc3AgRLwTN4ket
+`Patient` - Ekanayaka.W. E. M. D. S (IT18003574)
 
-*API(allows to access all above APIs):* api | yCXneeTgfw2yYcu6
+![Patient Nav](https://img.techpowerup.org/200505/3-patient-nav.png)
+
+`Appointment` - Alwis D. G. Y. C. K (IT17181402)
+
+![Appointment Nav](https://img.techpowerup.org/200505/4-appointment-nav.png)
+
+`Payment` - Sandeepa K. G. H (IT18067170)
+
+![Payment Nav](https://img.techpowerup.org/200505/5-payment-nav.png)

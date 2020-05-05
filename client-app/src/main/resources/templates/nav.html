@@ -11,7 +11,7 @@
         </a></li>
     </ul>
 </div>
-<div class="navbar"></div>
+<div class="navbar" style="display: none"></div>
 <script>
     const LBL_HOSP = '[[#{app.nav.hospital}]]', LBL_DOC = '[[#{app.nav.doctor}]]',
         LBL_PT = '[[#{app.nav.patient}]]', LBL_APPT = '[[#{app.nav.appointment}]]',
@@ -67,6 +67,7 @@
         }
         $('.navbar a[data-toggle="tooltip"]').tooltip();
         $('.dropdown .user').html(username);
+        $('.navbar').show();
     });
 </script>
 </body>

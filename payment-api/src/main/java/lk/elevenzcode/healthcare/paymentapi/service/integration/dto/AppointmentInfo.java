@@ -1,6 +1,9 @@
 package lk.elevenzcode.healthcare.paymentapi.service.integration.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lk.elevenzcode.healthcare.commons.serializer.JsonDateSerializer;
+import lk.elevenzcode.healthcare.commons.serializer.JsonDateTimeSerializer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,12 +17,15 @@ public class AppointmentInfo {
   private PatientInfo patient;
   private DoctorSessionInfo session;
   private int status;
+  @JsonSerialize(using = JsonDateSerializer.class)
   private LocalDate appointmentDate;
+  @JsonSerialize(using = JsonDateTimeSerializer.class)
   private LocalDateTime createDate;
 
   public int getId() {
     return id;
   }
+
 
   public void setId(int id) {
     this.id = id;
@@ -67,7 +73,7 @@ public class AppointmentInfo {
 
   public enum Status {
     PENDING(1), COMPLETED(2), CANCELED(3);
-    private int id;
+    private final int id;
 
     Status(int id) {
       this.id = id;

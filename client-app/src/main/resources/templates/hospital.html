@@ -12,7 +12,7 @@
 <div class="content">
 
 
-    <button class="btn btn-primary btn-round btn-sm" data-backdrop="static" data-target="#create-form" data-toggle="modal" type="button">
+    <button class="btn btn-primary btn-round btn-sm" data-backdrop="static" data-target="#create-modal" data-toggle="modal" type="button">
     + Add Hospital
     </button>
     
@@ -40,7 +40,7 @@
 
 
 
-    <div aria-hidden="true" class="modal fade" id="create-form" role="dialog" tabindex="-1">
+    <div aria-hidden="true" class="modal fade" id="create-modal" role="dialog" tabindex="-1">
        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
            <div class="modal-content">
             <div class="modal-header">
@@ -50,7 +50,7 @@
                 </button>
             </div>
 
-            <form action="/hospitals" data-parsley-validate="" method="POST" novalidate="">
+            <form action="/hospitals" data-parsley-validate="" id="h-create-form" method="POST" novalidate="">
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col-md-6">
@@ -158,7 +158,7 @@
        </div>
    </div>
 
-   <div aria-hidden="true" class="modal fade" id="delete-form" role="dialog"
+   <div aria-hidden="true" class="modal fade" id="delete-modal" role="dialog"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
@@ -169,7 +169,7 @@
                     </button>
                 </div>
 
-                <form action="/hospitals/{id}" method="DELETE">
+                <form action="/hospitals/{id}" id="h-delete-form" method="DELETE">
                     <div class="modal-body">
                         <div>Are you sure you want to delete?</div>
                     </div>
@@ -186,7 +186,7 @@
         </div>
     </div>
 
-    <div aria-hidden="true" class="modal fade" id="update-form" role="dialog" tabindex="-1">
+    <div aria-hidden="true" class="modal fade" id="update-modal" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
              <div class="modal-header">
@@ -196,9 +196,9 @@
                  </button>
              </div>
  
-             <form action="/hospitals/{id}" data-parsley-validate="" method="PUT" novalidate="">
+             <form action="/hospitals/{id}" id="h-update-form" data-parsley-validate="" method="PUT" novalidate="">
                  <div class="modal-body">
-                    <div class="form-group row">
+                    <div class="form-group row" style="display: none;">
                         <div class="col-md-6">
                             <div class="row">
                                 <label for="h-id" class="col-sm-3 col-form-label">ID</label>

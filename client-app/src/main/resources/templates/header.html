@@ -128,23 +128,56 @@
             ROLE_REFUND_PAY, ROLE_GET_PAY];
 
         var authorities = [], username;
-        var accessToken = sessionStorage.getItem('access_token');
-        $.ajaxSetup({
-            statusCode: {
-                401: function () {
-                    location.reload();
+
+        function getAccessToken() {
+            return sessionStorage.getItem('access_token');
+        }
+
+        // register AJAX prefilter : options, original options
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+            options._error = options.error;
+            // overwrite error handler for current request
+            options.error = function (_jqXHR, _textStatus, _errorThrown) {
+                if (_jqXHR.status === 401) {
+                    checkToken(getAccessToken(), function (options, response) {
+                        if (response && response.active) {
+                            // Call AJAX again with original options
+                            options["headers"] = {'Authorization': 'Bearer ' + getAccessToken()};
+                            $.ajax(options);
+                        } else {
+                            var refreshToken = sessionStorage.getItem('refresh_token');
+                            if (refreshToken) {
+                                refresh(refreshToken, function (options) {
+                                    // Call AJAX again with original options
+                                    options["headers"] = {'Authorization': 'Bearer ' + getAccessToken()};
+                                    $.ajax(options);
+                                }, options);
+                            } else {
+                                console.log('no refresh token..');
+                                redirectLogin();
+                            }
+                        }
+                    }, originalOptions);
+                } else {
+                    options._error(_jqXHR, _textStatus, _errorThrown);
                 }
-            },
-            headers: {'Authorization': 'Bearer ' + accessToken}
+            };
         });
-        if (accessToken) {
-            checkToken(accessToken);
+
+        $.ajaxSetup({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + getAccessToken());
+            },
+        });
+
+        if (getAccessToken()) {
+            checkToken(getAccessToken());
         } else {
             console.log('no access token..');
             redirectLogin();
         }
 
-        function refresh(refreshToken) {
+        function refresh(refreshToken, callback, options) {
             $.ajax({
                 url: '/oauth/token',
                 type: 'POST',
@@ -159,7 +192,7 @@
                 success: function (response, status, xhr) {
                     sessionStorage.setItem("access_token", response.access_token);
                     sessionStorage.setItem("refresh_token", response.refresh_token);
-                    checkToken(response.access_token);
+                    checkToken(response.access_token, callback, options);
                 },
                 cache: false,
                 contentType: 'application/x-www-form-urlencoded',
@@ -171,17 +204,20 @@
             });
         }
 
-        function checkToken(accessToken) {
+        function checkToken(accessToken, callback, options) {
             $.ajax({
                 url: '/oauth/check_token?token=' + accessToken,
                 type: 'POST',
                 async: false,
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', 'Basic Y2xpZW50OjVleXZMZjhUc1Q1ZEJGck0=');
+                    xhr.setRequestHeader('Authorization', BASIC_AUTH_TOKEN);
                 },
                 success: function (response, status, xhr) {
                     authorities = response.authorities;
                     username = response.user_name;
+                    if (callback) {
+                        callback(options, response);
+                    }
                 },
                 cache: false,
                 contentType: false,
@@ -189,7 +225,7 @@
                 error: function (jqXHR, textStatus, errorThrown) {
                     var refreshToken = sessionStorage.getItem('refresh_token');
                     if (refreshToken) {
-                        refresh(refreshToken);
+                        refresh(refreshToken, callback, options);
                     } else {
                         console.log('no refresh token..');
                         redirectLogin();

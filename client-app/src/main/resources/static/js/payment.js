@@ -132,6 +132,9 @@ function initTable() {
             formatter: actionFormatter
         }],
         classes: 'table',
+        formatSearch: function () {
+            return LBL_SEARCH_BOX_PLACEHOLDER
+        }
     });
 
     $table.on('load-success.bs.table', function (data) {
@@ -143,7 +146,7 @@ function initTable() {
 }
 
 $('#makePaymentModal').on('show.bs.modal', function (e) {
-    $(this).find('form:first').parsley().reset();
+    $("#makePaymentForm").parsley().reset();
     ajaxGet('/appointments/status/' + APPT_STATUS_PENDING, false, false,
         function (response) {
             if (response.length) {
@@ -160,9 +163,9 @@ $('#makePaymentModal').on('show.bs.modal', function (e) {
                     + '<li class="parsley-custom-error-message">' + ERR_NO_PENDING_APPT + '</li></ul>');
             }
         });
-    card.mount("#makePaymentModal .card-element");
+    card.mount("#makePaymentForm .card-element");
     card.on('change', function ({error}) {
-        var errorContainer = $("#makePaymentModal .card-errors");
+        var errorContainer = $("#makePaymentForm .card-errors");
         if (error) {
             errorContainer.html(error.message);
         } else {
@@ -170,21 +173,20 @@ $('#makePaymentModal').on('show.bs.modal', function (e) {
         }
     });
 }).on('hidden.bs.modal', function (e) {
-    $(this).find('form:first').parsley().reset();
     $("#appointments option:not(:first)").remove();
     $('#appointments').selectpicker('refresh');
     $('#appointments').selectpicker('val', $("#appointments option:first").val());
-    $('#makePaymentModal .appt-detail').hide();
+    $('#makePaymentForm .appt-detail').hide();
     card.unmount();
     $('#appointment-error-container').empty();
-    $("#makePaymentModal .card-errors").empty();
+    $("#makePaymentForm .card-errors").empty();
 });
 
-$('#makePaymentModal form').on('submit', function (e) {
+$('#makePaymentForm').on('submit', function (e) {
     e.preventDefault();
     var $form = $(this);
     if ($form.parsley().validate()) {
-        if ($('#makePaymentModal .card-element.StripeElement--complete').length) {
+        if ($('#makePaymentForm .card-element.StripeElement--complete').length) {
             ajaxFormJson($form, function (response) {
                 //charge the card by stripe
                 makePayment(response.body.clientSecret, function (result) {
@@ -199,35 +201,35 @@ $('#makePaymentModal form').on('submit', function (e) {
                     });
                 });
             });
-        } else if ($('#makePaymentModal .card-errors').is(':empty')) {
-            $('#makePaymentModal .card-errors').html(ERR_INVALID_CARD);
+        } else if ($('#makePaymentForm .card-errors').is(':empty')) {
+            $('#makePaymentForm .card-errors').html(ERR_INVALID_CARD);
         }
     }
 });
 
 $('#modifyPaymentModal').on('show.bs.modal', function (e) {
-    $(this).find('form:first').parsley().reset();
+    $('#modifyPaymentForm').parsley().reset();
     var $invoker = $(e.relatedTarget);
     var id = $invoker.data('id');
-    $('#modifyPaymentModal form').attr('action', PAY_MODIFY_URL.replace('{id}', id));
+    $('#modifyPaymentForm').attr('action', PAY_MODIFY_URL.replace('{id}', id));
     ajaxGet('/payments/' + id, false, false, function (response) {
-        $('#modifyPaymentModal input[name="id"]').val(response.body.id);
-        $('#modifyPaymentModal .ref').html(response.body.reference);
-        $('#modifyPaymentModal .payon').html(response.body.paidOn);
+        $('#modifyPaymentForm input[name="id"]').val(response.body.id);
+        $('#modifyPaymentForm .ref').html(response.body.reference);
+        $('#modifyPaymentForm .payon').html(response.body.paidOn);
 
         var apptInfo = response.body.appointmentInfo;
-        $('#modifyPaymentModal .appt-detail .hospital .val').html(apptInfo.session.room.hospital.name);
-        $('#modifyPaymentModal .appt-detail .doctor .val').html(apptInfo.session.doctor.name);
-        $('#modifyPaymentModal .appt-detail .patient .val').html(apptInfo.patient.name);
-        $('#modifyPaymentModal .appt-detail .roomNo .val').html(apptInfo.session.room.roomNo);
-        $('#modifyPaymentModal .appt-detail .date .val').html(apptInfo.appointmentDate + ' '
+        $('#modifyPaymentForm .appt-detail .hospital .val').html(apptInfo.session.room.hospital.name);
+        $('#modifyPaymentForm .appt-detail .doctor .val').html(apptInfo.session.doctor.name);
+        $('#modifyPaymentForm .appt-detail .patient .val').html(apptInfo.patient.name);
+        $('#modifyPaymentForm .appt-detail .roomNo .val').html(apptInfo.session.room.roomNo);
+        $('#modifyPaymentForm .appt-detail .date .val').html(apptInfo.appointmentDate + ' '
             + apptInfo.session.from);
-        $('#modifyPaymentModal .appt-detail .fee .val').html(formatCurrency(apptInfo
+        $('#modifyPaymentForm .appt-detail .fee .val').html(formatCurrency(apptInfo
             .session.docFee + apptInfo.session.room.roomFee));
     });
-    card.mount("#modifyPaymentModal .card-element");
+    card.mount("#modifyPaymentForm .card-element");
     card.on('change', function ({error}) {
-        var errorContainer = $("#modifyPaymentModal .card-errors");
+        var errorContainer = $("#modifyPaymentForm .card-errors");
         if (error) {
             errorContainer.html(error.message);
         } else {
@@ -235,22 +237,22 @@ $('#modifyPaymentModal').on('show.bs.modal', function (e) {
         }
     });
 }).on('hidden.bs.modal', function (e) {
-    $('#modifyPaymentModal input[name="id"]').val('');
+    $('#modifyPaymentForm input[name="id"]').val('');
     $('#fee').val('');
     card.unmount();
-    $("#modifyPaymentModal .card-errors").empty();
-    $('#modifyPaymentModal form').attr('action', PAY_MODIFY_URL);
+    $("#modifyPaymentForm .card-errors").empty();
+    $('#modifyPaymentForm').attr('action', PAY_MODIFY_URL);
 });
 
-$('#modifyPaymentModal form').on('submit', function (e) {
+$('#modifyPaymentForm').on('submit', function (e) {
     e.preventDefault();
     var $form = $(this);
     if ($form.parsley().validate()) {
-        if ($('#modifyPaymentModal .card-element.StripeElement--complete').length) {
-            $('#modifyPaymentModal input[name="fee"]').val($("#fee").val().split('Rs ')[1]
+        if ($('#modifyPaymentForm .card-element.StripeElement--complete').length) {
+            $('#modifyPaymentForm input[name="fee"]').val($("#fee").val().split('Rs ')[1]
                 .replace(/,/gi, ''));
             ajaxFormJson($form, function (response) {
-                var id = $('#modifyPaymentModal input[name="id"]').val();
+                var id = $('#modifyPaymentForm input[name="id"]').val();
                 //charge the card by stripe
                 makePayment(response.body.clientSecret, function (result) {
                     ajaxJson('/payments/' + id + '/modify/complete', 'PATCH', {
@@ -263,21 +265,22 @@ $('#modifyPaymentModal form').on('submit', function (e) {
                     });
                 });
             });
-        } else if ($('#modifyPaymentModal .card-errors').is(':empty')) {
-            $('#modifyPaymentModal .card-errors').html(ERR_INVALID_CARD);
+        } else if ($('#modifyPaymentForm .card-errors').is(':empty')) {
+            $('#modifyPaymentForm .card-errors').html(ERR_INVALID_CARD);
         }
     }
 });
 
 $('#refundPaymentModal').on('show.bs.modal', function (e) {
+    $("#refundPaymentForm").parsley().reset();
     var $invoker = $(e.relatedTarget);
     var id = $invoker.data('id');
-    $('#refundPaymentModal form').attr('action', PAY_REFUND_URL.replace('{id}', id));
+    $('#refundPaymentForm').attr('action', PAY_REFUND_URL.replace('{id}', id));
 }).on('hidden.bs.modal', function (e) {
-    $('#refundPaymentModal form').attr('action', PAY_REFUND_URL);
+    $('#refundPaymentForm').attr('action', PAY_REFUND_URL);
 });
 
-$('#refundPaymentModal form').on('submit', function (e) {
+$('#refundPaymentForm').on('submit', function (e) {
     e.preventDefault();
     if ($(this).parsley().validate()) {
         ajaxFormJson($(this), function (response) {

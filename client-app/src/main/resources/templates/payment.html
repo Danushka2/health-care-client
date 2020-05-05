@@ -22,12 +22,14 @@
             <span th:text="#{app.payment.btn.make.payment}"></span>
         </button>
     </div>
-    <table data-buttons-class="primary btn-lg"
+    <table data-buttons-class="primary btn-md"
            data-id-field="id"
            data-minimum-count-columns="2"
            data-page-list="[10, 15, 25, 50, all]"
            data-page-size="15"
            data-pagination="true"
+           data-show-refresh="true"
+           data-show-columns="true"
            data-row-style="rowFormatter"
            data-search="true"
            data-show-footer="true"
@@ -41,7 +43,7 @@
            data-url="/payments"
            id="payment-tbl">
     </table>
-    <div aria-hidden="true" class="modal fade" id="makePaymentModal" role="dialog"
+    <div id="makePaymentModal" aria-hidden="true" class="modal fade" role="dialog"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content">
@@ -52,19 +54,19 @@
                     </button>
                 </div>
 
-                <form action="/payments/init" data-parsley-validate="" method="POST" novalidate="">
+                <form action="/payments/init" data-parsley-validate="" id="makePaymentForm"
+                      method="POST" novalidate="">
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="font-weight-bold" for="appointments"
                                    th:text="#{app.payment.modal.field.appointment}"></label>
-                            <select class="selectpicker form-control" data-hide-disabled="true"
+                            <select id="appointments" name="appointmentId"
+                                    class="selectpicker form-control" data-hide-disabled="true"
                                     data-live-search="true"
                                     data-parsley-error-message="Appointment is required"
                                     data-parsley-errors-container="#appointment-error-container"
                                     data-parsley-required
                                     data-parsley-trigger="change focusin focusout input"
-                                    id="appointments"
-                                    name="appointmentId"
                                     title="">
                                 <option disabled selected
                                         th:text="#{app.payment.modal.select.appointment}">
@@ -115,9 +117,14 @@
                             <!-- put the error messages in this element -->
                             <div class="error card-errors" role="alert"></div>
                         </div>
+                        <div class="right-align">
+                            <a target="_blank" href="https://stripe.com/docs/testing">
+                                Click here for test cards
+                            </a>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-success btn-round btn-sm" id="proceed"
+                        <button id="proceed" class="btn btn-success btn-round btn-sm"
                                 th:text="#{app.common.lbl.proceed}"
                                 type="submit">
                         </button>
@@ -129,7 +136,7 @@
             </div>
         </div>
     </div>
-    <div aria-hidden="true" class="modal fade" id="modifyPaymentModal" role="dialog"
+    <div id="modifyPaymentModal" aria-hidden="true" class="modal fade" role="dialog"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-400px" role="document">
             <div class="modal-content">
@@ -140,8 +147,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/payments/{id}/modify/init" data-parsley-validate="" method="PUT"
-                      novalidate="">
+                <form action="/payments/{id}/modify/init" data-parsley-validate=""
+                      id="modifyPaymentForm" method="PUT" novalidate="">
                     <input name="id" type="hidden">
                     <div class="modal-body">
                         <div class="pay-detail">
@@ -196,14 +203,14 @@
                             <label class="font-weight-bold" for="fee"
                                    th:text="#{app.payment.modal.field.fee}"></label>
                             <input name="fee" type="hidden">
-                            <input class="form-control inputmask text-right" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2,
+                            <input id="fee" class="form-control inputmask text-right"
+                                   data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2,
                         'digitsOptional': false, 'prefix': 'Rs ', 'placeholder': '0'"
                                    data-parsley-pattern="/(?=.*\d)^Rs?\s(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/"
                                    data-parsley-pattern-message="Invalid Fee"
                                    data-parsley-required
                                    data-parsley-required-message="Fee is required"
                                    data-parsley-trigger="change keypress keydown keyup focusin focusout input"
-                                   id="fee"
                                    type="text"/>
                         </div>
                         <div class="form-group">
@@ -213,9 +220,15 @@
                             <!-- put the error messages in this element -->
                             <div class="error card-errors" role="alert"></div>
                         </div>
+                        <div class="right-align">
+                            <div class="mandatory-warn" th:text="#{app.payment.refund.notice}"></div>
+                            <a target="_blank" href="https://stripe.com/docs/testing">
+                                Click here for test cards
+                            </a>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary btn-round btn-sm" id="modify"
+                        <button id="modify" class="btn btn-primary btn-round btn-sm"
                                 th:text="#{app.common.lbl.modify}"
                                 type="submit">
                         </button>
@@ -227,7 +240,7 @@
             </div>
         </div>
     </div>
-    <div aria-hidden="true" class="modal fade" id="refundPaymentModal" role="dialog"
+    <div id="refundPaymentModal" aria-hidden="true" class="modal fade" role="dialog"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
@@ -237,7 +250,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/payments/{id}" method="DELETE">
+                <form action="/payments/{id}" id="refundPaymentForm" method="DELETE">
                     <div class="modal-body">
                         <span th:text="#{app.payment.refund.conf}"></span>
                         <div class="refund-msg" th:text="#{app.payment.modal.field.reason}"></div>
@@ -251,7 +264,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger btn-round btn-sm" id="confirm"
+                        <button id="confirm" class="btn btn-danger btn-round btn-sm"
                                 th:text="#{app.payment.refund.conf.action.yes}"
                                 type="submit">
                         </button>
@@ -284,12 +297,14 @@
     const ERR_INVALID_CARD = '[[#{app.payment.err.invalid.card.details}]]',
         ERR_NO_PENDING_APPT = '[[#{app.payment.err.no.pending.appointment}]]';
 
-    const LBL_PAY_SUCCESS = '[[#{app.payment.success}]]', LBL_REFUND_INFO =
-            '[[#{app.payment.refund.info}]]', LBL_MODIFY = '[[#{app.common.lbl.modify}]]',
+    const LBL_PAY_SUCCESS = '[[#{app.payment.success}]]', LBL_REFUND_INFO
+            = '[[#{app.payment.refund.info}]]', LBL_MODIFY = '[[#{app.common.lbl.modify}]]',
         LBL_REFUND_ON = '[[#{app.payment.refund.field.refund.on}]]', LBL_REASON =
             '[[#{app.payment.refund.field.reason}]]', LBL_REFUND = '[[#{app.payment.refund}]]',
         LBL_PAY_UPDATED = '[[#{app.payment.update.success}]]',
-        LBL_PAY_REFUNDED = '[[#{app.payment.refund.success}]]';
+        LBL_PAY_REFUNDED = '[[#{app.payment.refund.success}]]', LBL_SEARCH_BOX_PLACEHOLDER =
+            '[[#{app.payment.search.box.placeholder}]]', LBL_REFUND_NOTICE
+            = '[[#{app.payment.refund.notice}]]';
 </script>
 <!-- Payment JS -->
 <script src="/js/payment.js"></script>

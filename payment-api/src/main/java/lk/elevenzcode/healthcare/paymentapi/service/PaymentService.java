@@ -20,7 +20,7 @@ public interface PaymentService extends GenericService<Payment> {
   void refund(int id, String reason) throws ServiceException;
 
   List<Payment> getList(Integer offset, Integer limit, String sort, String order,
-                        ResultAdditionalData additionalData) throws ServiceException;
+                        ResultAdditionalData additionalData, String searchCriteria) throws ServiceException;
 
   void update(int id, String paymentIntentId) throws ServiceException;
 }
