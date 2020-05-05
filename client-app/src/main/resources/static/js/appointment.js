@@ -1,5 +1,4 @@
 const hospital_path = 'http://localhost:8080/hospitals';
-const doctor_path = 'http://localhost:8080/hospitals/doctors/';
 const app_path_id = 'http://localhost:8080/appointments/';
 const app_path_pid = 'http://localhost:8080/appointments/patients/';
 const app_path_sid = 'http://localhost:8080/appointments/status/';
@@ -15,7 +14,8 @@ typeIcons['danger'] = 'icon far fa-ban';
 $(document)
 		.ready(
 				function() {
-
+					loadDoctors();
+					getHospitals();
 					function showNotification(type, msg) {
 						$.notify({
 							icon : typeIcons[type],
@@ -64,32 +64,32 @@ $(document)
 										+ xhr.statusText);
 					}
 
-					jQuery.ajax({
-						url : hospital_path,
-						type : 'GET',
-						timeout : 5000,
-						error : function() {
-							errorHandler(response, status);
-						},
-						success : function(response, status) {
-							var arr = [];
-							$.each(response, function(index, value) {
-								var opt = '<option value = "' + value.id + '">'
-										+ value.hospitalName + '</option>';
-								arr.push(opt);
-							});
-							$('#hospitals').append(arr);
-							getDoctorsHTML();
-						}
-					});
-
-					function getDoctors(responseData) {
-						return jQuery.ajax({
-							url : doctor_path
-									+ $('#hospitals option:selected').val(),
+					function getHospitals(){
+						jQuery.ajax({
+							url : hospital_path,
 							type : 'GET',
 							timeout : 5000,
 							error : function() {
+								errorHandler(response, status);
+							},
+							success : function(response, status) {
+								var arr = [];
+								$.each(response, function(index, value) {
+									var opt = '<option value = "' + value.id + '">'
+											+ value.hospitalName + '</option>';
+									arr.push(opt);
+								});
+								$('#hospitals').append(arr);
+							}
+						});
+					}
+
+					function getDoctors(responseData) {
+						return jQuery.ajax({
+							url : session_path,
+							type : 'GET',
+							timeout : 5000,
+							error : function(response, xhr) {
 								errorHandler(response, xhr);
 							},
 							success : function(response, status) {
@@ -98,21 +98,7 @@ $(document)
 						});
 					}
 					
-					function getPatient(responseData, id) {
-						return jQuery.ajax({
-							url : patient_path + id,
-							type : 'GET',
-							timeout : 5000,
-							error : function() {
-								errorHandler(response, xhr);
-							},
-							success : function(response, status) {
-								responseData(response);
-							}
-						});
-					}
-
-					function getDoctorsHTML() {
+					function loadDoctors() {
 						$('#doctors').empty();
 						getDoctors(function(response) {
 							var arr = [];
@@ -122,17 +108,31 @@ $(document)
 								arr.push(opt);
 							});
 							$('#doctors').append(arr);
+							loadSessions();
+						});
+					}
+					
+					function getPatient(responseData, id) {
+						return jQuery.ajax({
+							url : patient_path + id,
+							type : 'GET',
+							timeout : 5000,
+							error : function(response, xhr) {
+								errorHandler(response, xhr);
+							},
+							success : function(response, status) {
+								responseData(response);
+							}
 						});
 					}
 
 					function getSessions(responseData) {
 						jQuery.ajax({
-							url : doctor_path
-									+ $('#hospitals option:selected').val(),
+							url : session_path + $('#doctors option:selected').val() + '/hospitals/sessions',
 							type : 'GET',
 							beforeSend : showLoading,
 							timeout : 5000,
-							error : function() {
+							error : function(response, xhr) {
 								hideLoading();
 								errorHandler(response, xhr);
 							},
@@ -145,11 +145,11 @@ $(document)
 					
 					function getSession(responseData,id) {
 						jQuery.ajax({
-							url : session_path+id+'/hospitals/sessions',
+							url : session_path + id +'/hospitals/sessions',
 							type : 'GET',
 							beforeSend : showLoading,
 							timeout : 5000,
-							error : function() {
+							error : function(response, xhr) {
 								hideLoading();
 								errorHandler(response, xhr);
 							},
@@ -159,7 +159,16 @@ $(document)
 							}
 						});
 					}
-
+					
+					function loadSessions(){
+						$('#sessions').empty();
+						getSessions(function(response) {
+							var opt = '<option value = "' + response.id + '">'
+									+ response.from +'-'+ response.to + '</option>';
+							$('#sessions').append(opt);
+						});
+					}
+					
 					function getAppointmentById(responseData) {
 						jQuery.ajax({
 							url : app_path_id + $('#appointment_id').val(),
@@ -176,23 +185,44 @@ $(document)
 							}
 						});
 					}
-
+					
+					function insertAppointment(){
+						var obj = {sessionId: $('#sessions option:selected').val(), patientId: $('#insert_pid').val(), appointmentDate: $('#date').val()};
+						jQuery.ajax({
+							url : app_path_id,
+							type : 'POST',
+							data: JSON.stringify(obj),
+							contentType: 'application/json',
+							beforeSend : showLoading,
+							timeout : 5000,
+							error : function(response, xhr) {
+								hideLoading();
+								errorHandler(response, xhr);
+							},
+							success : function(response, status) {
+								hideLoading();
+								showNotification('success', 'Insert Successful!');
+							}
+						});
+					}
+					
 					$("#hospitals").change(function() {
-						getDoctorsHTML();
+						loadDoctors();
 					});
-
-					$('#make_appointment').click(
-							function() {
-								showNotification('success',
-										'Appointment Successfully Created!');
-							});
+					
+					$("#doctors").change(function() {
+						loadSessions();
+					});
+					
+					$('#make_appointment').click(function() {
+						insertAppointment()
+					});
 
 					$('#getAppointmentById').click(function() {
 						showModal('#appByIdModal');
 					});
 
 					$('#find_appointment_by_id').click(function() {
-						hideModal('#appByIdModal');
 						loadAppointmentsById();
 					});
 
@@ -214,6 +244,9 @@ $(document)
 									status = 'CANCELED';
 									break;
 								}
+								var line;
+								if(response.status == 3){ line = '</td></tr>'}
+								else{line = '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>'}
 								var opt = '<tr><td>'
 										+ response.id
 										+ '</td><td>'
@@ -232,7 +265,7 @@ $(document)
 										+ status
 										+ '</td><td>'
 										+ '<button class="btn btn-danger btn-sm">Update</button></td><td>'
-										+ '<button class="btn btn-danger btn-sm">Delete</button></td></tr>';
+										+ line;
 								$('#appointment_tb tbody').append(opt);
 							}
 						});
@@ -262,6 +295,9 @@ $(document)
 							$.each(response_a, function(index, value){
 								getSession(function(response_s){
 									getPatient(function(response_p){
+										var line;
+										if(value.status.id == 3){ line = '</td></tr>'}
+										else{line = '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>'}
 										var opt = '<tr><td>'
 											+ value.id
 											+ '</td><td>'
@@ -280,7 +316,7 @@ $(document)
 											+ value.status.name
 											+ '</td><td>'
 											+ '<button class="btn btn-danger btn-sm">Update</button></td><td>'
-											+ '<button class="btn btn-danger btn-sm">Delete</button></td></tr>';
+											+ line;
 										$('#appointment_tb tbody').append(opt);
 									},value.patientId);
 								},value.sessionId);
@@ -329,7 +365,9 @@ $(document)
 									status = 'CANCELED';
 									break;
 								}
-								
+								var line;
+								if(value.status == 3){ line = '</td></tr>'}
+								else{line = '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>'}
 								var opt = '<tr><td><input type="hidden" value = "'+value.id+'" id="id">'
 									+ value.id
 									+ '</td><td>'
@@ -348,7 +386,7 @@ $(document)
 									+ status
 									+ '</td><td>'
 									+ '<button class="btn btn-danger btn-sm" id="update_appointment_btn">Update</button></td><td>'
-									+ '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>';
+									+ line;
 								$('#appointment_tb tbody').append(opt);
 							});
 						});
