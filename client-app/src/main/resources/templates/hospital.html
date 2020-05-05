@@ -16,24 +16,25 @@
     + Add Hospital
     </button>
     
-    <table data-click-to-select="true"
-               data-detail-formatter="detailFormatter"
-               data-detail-view="true"
-               data-id-field="id"
-               data-minimum-count-columns="2"
-               data-page-list="[10, 25, 50, 100, all]"
-               data-pagination="true"
-               data-search="true"
-               data-show-columns="true"
-               data-show-export="true"
-               data-show-footer="true"
-               data-show-fullscreen="true"
-               data-show-pagination-switch="true"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-toolbar="#toolbar"
-               data-url="/hospitals"
-               id="hospital-table">
+    <table  data-buttons-class="primary btn-md"
+            data-click-to-select="true"
+            data-detail-formatter="detailFormatter"
+            data-detail-view="false"
+            data-id-field="id"
+            data-minimum-count-columns="2"
+            data-page-list="[10, 25, 50, 100, all]"
+            data-pagination="true"
+            data-search="true"
+            data-show-columns="true"
+            data-show-export="true"
+            data-show-footer="true"
+            data-show-fullscreen="true"
+            data-show-pagination-switch="true"
+            data-show-refresh="true"
+            data-show-toggle="false"
+            data-toolbar="#toolbar"
+            data-url="/hospitals"
+            id="hospital-table">
     </table>
 
 
@@ -139,7 +140,10 @@
                             <div class="row">
                                 <label for="h-status" class="col-sm-3 col-form-label">Status</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="status" name="status" placeholder="Available / Unavailable">
+                                   <select class="form-control" id="status" name="status">
+                                       <option value="Available">Available</option>
+                                       <option value="Unavailable">Unavailable</option>
+                                   </select>
                                 </div>
                             </div>
                         </div>
@@ -249,7 +253,8 @@
                      <div class="row">
                         <div class="form-group col-md-4">
                             <div class="custom-control custom-radio">
-                                <input checked class="custom-control-input" id="customRadio1"
+                                <input checked class="custom-control-input" 
+                                       id="customRadio1"
                                        name="type" 
                                        value="Private" 
                                        type="radio">
@@ -274,7 +279,10 @@
                              <div class="row">
                                  <label for="h-status" class="col-sm-3 col-form-label">Status</label>
                                  <div class="col-sm-9">
-                                     <input type="text" class="form-control" id="status" name="status">
+                                    <select class="form-control" id="status" name="status">
+                                        <option value="Available">Available</option>
+                                        <option value="Unavailable">Unavailable</option>
+                                    </select>
                                  </div>
                              </div>
                          </div>
