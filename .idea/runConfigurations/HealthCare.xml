@@ -1,12 +1,12 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="HealthCare" type="CompoundRunConfigurationType">
-    <toRun name="HospitalApi" type="SpringBootApplicationConfigurationType" />
-    <toRun name="AuthApi" type="SpringBootApplicationConfigurationType" />
-    <toRun name="PatientApi" type="SpringBootApplicationConfigurationType" />
-    <toRun name="PaymentApi" type="SpringBootApplicationConfigurationType" />
-    <toRun name="AppointmentApi" type="SpringBootApplicationConfigurationType" />
     <toRun name="DoctorApi" type="SpringBootApplicationConfigurationType" />
+    <toRun name="AppointmentApi" type="SpringBootApplicationConfigurationType" />
     <toRun name="ClientApp" type="SpringBootApplicationConfigurationType" />
+    <toRun name="AuthApi" type="SpringBootApplicationConfigurationType" />
+    <toRun name="PaymentApi" type="SpringBootApplicationConfigurationType" />
+    <toRun name="PatientApi" type="SpringBootApplicationConfigurationType" />
+    <toRun name="HospitalApi" type="SpringBootApplicationConfigurationType" />
     <method v="2" />
   </configuration>
 </component>
