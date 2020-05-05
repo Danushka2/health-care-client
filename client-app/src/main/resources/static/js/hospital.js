@@ -62,10 +62,10 @@ function initTable() {
 function actionFormatter(value, row, index) {
     var actions = '';
     
-        actions += '<button class="btn btn-link link-primary edit" data-toggle="modal" data-target="#update-form" '
+        actions += '<button class="btn btn-link link-primary edit" data-toggle="modal" data-target="#update-modal" '
             + 'data-backdrop="static" data-id="' + row.id + '" title="' + "Edit" + '">'
             + '<i class="fad fa-edit"></i></button>'
-            + '<button class="btn btn-link link-danger refund" data-toggle="modal" data-target="#delete-form" '
+            + '<button class="btn btn-link link-danger refund" data-toggle="modal" data-target="#delete-modal" '
             + 'data-backdrop="static" data-toggle="tooltip" data-id="' + row.id + '" title="' + "Delete" + '">'
             + '<i class="fas fa-trash-alt"></i></button>';
     
@@ -73,72 +73,72 @@ function actionFormatter(value, row, index) {
 }
 
 
-$('#create-form form').on('submit', function (e) {
+$('#h-create-form').on('submit', function (e) {
     e.preventDefault();
     var $form = $(this);
     if ($form.parsley().validate()) {
         ajaxFormJson($form, function (response) {
             hideProgress();
-            $('#create-form').modal('hide');
+            $('#create-modal').modal('hide');
             showNotification('success', 'Successfully Added!');
             $table.bootstrapTable('refresh');
         });
     }
 });
 
-$('#delete-form').on('show.bs.modal', function (e) {
+$('#delete-modal').on('show.bs.modal', function (e) {
     var $invoker = $(e.relatedTarget);
     var id = $invoker.data('id');
-    $('#delete-form form').attr('action', HOSPITAL_DELETE_URL.replace('{id}', id));
+    $('#h-delete-form').attr('action', HOSPITAL_DELETE_URL.replace('{id}', id));
 }).on('hidden.bs.modal', function (e) {
-    $('#delete-form form').attr('action', HOSPITAL_DELETE_URL);
+    $('#h-delete-form').attr('action', HOSPITAL_DELETE_URL);
 });
 
-$('#delete-form form').on('submit', function (e) {
+$('#h-delete-form').on('submit', function (e) {
     e.preventDefault();
     var $form = $(this);
     ajaxFormJson($form, function (response) {
         hideProgress();
-        $('#delete-form').modal('hide');
+        $('#delete-modal').modal('hide');
         showNotification('success', 'Successfully Deleted!');
         $table.bootstrapTable('refresh');
     });
 });
 
-$('#update-form').on('show.bs.modal', function (e) {
+$('#update-modal').on('show.bs.modal', function (e) {
     $(this).find('form:first').parsley().reset();
     var $invoker = $(e.relatedTarget);
     var id = $invoker.data('id');
-    $('#update-form form').attr('action', HOSPITAL_UPDATE_URL.replace('{id}', id));
+    $('#h-update-form').attr('action', HOSPITAL_UPDATE_URL.replace('{id}', id));
     ajaxGet('/hospitals/' + id, false, false, function (response) {
-        $('#update-form input[name="id"]').val(response.id);
-        $('#update-form input[name="name"]').val(response.hospitalName);
-        $('#update-form input[name="address"]').val(response.hospitalAddress);
-        $('#update-form input[name="email"]').val(response.hospitalEmail);
-        $('#update-form input[name="fax"]').val(response.hospitalFax);
-        $('#update-form input[name="tel"]').val(response.hospitalTell);
-        $('#update-form input[name="type"]').val(response.hospitalType);
-        $('#update-form input[name="status"]').val(response.hospitalStatus);
+        $('#h-update-form input[name="id"]').val(response.id);
+        $('#h-update-form input[name="name"]').val(response.hospitalName);
+        $('#h-update-form input[name="address"]').val(response.hospitalAddress);
+        $('#h-update-form input[name="email"]').val(response.hospitalEmail);
+        $('#h-update-form input[name="fax"]').val(response.hospitalFax);
+        $('#h-update-form input[name="tel"]').val(response.hospitalTell);
+        $('#h-update-form input[name="type"]').val(response.hospitalType);
+        $('#h-update-form input[name="status"]').val(response.hospitalStatus);
     });
 }).on('hidden.bs.modal', function (e) {
-    $('#update-form input[name="id"]').val('');
-    $('#update-form input[name="name"]').val('');
-    $('#update-form input[name="address"]').val('');
-    $('#update-form input[name="email"]').val('');
-    $('#update-form input[name="fax"]').val('');
-    $('#update-form input[name="tel"]').val('');
-    $('#update-form input[name="type"]').val('');
-    $('#update-form input[name="status"]').val('');
-    $('#update-form form').attr('action', HOSPITAL_UPDATE_URL);
+    $('#h-update-form input[name="id"]').val('');
+    $('#h-update-form input[name="name"]').val('');
+    $('#h-update-form input[name="address"]').val('');
+    $('#h-update-form input[name="email"]').val('');
+    $('#h-update-form input[name="fax"]').val('');
+    $('#h-update-form input[name="tel"]').val('');
+    $('#h-update-form input[name="type"]').val('');
+    $('#h-update-form input[name="status"]').val('');
+    $('#h-update-form form').attr('action', HOSPITAL_UPDATE_URL);
 });
 
-$('#update-form form').on('submit', function (e) {
+$('#h-update-form').on('submit', function (e) {
     e.preventDefault();
     var $form = $(this);
     if ($form.parsley().validate()) {
         ajaxFormJson($form, function (response) {
             hideProgress();
-            $('#update-form').modal('hide');
+            $('#update-modal').modal('hide');
             showNotification('success', 'Successfully Updated!');
             $table.bootstrapTable('refresh');
         });
