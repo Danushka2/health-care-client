@@ -14,8 +14,8 @@ typeIcons['danger'] = 'icon far fa-ban';
 $(document)
 		.ready(
 				function() {
-					loadDoctors();
 					getHospitals();
+					
 					function showNotification(type, msg) {
 						$.notify({
 							icon : typeIcons[type],
@@ -30,48 +30,44 @@ $(document)
 							}
 						});
 					}
-
-					function showLoading() {
-						$('#myModal').modal({
-							backdrop : 'static',
-							keyboard : false
-						}).trigger('focus').modal('toggle').modal('show');
+					
+					function showProgress() {
+					    $('#progress').modal({
+					        backdrop: 'static',
+					        keyboard: false
+					    }).modal('show');
+					    $('body').css('overflow-y', 'hidden');
 					}
 
-					function hideLoading() {
-						$('#myModal').on('shown.bs.modal', function(e) {
-							$("#myModal").modal("hide");
-						});
+					function hideProgress(e) {
+						$('#progress').on('shown.bs.modal', function () {
+							  // Load up a new modal...
+							  $('#progress').modal('hide')
+							})
 					}
-
+					
 					function showModal(modal) {
 						$(modal).modal({
 							backdrop : 'static',
 							keyboard : false
-						}).trigger('focus').modal('toggle').modal('show');
+						}).trigger('focus').modal('show');
 					}
 					
 					function hideModal(modal) {
-						$(modal).on('shown.bs.modal', function(e) {
-							$(modal).modal('hide');
-						});
+						$(modal).modal('hide');
 					}
 
 					function errorHandler(response, xhr) {
-						showNotification('danger',
-								"Problem with server call.<br>Please try again.<br>Technical"
-										+ " details: " + xhr.status + ':'
-										+ xhr.statusText);
+						showNotification('danger',"Problem with server call.<br>Please try again.<br>Technical" + " details: " + xhr.status + ':' + xhr.statusText);
 					}
 
 					function getHospitals(){
+						showProgress();
 						jQuery.ajax({
 							url : hospital_path,
 							type : 'GET',
 							timeout : 5000,
-							error : function() {
-								errorHandler(response, status);
-							},
+							error :errorHandler,
 							success : function(response, status) {
 								var arr = [];
 								$.each(response, function(index, value) {
@@ -80,8 +76,12 @@ $(document)
 									arr.push(opt);
 								});
 								$('#hospitals').append(arr);
+								loadDoctors();
+								$('#hospitals').selectpicker('refresh');
+								hideProgress();
 							}
 						});
+						
 					}
 
 					function getDoctors(responseData) {
@@ -89,9 +89,7 @@ $(document)
 							url : session_path,
 							type : 'GET',
 							timeout : 5000,
-							error : function(response, xhr) {
-								errorHandler(response, xhr);
-							},
+							error : errorHandler,
 							success : function(response, status) {
 								responseData(response);
 							}
@@ -99,6 +97,7 @@ $(document)
 					}
 					
 					function loadDoctors() {
+						showProgress();
 						$('#doctors').empty();
 						getDoctors(function(response) {
 							var arr = [];
@@ -108,8 +107,10 @@ $(document)
 								arr.push(opt);
 							});
 							$('#doctors').append(arr);
+							$('#doctors').selectpicker('refresh');
 							loadSessions();
 						});
+						hideProgress();
 					}
 					
 					function getPatient(responseData, id) {
@@ -117,9 +118,7 @@ $(document)
 							url : patient_path + id,
 							type : 'GET',
 							timeout : 5000,
-							error : function(response, xhr) {
-								errorHandler(response, xhr);
-							},
+							error : errorHandler,
 							success : function(response, status) {
 								responseData(response);
 							}
@@ -127,83 +126,81 @@ $(document)
 					}
 
 					function getSessions(responseData) {
+						showProgress();
 						jQuery.ajax({
 							url : session_path + $('#doctors option:selected').val() + '/hospitals/sessions',
 							type : 'GET',
-							beforeSend : showLoading,
 							timeout : 5000,
-							error : function(response, xhr) {
-								hideLoading();
-								errorHandler(response, xhr);
-							},
+							error :errorHandler,
 							success : function(response, status) {
-								hideLoading();
 								responseData(response);
 							}
 						});
+						hideProgress();
 					}
 					
 					function getSession(responseData,id) {
 						jQuery.ajax({
 							url : session_path + id +'/hospitals/sessions',
 							type : 'GET',
-							beforeSend : showLoading,
 							timeout : 5000,
-							error : function(response, xhr) {
-								hideLoading();
-								errorHandler(response, xhr);
-							},
+							error : errorHandler,
 							success : function(response, status) {
-								hideLoading();
 								responseData(response);
 							}
 						});
 					}
 					
 					function loadSessions(){
+						
 						$('#sessions').empty();
 						getSessions(function(response) {
 							var opt = '<option value = "' + response.id + '">'
 									+ response.from +'-'+ response.to + '</option>';
 							$('#sessions').append(opt);
+							$('#sessions').selectpicker('refresh');
 						});
+						
 					}
 					
 					function getAppointmentById(responseData) {
 						jQuery.ajax({
 							url : app_path_id + $('#appointment_id').val(),
 							type : 'GET',
-							beforeSend : showLoading,
+							beforeSend : showProgress,
 							timeout : 5000,
 							error : function(response, xhr) {
-								hideLoading();
-								errorHandler(response, xhr);
+								
+								errorHandler;
 							},
 							success : function(response, status) {
-								hideLoading();
+								
 								responseData(response);
 							}
 						});
 					}
 					
 					function insertAppointment(){
-						var obj = {sessionId: $('#sessions option:selected').val(), patientId: $('#insert_pid').val(), appointmentDate: $('#date').val()};
-						jQuery.ajax({
-							url : app_path_id,
-							type : 'POST',
-							data: JSON.stringify(obj),
-							contentType: 'application/json',
-							beforeSend : showLoading,
-							timeout : 5000,
-							error : function(response, xhr) {
-								hideLoading();
-								errorHandler(response, xhr);
-							},
-							success : function(response, status) {
-								hideLoading();
-								showNotification('success', 'Insert Successful!');
+						if($('#date').val() != ''){
+							if($('#insert_pid').val() != ''){
+								var appDate = new Date($('#date').val());
+								var currDate = new Date();
+								if(currDate < appDate){
+									var obj = {sessionId: $('#sessions option:selected').val(), patientId: $('#insert_pid').val(), appointmentDate: $('#date').val()};
+									jQuery.ajax({
+										url : app_path_id,
+										type : 'POST',
+										data: JSON.stringify(obj),
+										contentType: 'application/json',
+										timeout : 5000,
+										error : errorHandler,
+										success : function(response, status) {
+											showNotification('success', 'Insert Successful!');
+										}
+									});
+								}
 							}
-						});
+						}
 					}
 					
 					$("#hospitals").change(function() {
@@ -229,45 +226,42 @@ $(document)
 					function loadAppointmentsById() {
 						$('#appointment_tb tbody').empty();
 						getAppointmentById(function(response) {
-							if (response.error) {
-								alert(response + 'OK');
-							} else {
-								var status;
-								switch (response.status) {
-								case 1:
-									status = 'PENDING';
-									break;
-								case 2:
-									status = 'COMPLETED';
-									break;
-								case 3:
-									status = 'CANCELED';
-									break;
-								}
-								var line;
-								if(response.status == 3){ line = '</td></tr>'}
-								else{line = '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>'}
-								var opt = '<tr><td>'
-										+ response.id
-										+ '</td><td>'
-										+ response.patient.name
-										+ '</td><td>'
-										+ response.session.doctor.name
-										+ '</td><td>'
-										+ response.session.room.roomNo
-										+ '</td><td>'
-										+ response.session.from
-										+ ' - '
-										+ response.session.to
-										+ '</td><td>'
-										+ response.appointmentDate
-										+ '</td><td>'
-										+ status
-										+ '</td><td>'
-										+ '<button class="btn btn-danger btn-sm">Update</button></td><td>'
-										+ line;
-								$('#appointment_tb tbody').append(opt);
+							var status;
+							switch (response.status) {
+							case 1:
+								status = 'PENDING';
+								break;
+							case 2:
+								status = 'COMPLETED';
+								break;
+							case 3:
+								status = 'CANCELED';
+								break;
 							}
+							var line;
+							if(response.status == 3){ line = '</td></tr>'}
+							else{line = '<button class="btn btn-danger btn-sm" id="delete_appointment_btn">Delete</button></td></tr>'}
+							var opt = '<tr><td>'
+									+ response.id
+									+ '</td><td>'
+									+ response.patient.name
+									+ '</td><td>'
+									+ response.session.doctor.name
+									+ '</td><td>'
+									+ response.session.room.roomNo
+									+ '</td><td>'
+									+ response.session.from
+									+ ' - '
+									+ response.session.to
+									+ '</td><td>'
+									+ response.appointmentDate
+									+ '</td><td>'
+									+ status
+									+ '</td><td>'
+									+ '<button class="btn btn-danger btn-sm">Update</button></td><td>'
+									+ line;
+							$('#appointment_tb tbody').append(opt);
+							
 						});
 					}
 
@@ -275,23 +269,18 @@ $(document)
 						jQuery.ajax({
 							url : app_path_pid + $('#patient_id').val(),
 							type : 'GET',
-							beforeSend : showLoading,
 							timeout : 5000,
-							error : function(response, xhr) {
-								hideLoading();
-								errorHandler(response, xhr);
-							},
+							error : errorHandler,
 							success : function(response, status) {
-								hideLoading();
 								responseData(response);
 							}
 						});
 					}
 					
 					function loadAppointmentsByPatient(){
+						
 						$('#appointment_tb tbody').empty();
 						getAppointmentByPatientId(function(response_a){
-							hideLoading();
 							$.each(response_a, function(index, value){
 								getSession(function(response_s){
 									getPatient(function(response_p){
@@ -322,6 +311,7 @@ $(document)
 								},value.sessionId);
 							});
 						});
+						
 					}
 					
 					$('#getAppointmentByPatient').click(function() {
@@ -336,20 +326,16 @@ $(document)
 						jQuery.ajax({
 							url : app_path_sid + $('#status_op option:selected').val(),
 							type : 'GET',
-							beforeSend : showLoading,
 							timeout : 5000,
-							error : function(response, xhr) {
-								hideLoading();
-								errorHandler(response, xhr);
-							},
+							error :errorHandler,
 							success : function(response, status) {
-								hideLoading();
 								responseData(response);
 							}
 						});
 					}
 					
 					function loadAppointmentsByStatus(){
+						
 						$('#appointment_tb tbody').empty();
 						getAppointmentByStatus(function(response){
 							$.each(response, function(index, value){
@@ -390,6 +376,7 @@ $(document)
 								$('#appointment_tb tbody').append(opt);
 							});
 						});
+						
 					}
 					
 					$('#getAppointmentByStatus').click(function(){
@@ -413,14 +400,9 @@ $(document)
 							type : 'PUT',
 							data:JSON.stringify(obj),
 							contentType: "application/json",
-							beforeSend : showLoading,
 							timeout : 5000,
-							error : function(response, xhr) {
-								hideLoading();
-								errorHandler(response, xhr);
-							},
+							error : errorHandler,
 							success : function(response, status) {
-								hideLoading();
 								if(response.hasOwnProperty('id')){
 									showNotification('success', 'Update Successful!');
 								}
@@ -429,21 +411,18 @@ $(document)
 					}
 					
 					$('#update_appointment').click(function(){
+						
 						updateAppointments();
+						
 					});
 					
 					function deleteAppointments(){
 						jQuery.ajax({
 							url : app_path_id + id,
 							type : 'DELETE',
-							beforeSend : showLoading,
 							timeout : 5000,
-							error : function(response, xhr) {
-								hideLoading();
-								errorHandler(response, xhr);
-							},
+							error : errorHandler,
 							success : function(response, status) {
-								hideLoading();
 								if(response.hasOwnProperty('id')){
 									showNotification('success', 'Delete Successful!');
 								}
@@ -458,6 +437,8 @@ $(document)
 					});
 					
 					$('#delete_appointment').click(function(){
+						
 						deleteAppointments();
+						location.reload();
 					});
 				});
