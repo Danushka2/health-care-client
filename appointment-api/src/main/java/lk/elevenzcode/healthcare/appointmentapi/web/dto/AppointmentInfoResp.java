@@ -1,11 +1,14 @@
 package lk.elevenzcode.healthcare.appointmentapi.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lk.elevenzcode.healthcare.appointmentapi.domain.Appointment;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.DoctorIntegrationService;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.PatientIntegrationService;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.dto.DoctorSessionInfo;
 import lk.elevenzcode.healthcare.appointmentapi.service.integration.dto.PatientInfo;
+import lk.elevenzcode.healthcare.commons.serializer.JsonDateSerializer;
+import lk.elevenzcode.healthcare.commons.serializer.JsonDateTimeSerializer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +18,9 @@ public class AppointmentInfoResp {
   private int id;
   private PatientInfo patient;
   private DoctorSessionInfo session;
+  @JsonSerialize(using = JsonDateSerializer.class)
   private LocalDate appointmentDate;
+  @JsonSerialize(using = JsonDateTimeSerializer.class)
   private LocalDateTime createDate;
   private int status;
 

@@ -1,6 +1,8 @@
 package lk.elevenzcode.healthcare.paymentapi.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lk.elevenzcode.healthcare.commons.serializer.JsonDateTimeSerializer;
 import lk.elevenzcode.healthcare.paymentapi.service.integration.dto.AppointmentInfo;
 
 import java.math.BigDecimal;
@@ -15,6 +17,7 @@ public class PaymentInfoResp {
   private String reference;
   private AppointmentInfo appointmentInfo;
   private BigDecimal fee;
+  @JsonSerialize(using = JsonDateTimeSerializer.class)
   private LocalDateTime paidOn;
   private String status;
 
