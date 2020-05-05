@@ -17,19 +17,23 @@
 
 
 
-
     <div class="container">
         <div class="">
-            <div class="col-md-4 ">
 
-                <h2>Patient Registration </h2>
+            <div id="form" style="align-items: center;width: 60%; ">
+                <b><h2 style="text-align: center;font-family: Times New Roman;">Patient
+                Registration
+                </h2></b>
                 <br>
                 <br>
 
                 <form id="PatientRegistration" name="PatientRegistration" action ="/insert"
                       method="POST">
-                    <input type="number" id="patientId">
-                    <label>Patient Name:</label>
+
+
+
+
+                    <label >Patient Name:</label>
                     <input id="PatientName" name="PatientName" type="text" class="form-control">
                     <br>
 
@@ -47,7 +51,7 @@
                     <br>
 
 
-                    <div class="">
+                    <div class="" style="width: 60%">
                         <div class="">
                             <span class="input-group-text"
                                   id="PatientlblName"><label>Gender:</label> </span>
@@ -56,6 +60,7 @@
                                                 name="PatientrdoGender" value="Male"> &nbsp;&nbsp;Female <input
                             type="radio" id="PatientrdoGenderFemale" name="PatientrdoGender" value="Female">
                     </div>
+                    <br>
 
 
                     <label>User Name:</label>
@@ -68,7 +73,15 @@
                     <br>
 
                     <input id="PatientbtnSave" name="PatientbtnSave" type="button" value="Save"
-                           class="btn btn-primary btn-lg">
+                           class="btn btn-primary btn-lg" >
+
+
+                    <br><br><br><br>
+                    <br>
+
+                    <label><b>Enter Patient id:</b></label>
+                    <input type="number" id="patientId">
+
 
                     <input id="PatientbtnUpdate" name="PatientbtnUpdate" type="button"
                            value="Update"
@@ -84,15 +97,20 @@
 
 
 
+
                 </form>
 
 
 
-                <label> Find Patient :</label>
+            </div><br><br><br><br>
+
+            <div style="align-self: center;width: 50% ">
+
+                <label> Enter ID for view profile :</label>
                 <input id="findPatientId" name="" type="number" min = "0"
                        class="form-control">
 
-                <input id="findPatientBtn" name="find " type="button" value="find"
+                <input id="findPatientBtn" name="find " type="button" value="Profile"
                        class="btn btn-primary btn-lg">
 
                 <div class="modal fade" id="patientModal" role="dialog">
@@ -121,6 +139,11 @@
                 </div>
 
             </div>
+
+
+
+
+
         </div>
     </div>
 
