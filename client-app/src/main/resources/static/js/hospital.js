@@ -11,12 +11,13 @@ $(function () {
 
 function initTable() {
     $table.bootstrapTable('destroy').bootstrapTable({
-        height: '900',
+        height: '700',
         columns: [{
             title: 'ID',
             field: 'id',
             align: 'center',
-            valign: 'middle'
+            valign: 'middle',
+            sortable: true
         }, {
             title: 'NAME',
             field: 'hospitalName',
@@ -40,8 +41,7 @@ function initTable() {
         }, {
             title: 'TELEPHONE',
             field: 'hospitalTell',
-            align: 'center',
-            sortable: true
+            align: 'center'
         }, {
             title: COL_ACTIONS,
             align: 'center',
