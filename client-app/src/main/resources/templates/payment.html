@@ -54,7 +54,8 @@
                     </button>
                 </div>
 
-                <form action="/payments/init" data-parsley-validate="" method="POST" novalidate="">
+                <form action="/payments/init" data-parsley-validate="" id="makePaymentForm"
+                      method="POST" novalidate="">
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="font-weight-bold" for="appointments"
@@ -146,8 +147,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/payments/{id}/modify/init" data-parsley-validate="" method="PUT"
-                      novalidate="">
+                <form action="/payments/{id}/modify/init" data-parsley-validate=""
+                      id="modifyPaymentForm" method="PUT" novalidate="">
                     <input name="id" type="hidden">
                     <div class="modal-body">
                         <div class="pay-detail">
@@ -249,7 +250,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/payments/{id}" method="DELETE">
+                <form action="/payments/{id}" id="refundPaymentForm" method="DELETE">
                     <div class="modal-body">
                         <span th:text="#{app.payment.refund.conf}"></span>
                         <div class="refund-msg" th:text="#{app.payment.modal.field.reason}"></div>

@@ -1,6 +1,8 @@
 package lk.elevenzcode.healthcare.paymentapi.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lk.elevenzcode.healthcare.commons.serializer.JsonDateTimeSerializer;
 import lk.elevenzcode.healthcare.paymentapi.domain.RefundPayment;
 
 import java.time.LocalDateTime;
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RefundPaymentInfoResp {
   private String reason;
+  @JsonSerialize(using = JsonDateTimeSerializer.class)
   private LocalDateTime refundOn;
 
   public static RefundPaymentInfoResp parse(RefundPayment refundPayment) {

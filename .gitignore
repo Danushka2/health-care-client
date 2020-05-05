@@ -17,3 +17,8 @@ target/
 .gitignore
 
 !.idea/runConfigurations/
+
+# VS Code
+.vscode
+*.log
+_config.yml

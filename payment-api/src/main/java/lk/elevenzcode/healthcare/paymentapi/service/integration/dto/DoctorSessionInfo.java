@@ -1,6 +1,8 @@
 package lk.elevenzcode.healthcare.paymentapi.service.integration.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lk.elevenzcode.healthcare.commons.serializer.JsonTimeSerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -9,7 +11,9 @@ import java.time.LocalTime;
 public class DoctorSessionInfo {
   private DoctorInfo doctor;
   private RoomInfo room;
+  @JsonSerialize(using = JsonTimeSerializer.class)
   private LocalTime from;
+  @JsonSerialize(using = JsonTimeSerializer.class)
   private LocalTime to;
   private BigDecimal docFee;
   private short status;

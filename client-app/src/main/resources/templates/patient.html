@@ -1,23 +1,181 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:include="/header :: header_head"></head>
+<head th:include="/header :: header_head">
+
+
+</head>
 <body>
 <div th:include="/header :: confirm_progress_dlg"></div>
 <div th:replace="/header :: validate_token"></div>
 <script type="text/javascript">
     if (!containsAny(authorities, PT_PERMS)) {
         redirectHome();
+
     }
 </script>
 <div class="content">
-    <h2>Implement Patient CRUD UIs Here</h2>
+
+
+
+    <div class="container">
+        <div class="">
+
+            <div id="form" style="align-items: center;width: 60%; ">
+                <b><h2 style="text-align: center;font-family: Times New Roman;">Patient
+                Registration
+                </h2></b>
+                <br>
+                <br>
+
+                <form id="PatientRegistration" name="PatientRegistration" action ="/insert"
+                      method="POST">
+
+
+
+
+                    <label >Patient Name:</label>
+                    <input id="PatientName" name="PatientName" type="text" class="form-control">
+                    <br>
+
+                    <label>Email:</label>
+                    <input id="PatientEmail" name="PatientEmail" type="email"
+                           class="form-control">
+                    <br>
+
+                    <label>Phone Number:</label>
+                    <input id="PatientPno" name="PatientPno" type="text" class="form-control">
+                    <br>
+
+                    <label>Age:</label>
+                    <input id="PatientAge" name="PatientAge" type="text" class="form-control">
+                    <br>
+
+
+                    <div class="" style="width: 60%">
+                        <div class="">
+                            <span class="input-group-text"
+                                  id="PatientlblName"><label>Gender:</label> </span>
+                        </div>
+                        &nbsp;&nbsp;Male <input type="radio" id="PatientrdoGenderMale"
+                                                name="PatientrdoGender" value="Male"> &nbsp;&nbsp;Female <input
+                            type="radio" id="PatientrdoGenderFemale" name="PatientrdoGender" value="Female">
+                    </div>
+                    <br>
+
+
+                    <label>User Name:</label>
+                    <input id="PatientUserName" name="PatientUserName" type="text" class="form-control">
+                    <br>
+
+                    <label>Password:</label>
+                    <input id="PatientPassword" name="PatientPassword" type="password"
+                           class="form-control">
+                    <br>
+
+                    <input id="PatientbtnSave" name="PatientbtnSave" type="button" value="Save"
+                           class="btn btn-primary btn-lg" >
+
+                    <input id="PatientbtnUpdate2" name="PatientbtnUpdate2" type="button"
+                           value="Update"
+                           class="btn btn-primary btn-lg">
+
+
+                    <div id="PatientalertSuccess" class="p-3 mb-2 bg-success text-white"></div>
+                    <div id="PatientalertError" class="p-3 mb-2 bg-danger text-white"></div>
+
+
+                    <br><br><br><br>
+                    <br>
+
+                    <label><b>Enter Patient id:</b></label>
+                    <input type="number" id="patientId">
+
+
+                    <input id="PatientbtnUpdate" name="PatientbtnUpdate" type="button"
+                           value="Update"
+                           class="btn btn-primary btn-lg">
+
+                    <input id="PatientbtnDelete" name="PatientbtnDelete" type="button"
+                           value="Delete"
+                           class="btn btn-primary btn-lg">
+
+
+
+
+
+
+
+
+                </form>
+
+
+
+            </div><br><br><br><br>
+
+            <div style="align-self: center;width: 50% ">
+
+                <label> Enter ID for view profile :</label>
+                <input id="findPatientId" name="" type="number" min = "0"
+                       class="form-control">
+
+                <input id="findPatientBtn" name="find " type="button" value="Profile"
+                       class="btn btn-primary btn-lg">
+
+                <div class="modal fade" id="patientModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Patient Details</h4>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+
+                                    <div class="container" style="width: 100%">
+                                        <p id="patientDetails"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
 </div>
 <div th:replace="/nav :: nav"></div>
 <script type="text/javascript">
     $(function () {
         $('#patient-menu').addClass('active');
         $('#patient-menu').siblings().removeClass('active');
+
+
     });
 </script>
+
+    <script src="/js/patient.js"></script>
 </body>
 </html>
