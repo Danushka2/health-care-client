@@ -98,8 +98,8 @@ public class PaymentServiceImpl extends GenericServiceImpl<Payment> implements P
     //set appointment details
     final Map<String, Object> parameters = new HashMap<>();
     parameters.put("ref", payment.getReference());
-    parameters.put("apptDate", DateUtil.formatDate(appointmentInfo.getAppointmentDate()));
-    parameters.put("apptTime", DateUtil.formatTime(appointmentInfo.getSession().getFrom()));
+    parameters.put("apptDate", appointmentInfo.getAppointmentDate());
+    parameters.put("apptTime", appointmentInfo.getSession().getFrom());
     parameters.put("docFee",
         ConversionUtil.getMoneyWithThousandSeparator(appointmentInfo.getSession().getDocFee()));
     parameters.put("hospFee", ConversionUtil.getMoneyWithThousandSeparator(appointmentInfo
