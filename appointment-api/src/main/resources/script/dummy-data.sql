@@ -1,0 +1,4 @@
+INSERT INTO sch_appointment.appointment (id, appointment_date, create_datetime, patient_id, session_id, status_id) VALUES (1, '2020-05-20', '2020-05-02 16:31:21', 1, 1, 3);
+INSERT INTO sch_appointment.appointment (id, appointment_date, create_datetime, patient_id, session_id, status_id) VALUES (2, '2020-05-25', '2020-05-03 06:44:28', 1, 1, 2);
+INSERT INTO sch_appointment.appointment (id, appointment_date, create_datetime, patient_id, session_id, status_id) VALUES (3, '2020-05-30', '2020-05-04 20:28:45', 1, 1, 3);
+INSERT INTO sch_appointment.appointment (id, appointment_date, create_datetime, patient_id, session_id, status_id) VALUES (4, '2020-06-05', '2020-05-05 12:38:45', 1, 1, 1);

@@ -17,10 +17,8 @@ public class AppointmentInfo {
   private PatientInfo patient;
   private DoctorSessionInfo session;
   private int status;
-  @JsonSerialize(using = JsonDateSerializer.class)
-  private LocalDate appointmentDate;
-  @JsonSerialize(using = JsonDateTimeSerializer.class)
-  private LocalDateTime createDate;
+  private String appointmentDate;
+  private String createDate;
 
   public int getId() {
     return id;
@@ -51,19 +49,19 @@ public class AppointmentInfo {
     return status;
   }
 
-  public LocalDate getAppointmentDate() {
+  public String getAppointmentDate() {
     return appointmentDate;
   }
 
-  public void setAppointmentDate(LocalDate appointmentDate) {
+  public void setAppointmentDate(String appointmentDate) {
     this.appointmentDate = appointmentDate;
   }
 
-  public LocalDateTime getCreateDate() {
+  public String getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(LocalDateTime createDate) {
+  public void setCreateDate(String createDate) {
     this.createDate = createDate;
   }
 

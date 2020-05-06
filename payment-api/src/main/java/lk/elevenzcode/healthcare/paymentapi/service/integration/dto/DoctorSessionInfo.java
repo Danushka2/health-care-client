@@ -11,10 +11,8 @@ import java.time.LocalTime;
 public class DoctorSessionInfo {
   private DoctorInfo doctor;
   private RoomInfo room;
-  @JsonSerialize(using = JsonTimeSerializer.class)
-  private LocalTime from;
-  @JsonSerialize(using = JsonTimeSerializer.class)
-  private LocalTime to;
+  private String from;
+  private String to;
   private BigDecimal docFee;
   private short status;
 
@@ -34,19 +32,19 @@ public class DoctorSessionInfo {
     this.room = room;
   }
 
-  public LocalTime getFrom() {
+  public String getFrom() {
     return from;
   }
 
-  public void setFrom(LocalTime from) {
+  public void setFrom(String from) {
     this.from = from;
   }
 
-  public LocalTime getTo() {
+  public String getTo() {
     return to;
   }
 
-  public void setTo(LocalTime to) {
+  public void setTo(String to) {
     this.to = to;
   }
 
