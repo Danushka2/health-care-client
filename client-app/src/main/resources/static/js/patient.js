@@ -10,8 +10,7 @@ $(document).ready(function() {
     $("#PatientbtnUpdate2").hide();
 
     function insertPatient(){
-        var obj = {name: $('#PatientName').val(), email:$('#PatientEmail').val(), phoneNo:$('#PatientPno').val(),age:$('#PatientAge').val(), gender:$('input[name="PatientrdoGender"]:checked').val(), username:$('#PatientUserName').val(), password:$('#PatientPassword').val()};
-        //alert(JSON.stringify(obj))
+        var obj = {name: $('#PatientName').val(), email:$('#PatientEmail').val(), phoneNo:$('#PatientPno').val(),age:$('#PatientAge').val(), gender:$('input[name="PatientrdoGender"]:checked').val(), user_name:$('#PatientUserName').val(), password:$('#PatientPassword').val()};
         jQuery.ajax({
             url: 'http://localhost:8080/patients',
             type: 'POST',
@@ -22,6 +21,7 @@ $(document).ready(function() {
             },
             success:function(response, status){
                 alert('OK');
+                $('#PatientRegistration')[0].reset();
             }
         });
     }
@@ -58,7 +58,7 @@ $(document).ready(function() {
     });
 
     function updatePatient(){
-        var obj = {name: $('#PatientName').val(), email:$('#PatientEmail').val(), phoneNo:$('#PatientPno').val(),age:$('#PatientAge').val(), gender:$('input[name="PatientrdoGender"]:checked').val(), username:$('#PatientUserName').val(), password:$('#PatientPassword').val()};
+        var obj = {name: $('#PatientName').val(), email:$('#PatientEmail').val(), phoneNo:$('#PatientPno').val(),age:$('#PatientAge').val(), gender:$('input[name="PatientrdoGender"]:checked').val(), user_name:$('#PatientUserName').val(), password:$('#PatientPassword').val()};
         alert(JSON.stringify(obj))
         jQuery.ajax({
             url: 'http://localhost:8080/patients/'+$('#patientId').val(),
@@ -145,6 +145,9 @@ function validateItemForm()
         return "Insert Patient Name.";
     }
 
+    if ($("#PatientName").val().length<5){
+        return "Please input the patient name more than 5 characters";
+    }
 
     if ($("#PatientEmail").val().trim() == "")
     {
@@ -163,6 +166,9 @@ function validateItemForm()
     {
         return "Insert patient phone number.";
     }
+    if ($("#PatientPno").val().length<10 || $("#PatientPno").val().length>10){
+        return"inert valid phone number"
+    }
 
 
     if ($("#PatientAge").val().trim() == "")
@@ -170,11 +176,6 @@ function validateItemForm()
         return "Insert patient age.";
     }
 
-    // is numerical value
-    /*var tmpAge = $("#PatientAge").val().trim();
-    {
-        return "Insert a numerical value for patient age .";
-    }*/
 
 
     if ($('input[name="PatientrdoGender"]:checked').val().trim() == "")
