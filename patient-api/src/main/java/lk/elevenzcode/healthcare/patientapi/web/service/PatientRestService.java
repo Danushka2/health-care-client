@@ -119,6 +119,7 @@ public class PatientRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   @Consumes(value = MediaType.APPLICATION_JSON)
   public Response updatePatient(@PathParam(value = "id") int id, PatientUpdateDto updateDto) {
+    ServiceResponse<String> serviceResponse = new ServiceResponse();
     Response response;
     try {
       if (StringUtils.isNotEmpty(updateDto.getEmail()) || StringUtils.isNotEmpty(updateDto
@@ -151,7 +152,8 @@ public class PatientRestService extends BaseRestService {
             patient.setStatus(new PatientStatus(updateDto.getStatus()));
           }
           patientService.update(patient);
-          response = RESTfulUtil.getOk("Patient details updated ");
+          serviceResponse.setBody("Patient details updated ");
+          response = RESTfulUtil.getOk(serviceResponse);
         } else {
           response = RESTfulUtil.getBadRequest();
         }
@@ -172,13 +174,14 @@ public class PatientRestService extends BaseRestService {
   @Produces(value = MediaType.APPLICATION_JSON)
   public Response deletePatient(@PathParam(value = "id") int id) {
     Response response;
-
+    ServiceResponse<String> serviceResponse = new ServiceResponse();
     try {
       final Patient patient = patientService.get(id);
       if (patient != null) {
         patient.setStatus(new PatientStatus(PatientStatus.STATUS_DELETED));
         patientService.update(patient);
-        response = RESTfulUtil.getOk("Status change to deleted ");
+        serviceResponse.setBody("Status change to deleted ");
+        response = RESTfulUtil.getOk(serviceResponse);
       } else {
         response = RESTfulUtil.getBadRequest();
       }

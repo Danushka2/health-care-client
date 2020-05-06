@@ -19,8 +19,9 @@
         <div class="">
 
             <div id="form" style="align-items: center;width: 60%; ">
+                <input id="status" type="hidden" name="status">
                 <b><h2 style="text-align: center;font-family: Times New Roman;">Patient
-                Registration
+                    Registration
                 </h2></b>
                 <br>
                 <br>
@@ -48,25 +49,23 @@
 
 
                     <div class="" style="width: 60%">
-                        <div class="">
-                            <span class="input-group-text"
-                                  id="PatientlblName"><label>Gender:</label> </span>
-                        </div>
+                        <label>Gender:</label>
                         &nbsp;&nbsp;Male <input type="radio" id="PatientrdoGenderMale"
                                                 name="PatientrdoGender" value="Male"> &nbsp;&nbsp;Female <input
                             type="radio" id="PatientrdoGenderFemale" name="PatientrdoGender" value="Female">
                     </div>
                     <br>
 
+                    <div id="userAccCredentials">
+                        <label>User Name:</label>
+                        <input id="PatientUserName" name="PatientUserName" type="text" class="form-control">
+                        <br>
 
-                    <label>User Name:</label>
-                    <input id="PatientUserName" name="PatientUserName" type="text" class="form-control">
-                    <br>
-
-                    <label>Password:</label>
-                    <input id="PatientPassword" name="PatientPassword" type="password"
-                           class="form-control">
-                    <br>
+                        <label>Password:</label>
+                        <input id="PatientPassword" name="PatientPassword" type="password"
+                               class="form-control">
+                        <br>
+                    </div>
 
                     <input id="PatientbtnSave" name="PatientbtnSave" type="button" value="Save"
                            class="btn btn-primary btn-lg" >
@@ -151,6 +150,6 @@
     });
 </script>
 
-    <script src="/js/patient.js"></script>
+<script src="/js/patient.js"></script>
 </body>
 </html>
